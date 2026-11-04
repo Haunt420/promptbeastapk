@@ -1,0 +1,650 @@
+# PromptBeast base pack. Original wording, every person an adult.
+# Format: see promptbeast/core/forge/pack.py. Slots roll in `order`; `give` traits constrain later slots.
+#
+# Trait vocabulary used here
+#   gender   f m nb
+#   place    indoor outdoor urban nature water private public formal
+#   climate  cold hot mild wet
+#   clock    dawn day dusk night
+#   outfit   casual formal winter swimwear sleepwear athletic
+
+@pack id=base name="PromptBeast base" adults=false
+
+# ---------------------------------------------------------------- subject
+@slot age label="Person" box=subject order=1
+a woman in her twenties ; give=f ; w=2
+a woman in her late twenties ; give=f ; w=2
+a woman in her early thirties ; give=f ; w=2
+a woman in her late thirties ; give=f
+a woman in her forties ; give=f
+a woman in her fifties ; give=f ; w=0.6
+a woman in her sixties ; give=f ; w=0.4
+a man in his twenties ; give=m ; w=2
+a man in his late twenties ; give=m ; w=2
+a man in his early thirties ; give=m ; w=2
+a man in his late thirties ; give=m
+a man in his forties ; give=m
+a man in his fifties ; give=m ; w=0.6
+a man in his sixties ; give=m ; w=0.4
+an androgynous person in their twenties ; give=nb
+an androgynous person in their thirties ; give=nb
+a person in their forties with an androgynous look ; give=nb ; w=0.6
+
+@slot role label="Role" box=subject order=2 chance=0.75
+a night-shift nurse
+a retired sea captain
+a touring cellist
+a street-food vendor
+a freelance bike courier
+a lighthouse keeper
+a burnt-out detective
+an off-duty paramedic
+a vinyl record collector
+a long-haul trucker
+a botanist
+a ferry pilot
+a tattoo artist
+a stage magician
+a boxing coach
+a violin repairer
+a late-night radio host
+an archaeologist
+a pastry chef
+a bicycle mechanic
+a ceramicist
+a wandering minstrel
+a smuggler with a soft spot for strays
+a space-station gardener
+a monastery gardener
+a bounty hunter
+a disillusioned architect
+a dive-bar bartender
+a ballet coach
+a wildlife photographer
+a sailing instructor
+a florist
+a roller-derby captain
+a carpenter
+a perfumer
+a street musician
+an astronomer
+a dockworker
+a fashion editor
+a clockmaker
+a rooftop beekeeper
+a retired rally driver
+
+@slot hair label="Hair" box=subject order=3
+long auburn hair in loose waves
+a sleek black bob
+copper hair pinned up loosely
+silver-white hair cropped short
+thick dark curls piled on top of the head
+a messy blonde braid over one shoulder
+waist-length black hair, straight and glossy
+a buzz cut dyed electric blue
+chestnut hair in a low ponytail
+a shaved head with a faint stubble shadow
+wavy honey-blonde hair to the shoulders
+jet-black hair in a high bun with loose strands
+tight coils of dark hair in a golden-hour halo
+a faded pink undercut with a long fringe
+salt-and-pepper hair swept back
+a tousled lob the colour of wet sand
+two thick braids tied with leather cord
+ash-grey hair in a pixie crop
+fiery red hair, frizzy from the rain
+dark hair with a single white streak
+platinum hair slicked behind the ears
+long dreadlocks tied back with a scarf
+a tidy side-parted cut in dark brown
+silver hair worn long and loose
+curtain bangs framing the face
+hair the colour of dark chocolate in a messy knot
+mint-green hair fading to silver at the tips
+a classic pompadour
+close-cropped natural hair
+long copper-brown hair tied in a thick plait
+
+@slot eyes label="Eyes" box=subject order=4 chance=0.7
+sharp green eyes
+deep brown eyes with amber flecks
+pale grey eyes
+heavy-lidded hazel eyes
+dark, almost black eyes
+bright blue eyes with dark lashes
+warm amber eyes
+one blue eye and one brown eye
+storm-grey eyes
+tired but kind brown eyes
+unusually light, wolfish eyes
+green-gold eyes
+steady dark eyes with laugh lines
+sea-glass green eyes
+
+@slot skin label="Skin" box=subject order=5 chance=0.6
+warm olive skin
+deep brown skin with a cool undertone
+pale skin dusted with freckles
+sun-browned skin
+rich ebony skin with a soft sheen
+fair skin that flushes easily
+golden-tan skin
+brown skin with scattered beauty marks
+weathered, sun-lined skin
+cool porcelain skin
+bronze skin glowing with sweat
+light brown skin with a warm glow
+
+@slot build label="Build" box=subject order=6 chance=0.8
+athletic build
+tall and lean
+broad-shouldered and sturdy
+soft and curvy
+petite and wiry
+muscular, with strong forearms
+long-limbed and graceful
+stocky and solid
+slim with sharp collarbones
+pear-shaped with strong thighs
+rangy and weathered
+full-figured and confident
+swimmer's shoulders and a narrow waist
+compact and powerful
+
+@slot feature label="Features" box=subject order=7 chance=0.5 count=1-2
+a scatter of freckles across the nose
+a thin scar through one eyebrow
+a small crescent-moon tattoo behind the ear
+a gap between the front teeth
+a faint dimple when smiling
+a pierced eyebrow
+a nose stud
+a half-sleeve of botanical tattoos
+paint under the fingernails
+ink-stained fingers
+a crooked nose that has been broken once
+laugh lines at the corners of the eyes
+a mole beneath the lip
+a streak of soot on one cheek
+a silver tooth
+a burn scar on one forearm
+beauty marks like constellations
+a chipped front tooth
+calloused hands
+a tiny gold ring in the nostril
+
+# ---------------------------------------------------------------- scene
+@slot setting label="Setting" box=scene order=10
+a city rooftop with the skyline behind ; give=outdoor,urban,mild
+a narrow cobblestone alley ; give=outdoor,urban,mild
+a neon-lit night market ; give=outdoor,urban,night
+a busy crosswalk at rush hour ; give=outdoor,urban,day
+a quiet bus stop on an empty road ; give=outdoor,urban,mild
+a fire escape above a side street ; give=outdoor,urban
+a stone bridge over a slow river ; give=outdoor,urban,water,mild
+a harbour at low tide ; give=outdoor,water,mild
+a graffiti-covered underpass ; give=outdoor,urban
+a train platform with the last train gone ; give=outdoor,urban,public,night
+a diner parking lot with a buzzing sign ; give=outdoor,urban,night
+a rooftop garden among tomato vines ; give=outdoor,urban,nature,mild
+a misty pine forest ; give=outdoor,nature,mild
+a sunlit meadow of wildflowers ; give=outdoor,nature,mild,day
+a windswept clifftop above the sea ; give=outdoor,nature,mild
+a black-sand beach ; give=outdoor,nature,water,mild
+a tropical beach lined with palms ; give=outdoor,nature,water,hot,day
+a dune field under a huge sky ; give=outdoor,nature,hot
+a frozen lake ; give=outdoor,nature,water,cold
+a snowy mountain pass ; give=outdoor,nature,cold
+a steaming hot spring in the mountains ; give=outdoor,nature,water,private
+a bamboo grove ; give=outdoor,nature,mild
+a lavender field ; give=outdoor,nature,hot,day
+a rocky riverbank ; give=outdoor,nature,water,mild
+an autumn orchard ; give=outdoor,nature,mild
+a salt flat at the edge of the world ; give=outdoor,nature,hot
+a volcanic crater rim ; give=outdoor,nature,hot
+a lighthouse gallery high above the waves ; give=outdoor,mild
+a vineyard at harvest ; give=outdoor,nature,mild,day
+a boardwalk with closed arcades ; give=outdoor,urban,water,mild
+a candle-lit library ; give=indoor,private,mild
+a sunlit loft apartment ; give=indoor,private,mild
+a cramped night-shift kitchen ; give=indoor,night
+a late-night laundromat ; give=indoor,urban,public,night
+a tiled public bath house ; give=indoor,water,hot,public
+a greenhouse full of ferns ; give=indoor,nature,hot,private
+an empty ballroom ; give=indoor,formal,private
+a velvet-curtained theatre stage ; give=indoor,formal
+a cluttered record shop ; give=indoor,public
+a dim jazz bar ; give=indoor,public,night
+a train compartment at night ; give=indoor,night
+an artist's studio full of canvases ; give=indoor,private
+a ship's galley ; give=indoor
+a tattoo parlour after hours ; give=indoor,night,private
+an old cinema lobby ; give=indoor,public
+a conservatory with a grand piano ; give=indoor,formal,private
+a boathouse at the water's edge ; give=indoor,water
+a hotel corridor at three in the morning ; give=indoor,public,night
+a bedroom with sheer curtains ; give=indoor,private,mild
+a steamy bathroom with a fogged mirror ; give=indoor,private,water,hot
+a small kitchen at dawn ; give=indoor,private,dawn
+an indoor pool under a glass roof ; give=indoor,water,hot
+a poolside terrace ; give=outdoor,water,hot
+a rain-streaked window seat in a cafe ; give=indoor,public,wet
+a workshop smelling of sawdust ; give=indoor,private
+a cluttered attic with a round window ; give=indoor,private
+a concrete stairwell ; give=indoor,urban
+a boxing gym with a heavy bag ; give=indoor,public
+a market stall under a striped awning ; give=outdoor,urban,day
+a wooden pier at the end of the day ; give=outdoor,water,mild
+
+@slot time label="Time of day" box=scene order=12 chance=0.8
+at dawn ; give=dawn ; not=night,dusk
+at golden hour ; give=dusk ; not=night,dawn
+at dusk ; give=dusk ; not=dawn
+at blue hour ; give=dusk ; not=dawn,day
+in the middle of the day ; give=day ; not=night,dusk
+in the late afternoon ; give=day ; not=night,dawn
+at midnight ; give=night ; not=day,dawn
+in the small hours ; give=night ; not=day
+just after sunset ; give=dusk ; not=day,dawn,night
+on a hazy morning ; give=dawn,day ; not=night
+
+@slot weather label="Weather" box=scene order=14 chance=0.55
+in light rain ; need=outdoor ; give=wet ; not=hot
+in heavy rain ; need=outdoor ; give=wet ; not=hot
+in drifting snow ; need=outdoor ; give=cold ; not=hot,wet
+in thick fog ; need=outdoor ; not=hot
+under a heat haze ; need=outdoor ; give=hot ; not=cold,wet
+under a clear sky ; need=outdoor ; not=wet
+under heavy overcast clouds ; need=outdoor ; not=night
+after a storm, with puddles everywhere ; need=outdoor ; give=wet ; not=hot
+on the first frost of the year ; need=outdoor ; give=cold ; not=hot,wet
+with a strong wind tugging at everything ; need=outdoor
+as cherry blossom drifts past ; need=outdoor ; give=mild ; not=cold,wet
+as autumn leaves swirl around ; need=outdoor ; give=mild ; not=hot,wet
+with a thunderstorm gathering on the horizon ; need=outdoor ; not=cold
+as sea spray hangs in the air ; need=water,outdoor ; give=wet
+under a low, bruised sunset sky ; need=outdoor ; not=night,dawn
+
+@slot lighting label="Lighting" box=scene order=16
+soft window light ; need=indoor ; not=night
+golden-hour sunlight raking sideways ; need=outdoor ; not=night,wet
+blue-hour ambient light ; need=outdoor ; not=day
+cold moonlight ; need=night,outdoor
+neon signage glow ; need=urban ; any=night,dusk
+candlelight ; need=indoor ; w=1.5
+harsh overhead fluorescent light ; need=indoor ; not=private
+sodium streetlight pools ; need=urban,outdoor ; any=night,dusk
+dappled light through leaves ; need=nature,outdoor ; not=night
+soft diffused overcast light ; need=outdoor ; not=night
+the orange flicker of a fire ; any=night,cold,private
+studio softbox lighting ; need=indoor ; not=public
+strong rim light from behind
+volumetric god rays ; need=outdoor ; any=dawn,dusk,mild
+a single bare bulb overhead ; need=indoor ; any=night,private
+lamplight pooling on the table ; need=indoor,private
+headlight glare from passing cars ; need=urban,outdoor ; any=night,dusk
+reflections of water rippling across the walls ; need=water,indoor
+warm low sun through dusty air ; need=indoor ; any=dusk,day
+
+@slot prop label="Props" box=scene order=18 chance=0.6 count=1-2
+a steaming paper cup
+a half-open umbrella ; not=hot
+a vintage film camera
+a stack of dog-eared paperbacks
+a bicycle leaning against the wall ; need=outdoor
+a battered suitcase
+scattered petals
+a thin curl of cigarette smoke
+a mug of tea going cold ; need=indoor
+a record player mid-spin ; need=indoor
+a crackling old radio
+string lights overhead
+a stray cat watching nearby
+a tangle of headphones
+a half-eaten peach
+a bunch of wildflowers in a jar
+a rain-spotted newspaper ; any=wet,urban
+a candle guttering in a saucer ; need=indoor
+a paper lantern
+a folded map
+a pair of boots by the door ; need=indoor,private
+a thermos with steam rising ; any=cold,wet
+a worn leather satchel
+a flickering neon sign ; need=urban
+
+# ---------------------------------------------------------------- pose
+@slot expression label="Expression" box=pose order=20
+a calm direct gaze
+a slow half-smile
+a wry smirk
+eyes closed, face tilted toward the light
+a distant, thoughtful stare
+soft laughter caught mid-breath
+an unimpressed stare
+tired but content
+fierce concentration
+quiet amusement
+a dreamy, faraway look
+a challenging raised eyebrow
+a gentle, unguarded smile
+a guarded look over the shoulder
+a sleepy half-lidded gaze
+a bright, toothy grin
+a stoic, unreadable face
+a pensive frown
+an openly delighted laugh
+a sly sideways glance
+
+@slot pose label="Pose" box=pose order=36
+standing with weight on one hip
+leaning against a doorframe ; need=indoor
+sitting on a low wall with legs swinging ; need=outdoor
+walking away from the camera, looking back
+crouching to tie a bootlace
+seated on the floor with knees drawn up
+arms crossed, shoulder against a pillar
+lying on their back, one arm above the head ; any=private,nature
+standing with hands in coat pockets ; not=hot
+perched on a stool at the counter ; need=indoor
+sitting astride a chair, arms folded over the backrest ; need=indoor
+mid-stride, coat flaring behind
+leaning on a railing ; need=outdoor
+reclining on a sofa with one leg over the arm ; need=indoor,private
+kneeling in the grass ; need=nature,outdoor
+stretching both arms overhead ; any=dawn,private,nature
+sitting on the stairs, elbows on knees
+turning to face the camera
+standing in the doorway with light behind ; need=indoor
+curled up in an armchair ; need=indoor,private
+hands on hips, chin lifted
+balancing on a low curb ; need=urban,outdoor
+resting a boot on a crate ; need=urban
+sitting cross-legged on a rooftop ledge ; need=outdoor,urban
+bent over a workbench ; need=indoor
+lounging on a pier, feet over the water ; need=water,outdoor
+adjusting a cuff, head slightly bowed
+hugging their own elbows against the cold ; any=cold,wet
+dancing alone, eyes closed
+standing very still in the middle of motion
+
+@slot action label="Action" box=pose order=37 chance=0.7
+tucking hair behind an ear
+lighting a cigarette
+pouring a drink
+adjusting a collar
+winding a wristwatch
+reading a letter
+tying a scarf
+checking the time
+laughing at something off-camera
+holding a cup in both hands
+turning a page
+whistling softly
+brushing dust off a sleeve
+shaking rain from their hair ; need=wet
+shielding their eyes from the sun ; not=night,wet
+cradling a guitar
+rolling up a sleeve
+folding a map
+sipping from a thermos
+biting into a peach
+
+# ---------------------------------------------------------------- fashion
+@slot outfit label="Outfit" box=fashion order=30
+a chunky oversized knit sweater and high-waisted jeans ; give=casual ; not=hot
+a white linen shirt with rolled sleeves and loose trousers ; give=casual ; not=cold
+a faded band tee and cut-off denim shorts ; give=casual ; not=cold
+a denim jacket over a slip dress ; give=casual ; not=cold
+a cropped hoodie and cargo pants ; give=casual
+a flowing floral sundress ; give=casual ; not=cold
+dungarees over a striped long-sleeve top ; give=casual
+a vintage cardigan over a button-up and pleated skirt ; give=casual ; not=hot
+a battered leather jacket over a plain tee and black jeans ; give=casual ; not=hot
+a silk blouse and tailored high-waist trousers ; give=formal ; not=hot
+a tailored charcoal suit with the top button undone ; give=formal ; not=hot
+a satin evening gown with an open back ; give=formal ; not=cold
+a fitted black cocktail dress ; give=formal ; not=cold
+a crisp white shirt with a loosened tie ; give=formal
+a velvet dinner jacket and bow tie ; give=formal ; not=hot
+a long midnight-blue velvet coat over a silk slip dress ; give=formal ; any=cold,wet,mild ; not=hot
+a heavy parka with a fur-trimmed hood ; give=winter ; need=cold
+a wool coat, thick scarf and leather gloves ; give=winter ; need=cold
+thermal layers under a puffer jacket ; give=winter ; need=cold
+a shearling-collared jacket and wool trousers ; give=winter ; any=cold,wet
+a high-waisted two-piece swimsuit ; give=swimwear ; any=hot,water ; not=cold
+a one-piece swimsuit with a deep back ; give=swimwear ; any=hot,water ; not=cold
+swim trunks and an open shirt ; give=swimwear ; any=hot,water ; not=cold
+a sheer beach cover-up over a bikini ; give=swimwear ; any=hot,water ; not=cold
+a sports bra and bike shorts ; give=athletic ; not=cold
+a track jacket and leggings ; give=athletic
+a yoga set in muted clay tones ; give=athletic ; not=cold
+boxing wraps, a tank top and a worn robe ; give=athletic ; need=indoor
+a silk pyjama set ; give=sleepwear ; need=indoor,private
+a soft flannel nightshirt ; give=sleepwear ; need=indoor,private
+a towelling bathrobe with hair wrapped in a towel ; give=sleepwear ; need=indoor,private,water
+an oversized shirt with the sleeves pushed up ; give=sleepwear ; need=indoor,private
+a chef's whites with a stained apron ; need=indoor
+scrubs with a lanyard and tired shoes ; need=indoor
+mechanic's coveralls tied at the waist over a tank top
+a ship's officer uniform with the jacket open
+a barista apron over a flannel shirt ; need=indoor
+a leather workshop apron over rolled sleeves ; need=indoor
+a cyberpunk techwear jacket with glowing seams ; any=urban,night
+a flowing travel cloak over worn leathers ; need=outdoor ; not=hot
+an embroidered kimono with a wide obi ; give=formal ; not=hot
+a sari in deep saffron silk ; give=formal
+a salwar kameez with a light dupatta ; give=casual ; not=cold
+a hanbok-inspired wrap jacket and skirt ; give=formal
+a dashiki with tailored trousers ; give=casual
+a flowing kaftan in sun-faded colours ; give=casual ; not=cold
+a vintage 1950s polka-dot dress ; give=casual ; not=cold
+a boiler suit with sleeves tied around the waist ; give=casual
+a trench coat belted over a black turtleneck ; give=casual ; any=wet,cold,mild ; not=hot
+an old rugby shirt and corduroy trousers ; give=casual ; not=hot
+a satin bomber jacket and pleated skirt ; give=casual ; not=hot
+a tuxedo shirt open at the collar, bow tie undone ; give=formal
+lace-trimmed camisole and wide linen trousers ; give=casual ; not=cold
+a cropped puffer vest over a long-sleeve base layer ; give=casual ; not=hot
+a long-sleeve henley and suspenders ; give=casual
+a wrap dress in deep green ; give=casual
+a bias-cut satin skirt and a soft knit top ; give=casual ; not=cold
+
+@slot outerwear label="Outerwear" box=fashion order=31 chance=0.4
+a long wool overcoat ; need=cold
+a waxed jacket ; any=wet,mild ; not=hot,swimwear
+a yellow rain slicker ; need=wet ; not=swimwear
+a quilted liner jacket ; any=cold,mild ; not=hot
+a cape-like poncho ; any=wet,mild,cold ; not=hot
+a long cardigan hanging open ; not=hot,swimwear
+a leather duster ; any=mild,cold ; not=hot,swimwear
+a bomber jacket slung over one shoulder ; any=mild,hot ; not=swimwear
+
+@slot accessory label="Accessories" box=fashion order=32 chance=0.8 count=1-2
+round wire-frame glasses
+a thin silver chain necklace
+chunky gold hoop earrings
+a leather choker
+fingerless gloves ; not=hot,swimwear
+a silk scarf knotted at the throat ; not=swimwear
+a stack of beaded bracelets
+a vintage wristwatch
+a wide-brim hat ; not=night,indoor
+a wool beret ; not=hot,swimwear
+a battered crossbody bag
+aviator sunglasses ; not=night,indoor
+tiny stud earrings
+a ring on every finger
+a pearl hair clip
+a knotted bandana
+a layered anklet
+a heavy tool belt ; not=swimwear,formal
+a signet ring
+dangling feather earrings
+a long beaded necklace
+a pocket watch on a chain ; not=swimwear
+a canvas tote bag ; not=formal
+a thin leather cord with a small pendant
+a lanyard with a laminated pass ; not=formal,swimwear
+
+@slot footwear label="Footwear" box=fashion order=33 chance=0.5
+scuffed combat boots ; not=swimwear,hot
+white canvas sneakers ; not=formal
+strappy leather sandals ; not=cold
+bare feet ; not=cold
+knee-high leather boots ; not=swimwear,hot
+polished oxford shoes ; not=swimwear,athletic
+rain boots ; need=wet ; not=swimwear
+heeled ankle boots ; not=swimwear,athletic
+fluffy slippers ; need=indoor,private
+ballet flats ; not=swimwear,athletic
+worn-in work boots ; not=swimwear,formal
+chunky platform trainers ; not=formal
+
+@slot makeup label="Makeup" box=fashion order=34 chance=0.5
+smudged eyeliner
+bold red lipstick
+glossy nude lips
+a dusting of glitter along the cheekbones
+bare-faced and natural
+dark plum lipstick
+sharp winged liner
+dewy highlighter
+freckles drawn on with a pencil
+a wash of metallic eyeshadow
+flushed rosy cheeks
+heavy kohl rimming the eyes
+a tiny rhinestone at the corner of one eye
+berry-stained lips
+a clean red lip and nothing else
+
+# ---------------------------------------------------------------- style
+@slot shot label="Shot" box=style order=40
+extreme close-up on the face
+close-up portrait
+head-and-shoulders portrait
+waist-up shot
+cowboy shot, framed from mid-thigh
+full-body shot
+wide environmental portrait with the subject small in frame
+over-the-shoulder shot
+profile shot
+candid mid-motion shot
+shot through a rain-streaked window ; any=wet,urban,indoor
+framed through a doorway
+reflected in a mirror ; need=indoor
+silhouette against the light
+
+@slot angle label="Angle" box=style order=41 chance=0.7
+eye-level
+from slightly below
+from above
+three-quarter view
+from behind
+a slight dutch tilt
+bird's-eye view
+worm's-eye view
+
+@slot lens label="Lens" box=style order=42 chance=0.65
+85mm f/1.4 portrait lens
+35mm street lens
+50mm f/1.8
+24mm wide angle
+135mm telephoto compression
+anamorphic lens with horizontal flares
+macro lens
+shallow depth of field with creamy bokeh
+deep focus, everything sharp
+soft-focus filter
+tilt-shift miniature effect
+halation around the highlights
+
+@slot medium label="Medium" box=style order=43
+35mm film still
+medium-format film photograph
+instant-camera snapshot
+16mm cinema still
+digital editorial photograph
+oil painting with visible brushwork
+watercolour and ink wash
+gouache illustration
+charcoal drawing on toned paper
+risograph print with limited inks
+comic-book inks with halftone dots
+ukiyo-e woodblock print
+art nouveau poster
+3D render with subsurface scattering
+clay stop-motion still
+graphite pencil sketch
+soft pastel painting
+noir graphic novel panel
+painterly concept art
+cel-shaded animation still
+tintype photograph
+chalk pastel on black paper
+magazine cover photograph
+documentary photograph
+
+@slot grade label="Grade" box=style order=44 chance=0.6
+warm Kodak-style grain
+teal and orange grade
+bleach-bypass contrast
+faded matte blacks
+high-contrast black and white
+cool cinematic shadows with warm highlights
+soft pastel colour grade
+heavy film grain
+cross-processed colours
+muted, desaturated tones
+rich saturated colour with deep blacks
+sepia tone
+
+# ---------------------------------------------------------------- aesthetic
+@slot palette label="Palette" box=aesthetic order=50
+an ember and ink palette of charcoal, copper and teal
+dusty rose and sage green
+teal and amber
+monochrome charcoal with one red accent
+peach and lavender pastels
+deep oxblood, gold and black
+cool blues with a single warm lamp
+earth tones of rust, clay and moss
+neon magenta and cyan against black
+cream, tan and chocolate
+midnight blue and silver
+mustard yellow, olive and brick red
+bone white and bruised plum
+sunburnt orange and dusty teal
+forest green and brass
+smoke grey and candle-flame orange
+
+@slot mood label="Mood" box=aesthetic order=51
+quiet and melancholic
+warm and intimate
+tense and electric
+dreamy and hazy
+wry and playful
+stoic and weathered
+hushed and reverent
+restless and nocturnal
+sun-drunk and lazy
+bittersweet nostalgia
+defiant and proud
+tender and unhurried
+lonely but at peace
+sly and conspiratorial
+raw and unguarded
+
+@slot era label="Era" box=aesthetic order=52 chance=0.4
+1950s
+1970s
+1980s
+1990s
+early 2000s
+Edwardian
+Weimar-era Berlin
+near-future
+timeless
+Belle Epoque
+mid-century modern
+post-war

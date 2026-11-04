@@ -1,0 +1,16 @@
+{
+ "files": {
+  "articles.json.gz": "96e38d05abb06a6181e42578a9a9218036f9a5bb675b2cdc6311d371e9b8f66f",
+  "charclass.json.gz": "2ce302684c2d96ce1a1b8ed988a3ef9eccf9c983afe4611099dca0d3c8445fca",
+  "compose.json.gz": "19fc1d4622bfdda9fd5fa9d735708c67efd6abc5f0d768ce168a924960828aae",
+  "dsl.json.gz": "adc1cf45281362cd4fa73eef264cff7cba00b689fa1a3dd743351aa1c3fa5c04",
+  "export.json.gz": "1cb06c9e3de9f43ce59e5a4636fa80a5a5d2bae847eadd4ee76088bc9ae07ddb",
+  "forge.json.gz": "91b9b69e7f63ce9d432589d0a4ae9a40c54cec51757210f0463f27829db86458",
+  "library.json.gz": "812dc507b036db1fd1ff6bfcd5b772f5465bc4ec0e807a2b023841da0b3c6a00",
+  "lint.json.gz": "8b08a6e60dd70c3dd33addd0f2bf687938b90d8f0da3ae36ad1fd0acd4af1c4f",
+  "profiles.json.gz": "96f5a6a23e9d29714557b476801b734162cc229456b2b84e6d11e3e0170c0fe2",
+  "rng.json.gz": "85234d11fd13f4000d1e5e4eefb7026fe507dff60fb7bd80ff5b462a65f0a727",
+  "weights.json.gz": "d765a0241e1cf607ca0c5a73bcebf046284f06aaae8bcd245d7c5a63c46d4d35"
+ },
+ "python": "3.13.18"
+}
