@@ -12,6 +12,23 @@ generator this is built around; all lists are re-authored.
 
 No distribution work yet: CI builds a debug APK and attaches it to the run.
 
+## Status (v0.1.0)
+
+* Compose tab: eight boxes + negative + variables, model profile, sticky variables, a/an fix, roll 1-8 variants from a seed,
+  live checks, copy / Mack key / share / keep.
+* Forge tab: seeded character rolls from the built-in packs, per-slot lock / reroll / off, adult packs behind an 18+ gate
+  (tier + heat), strict or loose coherence, send to Compose (replace / append / fill empty).
+* Library tab: search, views (all / favourites / kept / history / archive), tags, title and note, load back into Compose,
+  archive then delete for good. Settings: theme, JSON backup export / import, parity self-test.
+* The project autosaves; the library is SQLite with the desktop's schema.
+
+Not in v1: AI Tools tab, the embedded Mack pane, user packs, full desktop parity.
+
+## Get the APK
+
+Actions -> latest green run -> artifact `promptbeast-debug-apk`. It is a debug build: allow installs from unknown sources
+once, then open the APK.
+
 ## Verify parity
 
     ./gradlew :core:test                 # replays ~1.7M checks against the Python vectors
