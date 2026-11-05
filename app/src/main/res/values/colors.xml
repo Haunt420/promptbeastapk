@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ink">#0F0C0B</color>
-    <color name="ember">#FF6A2B</color>
+    <!-- Ember & Ink, light: window background shown before Compose draws -->
+    <color name="pb_bg">#F1ECE4</color>
+    <!-- launcher icon background (always ink) -->
+    <color name="ink">#0F1114</color>
+    <color name="ember">#E39A62</color>
 </resources>

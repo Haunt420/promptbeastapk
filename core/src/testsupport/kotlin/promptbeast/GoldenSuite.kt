@@ -8,8 +8,11 @@ import java.math.BigInteger
 object GoldenSuite {
     val dir: File = File(System.getProperty("pb.golden") ?: "core/src/test/resources/golden")
 
+    /** Where vector bytes come from: files by default, the APK's assets on a device (set by the app). */
+    @Volatile var source: (String) -> ByteArray = { name -> File(dir, "$name.json.gz").readBytes() }
+
     fun load(name: String): JsonObject =
-        java.util.zip.GZIPInputStream(File(dir, "$name.json.gz").inputStream()).use { Json.parseToJsonElement(String(it.readBytes(), Charsets.UTF_8)).jsonObject }
+        java.util.zip.GZIPInputStream(source(name).inputStream()).use { Json.parseToJsonElement(String(it.readBytes(), Charsets.UTF_8)).jsonObject }
 
     /** Failure text with every non-ASCII char as \\uXXXX (terminals and JVM stdout encodings mangle them otherwise). */
     private fun ascii(s: String) = buildString { for (c in s) if (c.code in 32..126 || c == '\n') append(c) else append("\\u%04x".format(c.code)) }

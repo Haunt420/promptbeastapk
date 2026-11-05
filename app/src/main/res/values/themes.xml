@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.PromptBeast" parent="android:Theme.Material.NoActionBar">
-        <item name="android:windowBackground">@color/ink</item>
-        <item name="android:statusBarColor">@color/ink</item>
-        <item name="android:navigationBarColor">@color/ink</item>
-        <item name="android:windowLightStatusBar">false</item>
+    <style name="Theme.PromptBeast" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/pb_bg</item>
     </style>
 </resources>

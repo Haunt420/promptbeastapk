@@ -6,9 +6,9 @@
     android:viewportHeight="108">
     <!-- an ember flame on ink -->
     <path
-        android:fillColor="#FF6A2B"
+        android:fillColor="#E39A62"
         android:pathData="M54,22 C60,34 74,42 74,60 C74,73 65,84 54,84 C43,84 34,73 34,60 C34,52 38,47 42,43 C42,50 46,54 50,54 C47,44 50,30 54,22 Z" />
     <path
-        android:fillColor="#FFC24D"
+        android:fillColor="#F0B184"
         android:pathData="M54,50 C58,57 64,61 64,68 C64,75 59,80 54,80 C49,80 44,75 44,68 C44,63 48,60 50,57 C51,60 53,61 55,60 C53,57 53,53 54,50 Z" />
 </vector>
