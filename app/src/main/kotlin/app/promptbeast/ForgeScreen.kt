@@ -76,7 +76,7 @@ fun ForgeScreen(vm: PbViewModel, onSent: () -> Unit) {
                         }
                         Switch(
                             checked = vm.forgeAdults,
-                            onCheckedChange = { on -> if (on && !vm.adultsAcked) askAdult = true else vm.setForgeAdults(on) },
+                            onCheckedChange = { on -> if (on && !vm.adultsAcked) askAdult = true else vm.onForgeAdults(on) },
                         )
                     }
                     if (vm.forgeAdults && lib.maxTier() > 0) {

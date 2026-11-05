@@ -321,7 +321,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     fun onForgeStrict(on: Boolean) { forgeStrict = on; runForge() }
     fun onForgeMode(m: String) { forgeMode = m }
 
-    fun setForgeAdults(on: Boolean) {
+    fun onForgeAdults(on: Boolean) {
         forgeAdults = on
         prefs.edit().putBoolean("adults", on).apply()
         forgeLib = loadForgeLib(on)
@@ -332,7 +332,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     fun ackAdults() {
         adultsAcked = true
         prefs.edit().putBoolean("adults_ack", true).apply()
-        setForgeAdults(true)
+        onForgeAdults(true)
     }
 
     /** Forge picks -> Compose boxes (replace / append / fill_empty), plus the adult negative when an adult tier was used. */
