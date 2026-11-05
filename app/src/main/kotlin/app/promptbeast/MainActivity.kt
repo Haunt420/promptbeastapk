@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 
 class MainActivity : ComponentActivity() {
@@ -80,6 +81,7 @@ private fun AppRoot(vm: PbViewModel) {
                 TABS.forEachIndexed { i, label ->
                     NavigationBarItem(
                         selected = tab == i, onClick = { tab = i },
+                        modifier = Modifier.testTag("nav_" + label.lowercase()),
                         icon = { Text(label.take(1), fontWeight = FontWeight.Bold) },
                         label = { Text(label) },
                     )

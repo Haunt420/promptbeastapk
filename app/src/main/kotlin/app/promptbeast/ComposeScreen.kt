@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -95,7 +96,7 @@ private fun EditPane(vm: PbViewModel, onRolled: () -> Unit) {
                 OutlinedTextField(
                     value = vm.boxes[spec.id] ?: "", onValueChange = { vm.onBox(spec.id, it) },
                     label = { Text(spec.label) }, placeholder = { Text(PLACEHOLDERS[spec.id] ?: "") },
-                    minLines = if (spec.id == "main") 4 else 2, modifier = Modifier.fillMaxWidth(),
+                    minLines = if (spec.id == "main") 4 else 2, modifier = Modifier.fillMaxWidth().testTag("box_${spec.id}"),
                 )
             }
             item(key = "more") {
@@ -180,7 +181,7 @@ private fun RollBar(vm: PbViewModel, onRolled: () -> Unit) {
                 modifier = Modifier.weight(1f),
             )
             OutlinedButton(onClick = { vm.cycleRollCount() }) { Text("x${vm.rollCount}") }
-            Button(onClick = { if (vm.roll()) onRolled() }) { Text("Roll") }
+            Button(onClick = { if (vm.roll()) onRolled() }, modifier = Modifier.testTag("roll")) { Text("Roll") }
         }
     }
 }

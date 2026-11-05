@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -80,7 +81,7 @@ fun SettingsScreen(vm: PbViewModel) {
                         "Charclass can differ on old Android versions (older Unicode tables).",
                 )
                 Gap(8)
-                Button(onClick = { vm.runSelfTest() }, enabled = !vm.selfTestRunning) {
+                Button(onClick = { vm.runSelfTest() }, enabled = !vm.selfTestRunning, modifier = Modifier.testTag("selftest_run")) {
                     Text(if (vm.selfTestRunning) "Running..." else "Run self-test")
                 }
                 if (vm.selfTest.isNotEmpty()) {

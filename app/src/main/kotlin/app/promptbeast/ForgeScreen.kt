@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import promptbeast.Boxes
@@ -125,7 +126,7 @@ fun ForgeScreen(vm: PbViewModel, onSent: () -> Unit) {
                         FilterChip(selected = vm.forgeMode == mode, onClick = { vm.onForgeMode(mode) }, label = { Text(label) })
                     }
                 }
-                Button(onClick = { if (vm.forgeSend()) onSent() }, modifier = Modifier.fillMaxWidth()) { Text("Send to Compose") }
+                Button(onClick = { if (vm.forgeSend()) onSent() }, modifier = Modifier.fillMaxWidth().testTag("forge_send")) { Text("Send to Compose") }
             }
         }
     }
