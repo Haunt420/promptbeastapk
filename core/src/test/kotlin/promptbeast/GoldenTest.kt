@@ -7,7 +7,7 @@ import kotlin.test.assertTrue
 class GoldenTest {
     private fun run(rep: GoldenSuite.Report) {
         println(rep)
-        assertTrue(rep.failures.isEmpty(), "${rep.name}: ${rep.failures.size}+ failures:\n" + rep.failures.joinToString("\n"))
+        assertTrue(rep.failures.isEmpty(), "$rep:\n" + rep.failures.joinToString("\n"))
         assertTrue(rep.checked > 0, "${rep.name}: nothing was checked")
     }
 

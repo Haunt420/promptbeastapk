@@ -24,12 +24,22 @@ object GoldenSuite {
 
     class Report(val name: String) {
         var checked = 0
+        var failed = 0
         val failures = mutableListOf<String>()
+        private val perKind = LinkedHashMap<String, Int>()
+        /** Counts every failure; keeps the first few messages of each kind (a message's first word) so one noisy kind can't hide another. */
         fun check(ok: Boolean, what: () -> String) {
             checked++
-            if (!ok && failures.size < 25) failures += ascii(what())
+            if (ok) return
+            failed++
+            val msg = ascii(what())
+            val kind = msg.substringBefore(' ')
+            val n = (perKind[kind] ?: 0) + 1
+            perKind[kind] = n
+            if (n <= 6 && failures.size < 60) failures += msg
         }
-        override fun toString() = "$name: $checked checks, ${failures.size} failures"
+        override fun toString() = "$name: $checked checks, $failed failures" +
+            (if (perKind.isEmpty()) "" else perKind.entries.joinToString(", ", " (", ")") { "${it.key}:${it.value}" })
     }
 
     private fun bitsToDouble(s: String): Double = Double.fromBits(s.toLong())

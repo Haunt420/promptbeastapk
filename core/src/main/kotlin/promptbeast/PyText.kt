@@ -81,8 +81,30 @@ object PyText {
         return out
     }
 
-    /** Unicode `Cased` (Lowercase | Uppercase | Titlecase letter). */
-    fun isCased(cp: Int): Boolean = Character.isLowerCase(cp) || Character.isUpperCase(cp) || Character.isTitleCase(cp)
+    /**
+     * Non-letter code points with Other_Lowercase / Other_Uppercase (and no case-ignorable category): ª º, Roman numerals,
+     * circled and squared letters. Spelled out because Android's Character.isLowerCase/isUpperCase (ICU) only know Ll/Lu,
+     * the JDK's also know these, and the answer must not depend on which one runs. (Lm / Mn ones are case-ignorable and
+     * never asked: isCased is only consulted after isCaseIgnorable.)
+     */
+    private val OTHER_CASED = intArrayOf(
+        0xAA, 0xAA, 0xBA, 0xBA, 0x2160, 0x217F, 0x24B6, 0x24E9, 0x1F130, 0x1F149, 0x1F150, 0x1F169,
+        0x1F170, 0x1F189)
+
+    private fun inOtherCased(cp: Int): Boolean {
+        var i = 0
+        while (i < OTHER_CASED.size) {
+            if (cp >= OTHER_CASED[i] && cp <= OTHER_CASED[i + 1]) return true
+            i += 2
+        }
+        return false
+    }
+
+    /** Unicode `Cased` (Lowercase | Uppercase | Titlecase letter, plus the Other_* ones above). */
+    fun isCased(cp: Int): Boolean = when (Character.getType(cp)) {
+        Character.LOWERCASE_LETTER.toInt(), Character.UPPERCASE_LETTER.toInt(), Character.TITLECASE_LETTER.toInt() -> true
+        else -> inOtherCased(cp)
+    }
 
     private val WORD_BREAK_IGNORABLE = intArrayOf(
         0x27, 0x2E, 0x3A, 0xB7, 0x387, 0x55F, 0x5F4, 0x2018, 0x2019, 0x2024, 0x2027, 0xFE13, 0xFE52, 0xFE55, 0xFF07, 0xFF0E, 0xFF1A)

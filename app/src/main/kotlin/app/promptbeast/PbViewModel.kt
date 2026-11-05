@@ -379,7 +379,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
             for ((n, run) in suites) {
                 val line = try {
                     val r = run()
-                    (if (r.failures.isEmpty()) "OK   " else "FAIL ") + r.toString() + r.failures.take(3).joinToString("") { "\n       $it" }
+                    (if (r.failures.isEmpty()) "OK   " else "FAIL ") + r.toString() + r.failures.take(8).joinToString("") { "\n       $it" }
                 } catch (t: Throwable) {
                     "FAIL $n crashed: ${t.javaClass.simpleName} ${t.message}"
                 }
