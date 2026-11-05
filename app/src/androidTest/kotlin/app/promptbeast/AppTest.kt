@@ -18,7 +18,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 
-/** Launches the real app on an emulator and drives it. Screenshots land in <externalFiles>/shots for CI to pull. */
+/** Launches the real app on an emulator and drives it. Screenshots land in <filesDir>/shots; CI pulls them with run-as. */
 @RunWith(AndroidJUnit4::class)
 class AppTest {
     @get:Rule
@@ -28,7 +28,7 @@ class AppTest {
 
     private fun shot(name: String) {
         rule.waitForIdle()
-        val dir = File(rule.activity.getExternalFilesDir(null), "shots").apply { mkdirs() }
+        val dir = File(rule.activity.filesDir, "shots").apply { mkdirs() }
         File(dir, "$name.png").outputStream().use {
             rule.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100, it)
         }
@@ -71,6 +71,7 @@ class AppTest {
         rule.waitUntil(300_000) { !vm.selfTestRunning && vm.selfTest.size == 11 }
         shot("5_selftest")
         val bad = vm.selfTest.filter { it.startsWith("FAIL") }
-        assertTrue("self-test:\n" + vm.selfTest.joinToString("\n"), bad.isEmpty())
+        val assets = listOf("", "golden", "packs").joinToString("\n") { d -> "assets/$d: " + rule.activity.assets.list(d)?.joinToString(",") }
+        assertTrue("self-test:\n" + vm.selfTest.joinToString("\n") + "\n" + assets, bad.isEmpty())
     }
 }

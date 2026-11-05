@@ -66,8 +66,10 @@ jobs:
           arch: x86_64
           disable-animations: true
           script: |
-            ./gradlew :app:connectedDebugAndroidTest --stacktrace || echo failed > fail.flag
-            adb pull /sdcard/Android/data/app.promptbeast/files/shots shots || true
+            ./gradlew :app:connectedDebugAndroidTest -Pandroid.injected.androidTest.leaveApksInstalledAfterRun=true --stacktrace || echo failed > fail.flag
+            mkdir -p shots
+            adb exec-out "run-as app.promptbeast tar c -C files/shots ." > shots.tar || true
+            tar xf shots.tar -C shots || true
             test ! -f fail.flag
       - name: Upload screenshots
         if: always()
