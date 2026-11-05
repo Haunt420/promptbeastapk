@@ -71,7 +71,8 @@ class AppTest {
         rule.waitUntil(300_000) { !vm.selfTestRunning && vm.selfTest.size == 11 }
         shot("5_selftest")
         val bad = vm.selfTest.filter { it.startsWith("FAIL") }
-        val assets = listOf("", "golden", "packs").joinToString("\n") { d -> "assets/$d: " + rule.activity.assets.list(d)?.joinToString(",") }
-        assertTrue("self-test:\n" + vm.selfTest.joinToString("\n") + "\n" + assets, bad.isEmpty())
+        val assets = listOf("", "golden", "packs").joinToString(" | ") { d -> "assets/$d: " + rule.activity.assets.list(d)?.joinToString(",") }
+        // one line: Gradle's console only shows the first lines of an assertion message
+        assertTrue("self-test: " + vm.selfTest.joinToString(" | ").replace("\n", " ") + " || " + assets, bad.isEmpty())
     }
 }
