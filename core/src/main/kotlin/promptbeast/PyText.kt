@@ -88,7 +88,7 @@ object PyText {
         0x27, 0x2E, 0x3A, 0xB7, 0x387, 0x55F, 0x5F4, 0x2018, 0x2019, 0x2024, 0x2027, 0xFE13, 0xFE52, 0xFE55, 0xFF07, 0xFF0E, 0xFF1A)
 
     /** Unicode `Case_Ignorable`: Mn, Me, Cf, Lm, Sk, plus the Word_Break MidLetter / MidNumLet / Single_Quote characters. */
-    fun isCaseIgnorable(cp: Int): Boolean = when (Character.getType(cp)) {
+    fun isCaseIgnorable(cp: Int): Boolean = if (cp == 0x1734) false else when (Character.getType(cp)) { // U+1734 is Mn up to Unicode 13 (JDK 17), Mc since 14
         Character.NON_SPACING_MARK.toInt(), Character.ENCLOSING_MARK.toInt(), Character.FORMAT.toInt(),
         Character.MODIFIER_LETTER.toInt(), Character.MODIFIER_SYMBOL.toInt() -> true
         else -> cp in WORD_BREAK_IGNORABLE
