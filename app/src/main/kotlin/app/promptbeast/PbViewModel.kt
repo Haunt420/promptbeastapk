@@ -365,7 +365,10 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         if (selfTestRunning) return
         selfTestRunning = true
         selfTest = emptyList()
-        GoldenSuite.source = { n -> app.assets.open("golden/$n.json.gz").use { it.readBytes() } }
+        GoldenSuite.source = { n ->
+            val gz = try { app.assets.open("golden/$n.json.gz") } catch (e: IOException) { app.assets.open("golden/$n.json") }
+            gz.use { it.readBytes() }
+        }
         Thread {
             val suites: List<Pair<String, () -> GoldenSuite.Report>> = listOf(
                 "rng" to { GoldenSuite.rng() }, "charclass" to { GoldenSuite.charclass() }, "dsl" to { GoldenSuite.dsl() },
