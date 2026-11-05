@@ -24,6 +24,12 @@ No distribution work yet: CI builds a debug APK and attaches it to the run.
 
 Not in v1: AI Tools tab, the embedded Mack pane, user packs, full desktop parity.
 
+## CI
+
+Three jobs on every push: `core` (the golden vectors on JDK 17), `android` (debug APK) and `emulator` (boots Android 14,
+launches the real app, drives roll / keep / Forge / Library, and runs all 11 parity suites on the device's own runtime;
+screenshots come back as the `promptbeast-screenshots` artifact).
+
 ## Get the APK
 
 Actions -> latest green run -> artifact `promptbeast-debug-apk`. It is a debug build: allow installs from unknown sources
