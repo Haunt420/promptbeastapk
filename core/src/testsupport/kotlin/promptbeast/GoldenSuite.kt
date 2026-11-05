@@ -70,7 +70,10 @@ object GoldenSuite {
             rep.check(PyText.isDecimal(cp) == inAny(digit, cp)) { "isDecimal U+%04X want=%s".format(cp, inAny(digit, cp)) }
             rep.check(PyText.isWord(cp) == inAny(word, cp)) { "isWord U+%04X want=%s".format(cp, inAny(word, cp)) }
         }
-        for ((k, v) in values) rep.check(Character.digit(k.toInt(), 10) == v.jsonPrimitive.int) { "digit value U+%04X".format(k.toInt()) }
+        for ((k, v) in values) {
+            if (!Character.isDefined(k.toInt())) continue // newer than this runtime's Unicode (JDK 17 = 13, Android 8 = 10)
+            rep.check(Character.digit(k.toInt(), 10) == v.jsonPrimitive.int) { "digit value U+%04X".format(k.toInt()) }
+        }
         val cased = o["cased"]!!.ranges(); val ign = o["case_ignorable"]!!.ranges(); val lowers = o["lower"]!!.jsonObject
         for (cp in 0..0x10FFFF) {
             if (cp in 0xD800..0xDFFF || !Character.isDefined(cp)) continue
