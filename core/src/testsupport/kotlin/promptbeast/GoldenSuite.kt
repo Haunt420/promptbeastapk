@@ -449,5 +449,76 @@ object GoldenSuite {
         return rep
     }
 
-    fun all(): List<Report> = listOf(rng(), charclass(), dsl(), weights(), articles(), profiles(), compose(), lint(), export(), forge(), library())
+    private fun JsonElement.strOrNull(): String? = (this as? JsonPrimitive)?.takeIf { it.isString }?.content
+
+    /** Message spec from the vectors: literal text, or prefix + a repeated char + suffix (for the huge ones). */
+    private fun specText(o: JsonObject): String =
+        if ("t" in o) o["t"]!!.jsonPrimitive.content
+        else o["pre"]!!.jsonPrimitive.content + o["ch"]!!.jsonPrimitive.content.repeat(o["n"]!!.jsonPrimitive.int) + o["post"]!!.jsonPrimitive.content
+
+    /** Compose <-> Mack bridge: what runs inside the page, and how untrusted console lines are read back. */
+    fun mackbridge(): Report {
+        val rep = Report("mackbridge")
+        val o = load("mackbridge")
+        rep.check(MackBridge.URL == o["url"]!!.jsonPrimitive.content) { "const url" }
+        rep.check(MackBridge.KEYS == o["keys"]!!.jsonArray.map { it.jsonPrimitive.content }) { "const keys ${MackBridge.KEYS}" }
+        rep.check(MackBridge.MAX_CONSOLE == o["max_console"]!!.jsonPrimitive.int && MackBridge.MAX_DEPTH == o["max_depth"]!!.jsonPrimitive.int) { "const limits" }
+        val sha = java.security.MessageDigest.getInstance("SHA-256").digest(MackBridge.FILLER_JS.toByteArray(Charsets.UTF_8))
+            .joinToString("") { "%02x".format(it) }
+        rep.check(sha == o["filler_sha"]!!.jsonPrimitive.content && PyText.length(MackBridge.FILLER_JS) == o["filler_len"]!!.jsonPrimitive.int) { "const filler js differs from the desktop's" }
+
+        for ((i, c) in o["fills"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val got = MackBridge.fillValues(Project.fromJson(co["project"]!!.jsonObject), co["pad"]!!.jsonPrimitive.boolean).map { it.key to it.value }
+            val want = co["values"]!!.jsonArray.map { it.jsonArray[0].jsonPrimitive.content to it.jsonArray[1].jsonPrimitive.content }
+            rep.check(got == want) { "fill#$i got=$got want=$want" }
+        }
+
+        for ((i, c) in o["messages"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val payload = co["payload"]!!.jsonArray.map { p ->
+                val key = p.jsonArray[0].jsonPrimitive.content
+                val v = p.jsonArray[1].jsonArray
+                key to (if (key == "values") JsonObject(LinkedHashMap<String, JsonElement>().also { m ->
+                    for (kv in v) m[kv.jsonArray[0].jsonPrimitive.content] = kv.jsonArray[1]
+                }) else JsonArray(v))
+            }
+            val js = MackBridge.messageJs(co["action"]!!.jsonPrimitive.content, co["id"]!!.jsonPrimitive.long, payload)
+            rep.check(encMatches(js, co["js"]!!.jsonObject)) { "message#$i ${co["action"]} id=${co["id"]} got=${js.take(200)}" }
+        }
+        for (a in o["bad_actions"]!!.jsonArray) {
+            val threw = try { MackBridge.messageJs(a.jsonPrimitive.content, 1); false } catch (e: IllegalArgumentException) { true }
+            rep.check(threw) { "message bad action ${a.jsonPrimitive.content} accepted" }
+        }
+
+        for ((i, c) in o["parts"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val got = MackBridge.valuesToProjectParts(co["values"]!!.jsonObject)
+            val wantBoxes = co["boxes"]!!.jsonArray.map { it.jsonArray[0].jsonPrimitive.content to it.jsonArray[1].jsonPrimitive.content }
+            rep.check(got.boxes.map { it.key to it.value } == wantBoxes) { "parts#$i boxes got=${got.boxes} want=$wantBoxes" }
+            rep.check(got.negative == co["negative"]!!.strOrNull() && got.scratchpad == co["scratchpad"]!!.strOrNull()) { "parts#$i neg/pad" }
+        }
+
+        for ((i, c) in o["replies"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val msg = specText(co["msg"]!!.jsonObject)
+            val got = MackBridge.parseReply(msg)
+            val want = co["out"]!!.let { if (it is JsonNull) null else it.jsonObject }
+            val shown = { if (msg.length > 120) msg.take(120) + "..." else msg }
+            if (want == null) {
+                rep.check(got == null) { "reply#$i accepted: ${shown()}" }
+            } else if (got == null) {
+                rep.check(false) { "reply#$i rejected: ${shown()}" }
+            } else {
+                rep.check(got.event == want["event"]!!.jsonPrimitive.content) { "reply#$i event ${shown()}" }
+                rep.check(got.id?.toString() == want["id"]!!.let { if (it is JsonNull) null else it.jsonPrimitive.content }) { "reply#$i id got=${got.id} want=${want["id"]} ${shown()}" }
+                rep.check(got.filled == want["filled"]!!.jsonArray.map { it.jsonPrimitive.content }) { "reply#$i filled ${shown()}" }
+                rep.check(got.values == want["values"]!!.jsonObject.mapValues { it.value.jsonPrimitive.content }) { "reply#$i values got=${got.values} ${shown()}" }
+                rep.check(got.clicked == want["clicked"]!!.strOrNull()) { "reply#$i clicked ${shown()}" }
+            }
+        }
+        return rep
+    }
+
+    fun all(): List<Report> = listOf(rng(), charclass(), dsl(), weights(), articles(), profiles(), compose(), lint(), export(), forge(), library(), mackbridge())
 }

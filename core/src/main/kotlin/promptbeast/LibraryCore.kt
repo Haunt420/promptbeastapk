@@ -106,15 +106,35 @@ object LibraryRules {
 
 /** `json.dumps` with Python's default separators (", " and ": "), optional sort_keys, ensure_ascii=False. */
 object PyJson {
-    fun dumps(e: JsonElement, sortKeys: Boolean = false): String = StringBuilder().also { write(it, e, sortKeys) }.toString()
+    fun dumps(e: JsonElement, sortKeys: Boolean = false, ensureAscii: Boolean = false): String =
+        StringBuilder().also { write(it, e, sortKeys, ensureAscii) }.toString()
 
-    private fun write(sb: StringBuilder, e: JsonElement, sortKeys: Boolean) {
+    /** `json.dumps(ensure_ascii=True)` string: everything outside space..~ becomes \\uXXXX (UTF-16 units, so astral = surrogate pair). */
+    internal fun quoteAscii(sb: StringBuilder, s: String): StringBuilder {
+        sb.append('"')
+        for (ch in s) when {
+            ch == '"' -> sb.append("\\\"")
+            ch == '\\' -> sb.append("\\\\")
+            ch == '\n' -> sb.append("\\n")
+            ch == '\r' -> sb.append("\\r")
+            ch == '\t' -> sb.append("\\t")
+            ch == '\b' -> sb.append("\\b")
+            ch == '\u000c' -> sb.append("\\f")
+            ch in ' '..'~' -> sb.append(ch)
+            else -> sb.append("\\u%04x".format(ch.code))
+        }
+        return sb.append('"')
+    }
+
+    private fun quote(sb: StringBuilder, s: String, ascii: Boolean) = if (ascii) quoteAscii(sb, s) else Export.quote(sb, s)
+
+    private fun write(sb: StringBuilder, e: JsonElement, sortKeys: Boolean, ascii: Boolean) {
         when (e) {
             is JsonNull -> sb.append("null")
-            is JsonPrimitive -> if (e.isString) Export.quote(sb, e.content) else sb.append(e.content)
+            is JsonPrimitive -> if (e.isString) quote(sb, e.content, ascii) else sb.append(e.content)
             is JsonArray -> {
                 sb.append('[')
-                e.forEachIndexed { i, x -> if (i > 0) sb.append(", "); write(sb, x, sortKeys) }
+                e.forEachIndexed { i, x -> if (i > 0) sb.append(", "); write(sb, x, sortKeys, ascii) }
                 sb.append(']')
             }
             is JsonObject -> {
@@ -122,8 +142,8 @@ object PyJson {
                 val keys = if (sortKeys) e.keys.sortedWith(PyText.CODEPOINT_ORDER) else e.keys.toList()
                 keys.forEachIndexed { i, k ->
                     if (i > 0) sb.append(", ")
-                    Export.quote(sb, k).append(": ")
-                    write(sb, e.getValue(k), sortKeys)
+                    quote(sb, k, ascii).append(": ")
+                    write(sb, e.getValue(k), sortKeys, ascii)
                 }
                 sb.append('}')
             }

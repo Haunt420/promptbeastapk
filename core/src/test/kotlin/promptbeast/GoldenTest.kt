@@ -22,4 +22,5 @@ class GoldenTest {
     @Test fun export() = run(GoldenSuite.export())
     @Test fun forge() = run(GoldenSuite.forge())
     @Test fun library() = run(GoldenSuite.library())
+    @Test fun mackbridge() = run(GoldenSuite.mackbridge())
 }
