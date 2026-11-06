@@ -61,13 +61,20 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private val TABS = listOf("Compose", "Forge", "Library", "Settings")
+private val TABS = listOf("Compose", "Forge", "Mack", "Library", "Settings")
 
 @Composable
 private fun AppRoot(vm: PbViewModel) {
     var tab by rememberSaveable { mutableStateOf(0) }
     val snack = remember { SnackbarHostState() }
     val msg = vm.toast
+    val go = vm.goTab
+    LaunchedEffect(go) {
+        if (go != null) {
+            tab = go
+            vm.goTab = null
+        }
+    }
     LaunchedEffect(msg) {
         if (msg != null) {
             snack.showSnackbar(msg)
@@ -93,7 +100,8 @@ private fun AppRoot(vm: PbViewModel) {
             when (tab) {
                 0 -> ComposeScreen(vm)
                 1 -> ForgeScreen(vm, onSent = { tab = 0 })
-                2 -> LibraryScreen(vm, onLoad = { tab = 0 })
+                2 -> MackScreen(vm)
+                3 -> LibraryScreen(vm, onLoad = { tab = 0 })
                 else -> SettingsScreen(vm)
             }
         }

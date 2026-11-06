@@ -1,18 +1,33 @@
 package app.promptbeast
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.webkit.ConsoleMessage
+import android.webkit.CookieManager
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import promptbeast.Assembled
 import promptbeast.Boxes
@@ -28,6 +43,9 @@ import promptbeast.Issue
 import promptbeast.Library
 import promptbeast.LibraryRules
 import promptbeast.Lint
+import promptbeast.MackBridge
+import promptbeast.MackParts
+import promptbeast.MackReply
 import promptbeast.MemoryStore
 import promptbeast.Pack
 import promptbeast.Profiles
@@ -356,6 +374,211 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         return true
     }
 
+    // ---- mack ------------------------------------------------------------------------------------------------------
+    /** idle -> loading -> live | failed. The page is only fetched the first time the Mack tab is opened. */
+    var mackState by mutableStateOf("idle")
+    var mackNote by mutableStateOf("")
+    var mackProgress by mutableStateOf(0)
+    var mackPad by mutableStateOf(true)
+    var mackUrl: String = MackBridge.URL
+    var goTab by mutableStateOf<Int?>(null)
+
+    /** Kept here (application context) so the page survives tab switches and rotation; the screen only attaches it. */
+    var mackView by mutableStateOf<WebView?>(null)
+        private set
+    private var mackReq = 0L
+    private val mackReplies = ArrayList<MackReply>()
+    private var mackAfter: ((List<MackReply>) -> Unit)? = null
+    private val mackFinish = Runnable {
+        val cb = mackAfter
+        mackAfter = null
+        cb?.invoke(ArrayList(mackReplies))
+    }
+
+    private fun mackHostOk(u: Uri): Boolean {
+        val scheme = u.scheme ?: return false
+        if (scheme == "about" || scheme == "data" || scheme == "blob") return true
+        if (scheme != "https" && scheme != "http") return false
+        val host = (u.host ?: "").lowercase()
+        return host == "perchance.org" || host.endsWith(".perchance.org")
+    }
+
+    private fun openExternal(u: Uri) {
+        if (u.scheme != "https" && u.scheme != "http") return
+        try { app.startActivity(Intent(Intent.ACTION_VIEW, u).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) } catch (e: Exception) { say("No browser to open that link") }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun buildMackView(): WebView {
+        val v = WebView(app)
+        v.settings.javaScriptEnabled = true
+        v.settings.domStorageEnabled = true
+        v.settings.allowFileAccess = false
+        v.settings.allowContentAccess = false
+        v.settings.setSupportMultipleWindows(false)
+        CookieManager.getInstance().setAcceptThirdPartyCookies(v, true)
+        // Perchance generators live in nested, possibly cross-origin frames: the filler must be in every one of them.
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+            WebViewCompat.addDocumentStartJavaScript(v, MackBridge.FILLER_JS, setOf("https://perchance.org", "https://*.perchance.org"))
+        }
+        v.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                if (request == null || !request.isForMainFrame || mackHostOk(request.url)) return false
+                openExternal(request.url)           // leaving Mack/Perchance: use the real browser
+                return true
+            }
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                mackState = "loading"
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                view?.evaluateJavascript(MackBridge.FILLER_JS, null)      // main frame too, in case the start script isn't supported
+                if (mackState != "failed") mackState = "live"
+            }
+
+            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+                if (request != null && request.isForMainFrame) {
+                    mackState = "failed"
+                    mackNote = "Couldn't load Mack. Check your connection and try again, or use Mack in your own browser and paste the Mack key."
+                }
+            }
+
+            override fun onReceivedHttpError(view: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?) {
+                if (request != null && request.isForMainFrame && (errorResponse?.statusCode ?: 0) >= 400) {
+                    mackState = "failed"
+                    mackNote = "Mack answered with an error (${errorResponse?.statusCode}). Try again in a bit, or use it in your own browser."
+                }
+            }
+        }
+        v.webChromeClient = object : WebChromeClient() {
+            override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+                val text = consoleMessage?.message() ?: return false
+                if (text.startsWith(MackBridge.PREFIX)) {
+                    val r = MackBridge.parseReply(text)
+                    if (r != null && r.id == mackReq) mackReplies += r
+                    return true
+                }
+                return false
+            }
+
+            override fun onProgressChanged(view: WebView?, newProgress: Int) { mackProgress = newProgress }
+        }
+        return v
+    }
+
+    /** Creates the WebView and (unless [load] is false) starts loading Mack, once. Safe to call every time the tab is shown. */
+    fun mackEnsure(load: Boolean = true) {
+        if (mackView != null) return
+        try {
+            val v = buildMackView()
+            mackView = v
+            if (load) {
+                mackState = "loading"
+                v.loadUrl(mackUrl)
+            }
+        } catch (e: Exception) {      // no WebView provider / broken GPU stack must not take the app down
+            mackState = "failed"
+            mackNote = "The embedded browser could not start (${e.javaClass.simpleName}). Mack still works in your own browser: open it, then paste the Mack key."
+        }
+    }
+
+    fun mackReload() {
+        val v = mackView
+        if (v == null) { mackEnsure(); return }
+        mackState = "loading"
+        v.loadUrl(mackUrl)
+    }
+
+    fun mackOpenInBrowser() = openExternal(Uri.parse(MackBridge.URL))
+
+    /** Test hook: load a page in place of Mack, with Mack's origin so the same frame rules apply. */
+    fun mackLoadHtml(html: String) {
+        mackEnsure(load = false)
+        mackState = "loading"
+        mackView?.loadDataWithBaseURL("https://perchance.org/mack-mcgenerator", html, "text/html", "utf-8", null)
+    }
+
+    /** Test hook: evaluate a script in the page (main thread only). */
+    fun mackEval(js: String, cb: (String) -> Unit) { mackView?.evaluateJavascript(js) { cb(it ?: "null") } }
+
+    fun mackPause(paused: Boolean) { if (paused) mackView?.onPause() else mackView?.onResume() }
+
+    override fun onCleared() {
+        handler.removeCallbacks(mackFinish)
+        try { mackView?.destroy() } catch (e: Exception) { /* already gone */ }
+        mackView = null
+        super.onCleared()
+    }
+
+    /** Runs [js] (built from a fresh request id) in the page; frames answer asynchronously, so replies are collected for 600 ms. */
+    private fun mackSend(js: (Long) -> String, after: (List<MackReply>) -> Unit): Boolean {
+        val v = mackView
+        if (v == null || mackState != "live") {
+            say("Mack isn't loaded. Use Copy Mack key and paste it in.")
+            return false
+        }
+        mackReq += 1
+        mackReplies.clear()
+        mackAfter = after
+        v.evaluateJavascript(js(mackReq), null)
+        handler.removeCallbacks(mackFinish)
+        handler.postDelayed(mackFinish, 600)
+        return true
+    }
+
+    fun mackFill(then: (() -> Unit)? = null) {
+        val values = MackBridge.fillValues(snapshot(), mackPad)
+        mackSend({ MackBridge.fillJs(it, values) }) { replies ->
+            val filled = replies.flatMap { it.filled }.toSet()
+            if (filled.isEmpty()) {
+                say("Couldn't find Mack's inputs. Wait for the page to finish loading, or use Copy Mack key.")
+                return@mackSend
+            }
+            val miss = values.keys.filter { it !in filled }
+            say("Filled ${filled.size} of ${values.size} Mack inputs" +
+                if (miss.isEmpty()) "" else " (not found: ${miss.take(4).joinToString(", ")}${if (miss.size > 4) "…" else ""})")
+            then?.invoke()
+        }
+    }
+
+    fun mackFillAndGenerate() = mackFill(then = {
+        mackSend({ MackBridge.clickJs(it) }) { replies ->
+            val hit = replies.firstNotNullOfOrNull { it.clicked }
+            say(if (hit != null) "Generating…" else "Couldn't find Mack's Generate button. Press it in the pane.")
+        }
+    })
+
+    fun mackPull() {
+        val keys = MackBridge.KEYS.filter { it != Boxes.SCRATCHPAD_KEY || mackPad }
+        mackSend({ MackBridge.readJs(it, keys) }) { replies ->
+            val merged = LinkedHashMap<String, JsonElement>()
+            for (r in replies) for ((k, v) in r.values) merged[k] = JsonPrimitive(v)
+            if (merged.isEmpty()) {
+                say("Couldn't read Mack's inputs. Wait for the page to finish loading.")
+                return@mackSend
+            }
+            val n = applyMackParts(MackBridge.valuesToProjectParts(merged))
+            goTab = 0
+            say(if (n > 0) "Pulled from Mack: updated $n field${if (n != 1) "s" else ""}" else "Pulled from Mack: nothing changed")
+        }
+    }
+
+    /** Set boxes to exactly what Mack holds (its text already contains any picks, so picks are dropped for those boxes). */
+    private fun applyMackParts(p: MackParts): Int {
+        var n = 0
+        for ((id, text) in p.boxes) {
+            picks.remove(id)
+            if ((boxes[id] ?: "") != text) { boxes[id] = text; n++ }
+        }
+        p.negative?.let { if (it != negative) { negative = it; n++ } }
+        p.scratchpad?.let { if (it != scratchpad) { scratchpad = it; n++ } }
+        rolls = emptyList()
+        rolled = null
+        dirty()
+        return n
+    }
+
     // ---- parity self-test ------------------------------------------------------------------------------------------
     var selfTest by mutableStateOf<List<String>>(emptyList())
     var selfTestRunning by mutableStateOf(false)
@@ -375,6 +598,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
                 "weights" to { GoldenSuite.weights() }, "articles" to { GoldenSuite.articles() },
                 "profiles" to { GoldenSuite.profiles() }, "compose" to { GoldenSuite.compose() }, "lint" to { GoldenSuite.lint() },
                 "export" to { GoldenSuite.export() }, "forge" to { GoldenSuite.forge() }, "library" to { GoldenSuite.library() },
+                "mackbridge" to { GoldenSuite.mackbridge() },
             )
             for ((n, run) in suites) {
                 val line = try {

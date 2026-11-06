@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
@@ -17,6 +18,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 
 /** Launches the real app on an emulator and drives it. Screenshots land in <filesDir>/shots; CI pulls them with run-as. */
 @RunWith(AndroidJUnit4::class)
@@ -68,11 +71,83 @@ class AppTest {
     fun parityOnDevice() {
         rule.onNodeWithTag("nav_settings").performClick()
         rule.onNodeWithTag("selftest_run").performClick()
-        rule.waitUntil(300_000) { !vm.selfTestRunning && vm.selfTest.size == 11 }
+        rule.waitUntil(300_000) { !vm.selfTestRunning && vm.selfTest.size == 12 }
         shot("5_selftest")
         val bad = vm.selfTest.filter { it.startsWith("FAIL") }
         val assets = listOf("", "golden", "packs").joinToString(" | ") { d -> "assets/$d: " + rule.activity.assets.list(d)?.joinToString(",") }
         // one line: Gradle's console only shows the first lines of an assertion message
         assertTrue("self-test: " + vm.selfTest.joinToString(" | ").replace("\n", " ") + " || " + assets, bad.isEmpty())
+    }
+
+    // ---- Mack pane, against a stand-in page served with Mack's own origin (no network) -----------------------------------
+
+    private val fakeMack = """<!doctype html><html><body>
+        <textarea name="description"></textarea>
+        <textarea name="negative"></textarea>
+        <button onclick="window.__gen=(window.__gen||0)+1">Generate</button>
+        <iframe id="f" srcdoc="&lt;textarea name='descriptionp'&gt;&lt;/textarea&gt;"></iframe>
+        </body></html>"""
+
+    /** Runs [js] in the stand-in page and returns the JSON it evaluates to (strings come back quoted). */
+    private fun page(js: String): String {
+        val latch = CountDownLatch(1)
+        var out = ""
+        rule.runOnUiThread { vm.mackEval(js) { out = it; latch.countDown() } }
+        assertTrue("page did not answer: $js", latch.await(10, TimeUnit.SECONDS))
+        return out
+    }
+
+    private fun waitForPage(js: String, want: String) {
+        val end = System.currentTimeMillis() + 15_000
+        var got = ""
+        while (System.currentTimeMillis() < end) {
+            got = page(js)
+            if (got == want) return
+            Thread.sleep(150)
+        }
+        assertEquals("page: $js", want, got)
+    }
+
+    @Test
+    fun mackPaneFillsPullsAndGenerates() {
+        rule.runOnUiThread {
+            vm.newProject()
+            vm.onBox("main", "a coat")
+            vm.onBox("pose", "standing")
+            vm.onNegative("blurry")
+            vm.mackLoadHtml(fakeMack)
+        }
+        rule.waitUntil(20_000) { vm.mackState == "live" }
+        rule.onNodeWithTag("nav_mack").performClick()
+        rule.waitForIdle()
+        shot("6_mack")
+
+        val top = "document.querySelector('textarea[name=description]').value"
+        val nested = "document.getElementById('f').contentDocument.querySelector('textarea').value"
+
+        // Fill: top-level inputs and the nested frame's input
+        rule.onNodeWithTag("mack_fill").performClick()
+        waitForPage(top, "\"a coat\"")
+        waitForPage(nested, "\"standing\"")
+        waitForPage("document.querySelector('textarea[name=negative]').value", "\"blurry\"")
+
+        // Pull: Mack's text wins, boxes Mack doesn't have stay as they were
+        page("(function(){var t=document.querySelector('textarea[name=description]');t.value='from mack';" +
+            "document.getElementById('f').contentDocument.querySelector('textarea').value='kneeling';return 1})()")
+        rule.runOnUiThread { vm.onBox("style", "keep me") }
+        rule.onNodeWithTag("mack_pull").performClick()
+        rule.waitUntil(15_000) { vm.boxes["main"] == "from mack" }
+        assertEquals("kneeling", vm.boxes["pose"])
+        assertEquals("keep me", vm.boxes["style"])
+        rule.waitUntil(5_000) { rule.onAllNodesWithTag("roll").fetchSemanticsNodes().isNotEmpty() }   // back on Compose
+
+        // the page survived the tab switch; Fill & generate presses Generate
+        rule.onNodeWithTag("nav_mack").performClick()
+        rule.waitForIdle()
+        waitForPage(top, "\"from mack\"")
+        rule.runOnUiThread { vm.onBox("main", "second") }
+        rule.onNodeWithTag("mack_fill_go").performClick()
+        waitForPage(top, "\"second\"")
+        waitForPage("String(window.__gen||0)", "\"1\"")
     }
 }
