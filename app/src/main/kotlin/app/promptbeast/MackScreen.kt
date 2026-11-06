@@ -3,6 +3,8 @@ package app.promptbeast
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -19,6 +22,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -40,17 +44,24 @@ fun MackScreen(vm: PbViewModel) {
     val live = vm.mackState == "live"
 
     Column(Modifier.fillMaxSize()) {
-        Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp)) {
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Button(onClick = { vm.mackFill() }, enabled = live, modifier = Modifier.testTag("mack_fill")) { Text("Fill") }
-                Button(onClick = { vm.mackFillAndGenerate() }, enabled = live, modifier = Modifier.testTag("mack_fill_go")) { Text("Fill & generate") }
-                OutlinedButton(onClick = { vm.mackPull() }, enabled = live, modifier = Modifier.testTag("mack_pull")) { Text("Pull") }
-                TextButton(onClick = { vm.mackReload() }, modifier = Modifier.testTag("mack_reload")) { Text("Reload") }
-                TextButton(onClick = { vm.mackOpenInBrowser() }, modifier = Modifier.testTag("mack_browser")) { Text("Browser") }
+        Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp)) {
+            // one tight row of actions, one row of switches: the page needs the room
+            val pad = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Button(onClick = { vm.mackFill() }, enabled = live, contentPadding = pad,
+                    modifier = Modifier.weight(1f).testTag("mack_fill")) { Text("Fill", maxLines = 1) }
+                Button(onClick = { vm.mackFillAndGenerate() }, enabled = live, contentPadding = pad,
+                    modifier = Modifier.weight(1.4f).testTag("mack_fill_go")) { Text("Fill & go", maxLines = 1) }
+                OutlinedButton(onClick = { vm.mackPull() }, enabled = live, contentPadding = pad,
+                    modifier = Modifier.weight(1f).testTag("mack_pull")) { Text("Pull", maxLines = 1) }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Switch(checked = vm.mackPad, onCheckedChange = { vm.mackPad = it }, modifier = Modifier.testTag("mack_pad"))
-                Text("  Include scratchpad")
+                Switch(checked = vm.mackPad, onCheckedChange = { vm.mackPad = it },
+                    modifier = Modifier.scale(0.75f).testTag("mack_pad"))
+                Text("Scratchpad", style = MaterialTheme.typography.bodySmall)
+                Spacer(Modifier.weight(1f))
+                TextButton(onClick = { vm.mackReload() }, contentPadding = pad, modifier = Modifier.testTag("mack_reload")) { Text("Reload") }
+                TextButton(onClick = { vm.mackOpenInBrowser() }, contentPadding = pad, modifier = Modifier.testTag("mack_browser")) { Text("Browser") }
             }
             if (vm.mackState == "loading") {
                 LinearProgressIndicator(progress = { vm.mackProgress / 100f }, modifier = Modifier.fillMaxWidth().padding(top = 4.dp))
@@ -62,12 +73,16 @@ fun MackScreen(vm: PbViewModel) {
             if (view != null && !failed) {
                 AndroidView(
                     modifier = Modifier.fillMaxSize().testTag("mack_web"),
-                    factory = {
+                    factory = { host ->
+                        vm.mackAttach(host)
                         (view.parent as? ViewGroup)?.removeView(view)
                         view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
                         view
                     },
-                    onRelease = { (it.parent as? ViewGroup)?.removeView(it) },
+                    onRelease = {
+                        (it.parent as? ViewGroup)?.removeView(it)
+                        vm.mackDetach()
+                    },
                 )
             }
             if (failed) MackFallback(vm)

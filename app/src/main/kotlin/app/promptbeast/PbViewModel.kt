@@ -6,6 +6,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.MutableContextWrapper
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Handler
@@ -386,6 +387,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     /** Kept here (application context) so the page survives tab switches and rotation; the screen only attaches it. */
     var mackView by mutableStateOf<WebView?>(null)
         private set
+    private var mackCtx: MutableContextWrapper? = null
     private var mackReq = 0L
     private val mackReplies = ArrayList<MackReply>()
     private var mackAfter: ((List<MackReply>) -> Unit)? = null
@@ -410,7 +412,11 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun buildMackView(): WebView {
-        val v = WebView(app)
+        // An Application-context WebView can't open <select> dropdowns or JS dialogs (Perchance's "Content Safety Settings" needs
+        // both), so the view gets a wrapper whose base is swapped for the Activity while the Mack tab is on screen.
+        val ctx = MutableContextWrapper(app)
+        mackCtx = ctx
+        val v = WebView(ctx)
         v.settings.javaScriptEnabled = true
         v.settings.domStorageEnabled = true
         v.settings.allowFileAccess = false
@@ -502,10 +508,22 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     /** Test hook: evaluate a script in the page (main thread only). */
     fun mackEval(js: String, cb: (String) -> Unit) { mackView?.evaluateJavascript(js) { cb(it ?: "null") } }
 
-    fun mackPause(paused: Boolean) { if (paused) mackView?.onPause() else mackView?.onResume() }
+    /** The Mack tab is on screen: popups and dialogs inside the page may use this Activity. */
+    fun mackAttach(host: Context) { mackCtx?.baseContext = host }
+
+    /** The tab is gone: let go of the Activity (the view outlives it across rotation). */
+    fun mackDetach() { mackCtx?.baseContext = app }
+
+    fun mackPause(paused: Boolean) {
+        if (paused) {
+            mackView?.onPause()
+            try { CookieManager.getInstance().flush() } catch (e: Exception) { /* no WebView */ }   // keep Perchance's settings if the app is killed
+        } else mackView?.onResume()
+    }
 
     override fun onCleared() {
         handler.removeCallbacks(mackFinish)
+        mackDetach()
         try { mackView?.destroy() } catch (e: Exception) { /* already gone */ }
         mackView = null
         super.onCleared()
