@@ -9,6 +9,7 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
 import androidx.lifecycle.ViewModelProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -17,6 +18,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import promptbeast.AiHttpSuite
+import promptbeast.FakeHttp
 import java.io.File
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -71,7 +74,7 @@ class AppTest {
     fun parityOnDevice() {
         rule.onNodeWithTag("nav_settings").performClick()
         rule.onNodeWithTag("selftest_run").performClick()
-        rule.waitUntil(300_000) { !vm.selfTestRunning && vm.selfTest.size == 12 }
+        rule.waitUntil(300_000) { !vm.selfTestRunning && vm.selfTest.size == 13 }
         shot("5_selftest")
         val bad = vm.selfTest.filter { it.startsWith("FAIL") }
         val assets = listOf("", "golden", "packs").joinToString(" | ") { d -> "assets/$d: " + rule.activity.assets.list(d)?.joinToString(",") }
@@ -149,5 +152,54 @@ class AppTest {
         rule.onNodeWithTag("mack_fill_go").performClick()
         waitForPage(top, "\"second\"")
         waitForPage("String(window.__gen||0)", "\"1\"")
+    }
+
+    // ---- AI Tools: a real round trip to a loopback endpoint, apply to Compose, and the manual paste-back path -------------
+
+    @Test
+    fun aiToolsRunApplyAndManualRoundTrip() {
+        val reply = """{"choices":[{"message":{"content":"a {red|blue} wool coat on [WHO], stitched seams"}}]}"""
+        FakeHttp { FakeHttp.Resp(body = reply.toByteArray()) }.use { srv ->
+            rule.runOnUiThread {
+                vm.newProject()
+                vm.onBox("main", "a {red|blue} coat on [WHO]")
+                vm.onScratchpad("WHO = a sailor")
+                vm.onAiKind("openai"); vm.onAiBaseUrl("http://127.0.0.1:${srv.port}/v1"); vm.onAiModel("m1")
+                vm.onAiTask("enhance"); vm.onAiBox("main"); vm.onAiExtra("rainy")
+            }
+            rule.onNodeWithTag("nav_ai").performClick()
+            rule.onNodeWithTag("ai_run").performScrollTo().performClick()
+            rule.waitUntil(20_000) { vm.aiResult != null }
+            rule.waitForIdle()
+            assertEquals("a {red|blue} wool coat on [WHO], stitched seams", vm.aiOut)
+            val sent = String(srv.seen.single().body, Charsets.US_ASCII)
+            assertTrue("prompt reached the endpoint: " + sent.take(200), sent.contains("rainy") && sent.contains("[WHO]") && sent.contains("\"model\": \"m1\""))
+            shot("7_ai")
+            rule.onNodeWithTag("ai_apply").performScrollTo().performClick()
+            rule.waitUntil(5_000) { vm.boxes["main"] == "a {red|blue} wool coat on [WHO], stitched seams" }
+            rule.waitUntil(5_000) { rule.onAllNodesWithTag("roll").fetchSemanticsNodes().isNotEmpty() }      // back on Compose
+        }
+
+        // manual provider: build the instruction, paste a refusal (discarded), then a good reply (read)
+        rule.runOnUiThread { vm.onBox("style", "35mm film"); vm.onAiKind("manual"); vm.onAiTask("doctor") }
+        rule.onNodeWithTag("nav_ai").performClick()
+        rule.onNodeWithTag("ai_run").performScrollTo().performClick()
+        rule.waitUntil(5_000) { vm.aiInstruction.isNotEmpty() }
+        assertTrue(vm.aiInstruction.contains("Review this prompt") && vm.aiInstruction.contains("18+"))
+        rule.runOnUiThread { vm.onAiPaste("REFUSED: minor") }
+        rule.onNodeWithTag("ai_read").performScrollTo().performClick()
+        rule.waitUntil(5_000) { vm.aiProblem.contains("declined") }
+        assertEquals("35mm film", vm.boxes["style"])
+        rule.runOnUiThread { vm.onAiPaste("### notes\n- sharper\n\n### style\n35mm film, grain") }
+        rule.onNodeWithTag("ai_read").performScrollTo().performClick()
+        rule.waitUntil(5_000) { vm.aiResult?.sections?.get("style") == "35mm film, grain" }
+        assertEquals(listOf("sharper"), vm.aiResult!!.notes)
+    }
+
+    /** The provider's real HTTP behaviour (redirects, timeouts, error bodies) on this device's HttpURLConnection. */
+    @Test
+    fun aiHttpOnDevice() {
+        val rep = AiHttpSuite.run()
+        assertTrue(rep.toString() + " | " + rep.failures.joinToString(" | ").replace("\n", " "), rep.failures.isEmpty())
     }
 }

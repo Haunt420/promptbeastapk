@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -61,7 +62,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private val TABS = listOf("Compose", "Forge", "Mack", "Library", "Settings")
+private val TABS = listOf("Compose", "Forge", "AI", "Mack", "Library", "Settings")
 
 @Composable
 private fun AppRoot(vm: PbViewModel) {
@@ -90,7 +91,7 @@ private fun AppRoot(vm: PbViewModel) {
                         selected = tab == i, onClick = { tab = i },
                         modifier = Modifier.testTag("nav_" + label.lowercase()),
                         icon = { Text(label.take(1), fontWeight = FontWeight.Bold) },
-                        label = { Text(label) },
+                        label = { Text(label, style = MaterialTheme.typography.labelSmall, maxLines = 1) },
                     )
                 }
             }
@@ -100,8 +101,9 @@ private fun AppRoot(vm: PbViewModel) {
             when (tab) {
                 0 -> ComposeScreen(vm)
                 1 -> ForgeScreen(vm, onSent = { tab = 0 })
-                2 -> MackScreen(vm)
-                3 -> LibraryScreen(vm, onLoad = { tab = 0 })
+                2 -> AiScreen(vm)
+                3 -> MackScreen(vm)
+                4 -> LibraryScreen(vm, onLoad = { tab = 0 })
                 else -> SettingsScreen(vm)
             }
         }

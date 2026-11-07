@@ -168,6 +168,48 @@ object PyText {
         return sb.toString()
     }
 
+    /**
+     * `bytes.decode("utf-8", "replace")` the way CPython does it: each maximal invalid prefix becomes ONE U+FFFD (so a
+     * sequence cut off by the end of the data is one replacement, and overlongs / surrogates / > U+10FFFF never decode).
+     * Written out because JDK and Android decoders differ from CPython on where the replacements fall.
+     */
+    fun decodeUtf8(b: ByteArray): String {
+        val n = b.size
+        val sb = StringBuilder(n)
+        fun at(j: Int) = b[j].toInt() and 0xFF
+        fun cont(j: Int, lo: Int = 0x80, hi: Int = 0xBF) = j < n && at(j) in lo..hi
+        var i = 0
+        while (i < n) {
+            val c = at(i)
+            when {
+                c < 0x80 -> { sb.append(c.toChar()); i++ }
+                c in 0xC2..0xDF ->
+                    if (cont(i + 1)) { sb.append((((c and 0x1F) shl 6) or (at(i + 1) and 0x3F)).toChar()); i += 2 }
+                    else { sb.append('\uFFFD'); i++ }
+                c in 0xE0..0xEF -> {
+                    val lo = if (c == 0xE0) 0xA0 else 0x80
+                    val hi = if (c == 0xED) 0x9F else 0xBF
+                    if (!cont(i + 1, lo, hi)) { sb.append('\uFFFD'); i++ }
+                    else if (!cont(i + 2)) { sb.append('\uFFFD'); i += 2 }
+                    else { sb.append((((c and 0x0F) shl 12) or ((at(i + 1) and 0x3F) shl 6) or (at(i + 2) and 0x3F)).toChar()); i += 3 }
+                }
+                c in 0xF0..0xF4 -> {
+                    val lo = if (c == 0xF0) 0x90 else 0x80
+                    val hi = if (c == 0xF4) 0x8F else 0xBF
+                    if (!cont(i + 1, lo, hi)) { sb.append('\uFFFD'); i++ }
+                    else if (!cont(i + 2)) { sb.append('\uFFFD'); i += 2 }
+                    else if (!cont(i + 3)) { sb.append('\uFFFD'); i += 3 }
+                    else {
+                        sb.appendCodePoint(((c and 0x07) shl 18) or ((at(i + 1) and 0x3F) shl 12) or ((at(i + 2) and 0x3F) shl 6) or (at(i + 3) and 0x3F))
+                        i += 4
+                    }
+                }
+                else -> { sb.append('\uFFFD'); i++ }
+            }
+        }
+        return sb.toString()
+    }
+
     /** `s[:n]` in Python: the first n CODE POINTS. */
     fun prefix(s: String, n: Int): String =
         if (s.length <= n || length(s) <= n) s else s.substring(0, s.offsetByCodePoints(0, n))

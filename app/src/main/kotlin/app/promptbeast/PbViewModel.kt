@@ -29,7 +29,13 @@ import androidx.webkit.WebViewFeature
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.put
+import promptbeast.AiProvider
+import promptbeast.AiRequest
+import promptbeast.AiResult
+import promptbeast.AiTasks
 import promptbeast.Assembled
 import promptbeast.Boxes
 import promptbeast.Composer
@@ -52,7 +58,11 @@ import promptbeast.Pack
 import promptbeast.Profiles
 import promptbeast.Project
 import promptbeast.PyJson
+import promptbeast.ProviderConfig
+import promptbeast.ProviderError
 import promptbeast.PyText
+import promptbeast.Rejected
+import promptbeast.StrictJson
 import promptbeast.TagLibrary
 import promptbeast.parsePack
 import java.io.File
@@ -400,7 +410,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     private fun mackHostOk(u: Uri): Boolean {
         val scheme = u.scheme ?: return false
         if (scheme == "about" || scheme == "data" || scheme == "blob") return true
-        if (scheme != "https" && scheme != "http") return false
+        if (scheme != "https") return false
         val host = (u.host ?: "").lowercase()
         return host == "perchance.org" || host.endsWith(".perchance.org")
     }
@@ -597,6 +607,228 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         return n
     }
 
+    // ---- ai tools ----------------------------------------------------------------------------------------------------
+    private val aiFile = File(app.filesDir, "ai.json")
+    private val aiKeyFile = File(app.noBackupFilesDir, "ai.key")      // not in backups: a key is not something to copy to the cloud
+
+    var aiKind by mutableStateOf("manual")
+    var aiBaseUrl by mutableStateOf(ProviderConfig().baseUrl)
+    var aiModel by mutableStateOf("")
+    var aiTemp by mutableStateOf(0.8)
+    var aiVision by mutableStateOf(false)
+    var aiKeyDraft by mutableStateOf("")
+    var aiKeySaved by mutableStateOf(false)
+    private var aiMaxTokens = 1200
+    private var aiTimeout = 90
+
+    var aiTask by mutableStateOf("enhance")
+    var aiBox by mutableStateOf("main")
+    var aiTakes by mutableStateOf(4)
+    var aiExtra by mutableStateOf("")
+    private var aiImage: ByteArray? = null
+    private var aiImageMime = "image/png"
+    var aiImageLabel by mutableStateOf("")
+
+    var aiBusy by mutableStateOf(false)
+    var aiStatus by mutableStateOf("")
+    private var aiRequest: AiRequest? = null
+    var aiInstruction by mutableStateOf("")
+    var aiPaste by mutableStateOf("")
+    var aiResult by mutableStateOf<AiResult?>(null)
+    var aiVariant by mutableStateOf(0)
+    var aiOut by mutableStateOf("")
+    var aiNotes by mutableStateOf<List<String>>(emptyList())
+    var aiProblem by mutableStateOf("")
+
+    init { loadAiSettings() }
+
+    private fun loadAiSettings() {
+        try {
+            val c = ProviderConfig.fromJson(if (aiFile.exists()) StrictJson.parse(aiFile.readText(), 64) else null)
+            aiKind = c.kind; aiBaseUrl = c.baseUrl; aiModel = c.model; aiTemp = c.temperature; aiVision = c.vision
+            aiMaxTokens = c.maxTokens; aiTimeout = c.timeout
+            aiKeySaved = readAiKey().isNotEmpty()
+        } catch (e: Exception) { /* unreadable settings: start from the defaults */ }
+    }
+
+    private fun readAiKey(): String = try { if (aiKeyFile.exists()) PyText.strip(aiKeyFile.readText()) else "" } catch (e: IOException) { "" }
+
+    /** The provider as the screen shows it, clamped like a loaded one. */
+    fun aiConfig(): ProviderConfig = ProviderConfig.fromJson(buildJsonObject {
+        put("kind", aiKind); put("base_url", PyText.strip(aiBaseUrl)); put("model", PyText.strip(aiModel)); put("temperature", aiTemp)
+        put("max_tokens", aiMaxTokens); put("timeout", aiTimeout); put("vision", aiVision)
+    })
+
+    private fun aiKey(): String = PyText.strip(aiKeyDraft).ifEmpty { readAiKey() }
+
+    fun onAiKind(v: String) { aiKind = v }
+    fun onAiBaseUrl(v: String) { aiBaseUrl = v }
+    fun onAiModel(v: String) { aiModel = v }
+    fun onAiTemp(v: Double) { aiTemp = Math.round(v * 10) / 10.0 }
+    fun onAiVision(v: Boolean) { aiVision = v }
+    fun onAiKeyDraft(v: String) { aiKeyDraft = v }
+    fun onAiTask(v: String) { aiTask = v }
+    fun onAiBox(v: String) { aiBox = v }
+    fun onAiTakes(v: Int) { aiTakes = v.coerceIn(2, 8) }
+    fun onAiExtra(v: String) { aiExtra = v }
+    fun onAiPaste(v: String) { aiPaste = v }
+    fun onAiOut(v: String) { aiOut = v }
+
+    private fun writePrivate(f: File, text: String) {
+        val tmp = File(f.parentFile, f.name + ".tmp")
+        tmp.writeText(text)
+        tmp.setReadable(false, false); tmp.setReadable(true, true)
+        if (!tmp.renameTo(f)) { f.writeText(text); tmp.delete() }
+    }
+
+    fun aiSave() {
+        try {
+            val c = aiConfig()
+            writePrivate(aiFile, c.toJson().toString())
+            if (PyText.strip(aiKeyDraft).isNotEmpty()) {
+                writePrivate(aiKeyFile, PyText.strip(aiKeyDraft))
+                aiKeyDraft = ""
+                aiKeySaved = true
+            }
+            aiStatus = "Saved."
+            say("AI provider settings saved")
+        } catch (e: IOException) {
+            aiStatus = "Couldn't save: ${e.message}"
+        }
+    }
+
+    fun aiForgetKey() {
+        aiKeyFile.delete()
+        aiKeyDraft = ""
+        aiKeySaved = false
+        say("API key removed")
+    }
+
+    fun aiPickImage(uri: Uri) {
+        try {
+            val cr = app.contentResolver
+            val bytes = cr.openInputStream(uri)?.use { s ->
+                val out = java.io.ByteArrayOutputStream()
+                val buf = ByteArray(65536)
+                while (out.size() <= 8_000_000) { val n = s.read(buf); if (n < 0) break; out.write(buf, 0, n) }
+                out.toByteArray()
+            } ?: throw IOException("can't open it")
+            if (bytes.size > 8_000_000) { say("That image is over 8 MB; shrink it first"); return }
+            val type = cr.getType(uri)
+            aiImage = bytes
+            aiImageMime = if (type in setOf("image/png", "image/jpeg", "image/webp", "image/gif")) type!! else "image/png"
+            var name = "image"
+            cr.query(uri, arrayOf(android.provider.OpenableColumns.DISPLAY_NAME), null, null, null)?.use { c -> if (c.moveToFirst()) name = c.getString(0) ?: name }
+            aiImageLabel = "$name (${bytes.size / 1024} KB)"
+        } catch (e: Exception) {
+            say("Can't read that image: ${e.message}")
+        }
+    }
+
+    private fun aiFail(msg: String) {
+        aiProblem = msg
+        aiStatus = msg
+        aiNotes = listOf(msg)
+        say(msg)
+    }
+
+    /** Builds the request; with the manual provider that is the pasteable instruction, otherwise it goes to the endpoint. */
+    fun aiRun() {
+        if (aiBusy) return
+        val req = try {
+            AiTasks.build(aiTask, snapshot(), box = aiBox, extra = aiExtra, n = aiTakes, image = aiImage, imageMime = aiImageMime)
+        } catch (e: IllegalArgumentException) { aiFail(e.message ?: "Can't build that request"); return }
+        aiRequest = req
+        val cfg = aiConfig()
+        if (cfg.kind == "manual") {
+            aiInstruction = AiTasks.flatten(req)
+            aiPaste = ""
+            aiProblem = ""
+            say("Instruction built. Copy it, then paste the reply below.")
+            return
+        }
+        if (req.needsVision && !cfg.vision) { aiFail("This provider is not marked as vision-capable (tick 'Model can see images')."); return }
+        val key = aiKey()
+        aiBusy = true
+        aiStatus = "Waiting for the model..."
+        Thread {
+            var res: AiResult? = null
+            var err: String? = null
+            try { res = AiTasks.parse(req, AiProvider.complete(cfg, key, req.messages)) }
+            catch (e: ProviderError) { err = e.message }
+            catch (e: Rejected) { err = e.message }
+            catch (e: Exception) { err = "Unexpected error: ${e.javaClass.simpleName}: ${e.message}" }
+            handler.post {
+                aiBusy = false
+                val r = res                      // (a var captured by the worker lambda can't be smart-cast)
+                if (r != null) aiShow(r) else aiFail(err ?: "Failed")
+            }
+        }.start()
+    }
+
+    fun aiReadReply() {
+        val req = aiRequest
+        if (req == null) { aiFail("Press Build instruction first"); return }
+        try { aiShow(AiTasks.parse(req, aiPaste)) } catch (e: Rejected) { aiFail(e.message ?: "Rejected") }
+    }
+
+    fun aiTest() {
+        if (aiBusy) return
+        val cfg = aiConfig()
+        if (cfg.kind == "manual") return
+        val key = aiKey()
+        aiBusy = true
+        aiStatus = "Testing..."
+        Thread {
+            var out: String? = null
+            var err: String? = null
+            try { out = AiProvider.test(cfg, key) } catch (e: ProviderError) { err = e.message } catch (e: Exception) { err = "Unexpected error: ${e.javaClass.simpleName}: ${e.message}" }
+            handler.post {
+                aiBusy = false
+                val o = out
+                if (o != null) { aiStatus = "Connected. The model replied: $o"; say(aiStatus) } else aiFail(err ?: "Failed")
+            }
+        }.start()
+    }
+
+    private fun aiShow(res: AiResult) {
+        aiResult = res
+        aiVariant = 0
+        aiOut = if (res.sections.isNotEmpty()) res.sections.entries.joinToString("\n\n") { "### ${it.key}\n${it.value}" } else res.texts.firstOrNull() ?: ""
+        aiNotes = if (res.notes.isEmpty()) listOf("No notes.") else res.notes.toList()
+        aiProblem = ""
+        say("Result ready. Review it, then Apply.")
+    }
+
+    fun aiPickVariant(i: Int) {
+        val res = aiResult ?: return
+        if (i in res.texts.indices) { aiVariant = i; aiOut = res.texts[i] }
+    }
+
+    fun aiApply() {
+        val res = aiResult
+        if (res == null) { say("Nothing to apply yet"); return }
+        if (res.sections.isNotEmpty()) { applyAi(res.sections); return }
+        val text = PyText.strip(aiOut)
+        if (text.isEmpty()) { say("The result is empty"); return }
+        applyAi(mapOf(aiBox to text))
+    }
+
+    /** Replace the named boxes (a "negative" key sets the negative prompt), then show Compose. */
+    private fun applyAi(sections: Map<String, String>) {
+        var n = 0
+        for (spec in Boxes.ALL) {
+            val t = sections[spec.id] ?: continue
+            if ((boxes[spec.id] ?: "") != t) { boxes[spec.id] = t; n++ }
+        }
+        sections[Boxes.NEGATIVE_KEY]?.let { negative = it; n++ }
+        rolls = emptyList()
+        rolled = null
+        dirty()
+        goTab = 0
+        say("AI: updated $n box${if (n != 1) "es" else ""}")
+    }
+
     // ---- parity self-test ------------------------------------------------------------------------------------------
     var selfTest by mutableStateOf<List<String>>(emptyList())
     var selfTestRunning by mutableStateOf(false)
@@ -616,7 +848,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
                 "weights" to { GoldenSuite.weights() }, "articles" to { GoldenSuite.articles() },
                 "profiles" to { GoldenSuite.profiles() }, "compose" to { GoldenSuite.compose() }, "lint" to { GoldenSuite.lint() },
                 "export" to { GoldenSuite.export() }, "forge" to { GoldenSuite.forge() }, "library" to { GoldenSuite.library() },
-                "mackbridge" to { GoldenSuite.mackbridge() },
+                "mackbridge" to { GoldenSuite.mackbridge() }, "ai" to { GoldenSuite.ai() },
             )
             for ((n, run) in suites) {
                 val line = try {

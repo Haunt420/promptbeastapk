@@ -520,5 +520,133 @@ object GoldenSuite {
         return rep
     }
 
-    fun all(): List<Report> = listOf(rng(), charclass(), dsl(), weights(), articles(), profiles(), compose(), lint(), export(), forge(), library(), mackbridge())
+    // ---- ai --------------------------------------------------------------------------------------------------------------
+    private fun b64(s: String): ByteArray = java.util.Base64.getDecoder().decode(s)
+    private fun encText(o: JsonObject): String = o["t"]?.jsonPrimitive?.content ?: error("long text in a short-text vector")
+    private fun nullable(e: JsonElement?): String? = if (e == null || e is JsonNull) null else e.jsonPrimitive.content
+
+    private fun configFrom(o: JsonObject) = ProviderConfig(
+        kind = o["kind"]!!.jsonPrimitive.content, baseUrl = o["base_url"]!!.jsonPrimitive.content, model = o["model"]!!.jsonPrimitive.content,
+        temperature = bitsToDouble(o["temperature"]!!.jsonPrimitive.content), maxTokens = o["max_tokens"]!!.jsonPrimitive.int,
+        timeout = o["timeout"]!!.jsonPrimitive.int, vision = o["vision"]!!.jsonPrimitive.boolean)
+
+    private fun sameConfig(c: ProviderConfig, o: JsonObject): Boolean =
+        c.kind == o["kind"]!!.jsonPrimitive.content && c.baseUrl == o["base_url"]!!.jsonPrimitive.content &&
+            c.model == o["model"]!!.jsonPrimitive.content && c.temperature.toRawBits().toString() == o["temperature"]!!.jsonPrimitive.content &&
+            c.maxTokens == o["max_tokens"]!!.jsonPrimitive.int && c.timeout == o["timeout"]!!.jsonPrimitive.int &&
+            c.vision == o["vision"]!!.jsonPrimitive.boolean
+
+    fun ai(): Report {
+        val rep = Report("ai")
+        val o = load("ai")
+        for ((i, c) in o["floats"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val got = PyFloat.repr(bitsToDouble(co["bits"]!!.jsonPrimitive.content))
+            rep.check(got == co["repr"]!!.jsonPrimitive.content) { "floats#$i got=$got want=${co["repr"]!!.jsonPrimitive.content}" }
+        }
+        for ((i, c) in o["config"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val got = ProviderConfig.fromJson(co["in"])
+            rep.check(sameConfig(got, co["out"]!!.jsonObject)) { "config#$i in=${co["in"]} got=${got.toJson()} want=${co["out"]}" }
+        }
+        for ((i, c) in o["config_raw"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val got = ProviderConfig.fromJson(StrictJson.parse(co["raw"]!!.jsonPrimitive.content, 64))
+            rep.check(sameConfig(got, co["out"]!!.jsonObject)) { "config_raw#$i ${co["raw"]} got=${got.toJson()} want=${co["out"]}" }
+        }
+        for ((i, c) in o["url"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val inp = nullable(co["in"])
+            val got = try { AiProvider.chatUrl(inp).let { u -> "ok" to (u + "\u0000" + AiProvider.netloc(u)) } } catch (e: ProviderError) { "err" to e.message!! }
+            val want = if (co.containsKey("err")) "err" to co["err"]!!.jsonPrimitive.content
+            else "ok" to (co["url"]!!.jsonPrimitive.content + "\u0000" + co["netloc"]!!.jsonPrimitive.content)
+            rep.check(got == want) { "url#$i in=${ascii(inp ?: "null")} got=${ascii(got.second)} want=${ascii(want.second)}" }
+        }
+        for ((i, c) in o["body"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val body = AiProvider.requestBody(configFrom(co["cfg"]!!.jsonObject), StrictJson.parse(co["messages"]!!.jsonPrimitive.content, 64)!!.jsonArray)
+            rep.check(encMatches(body, co["out"]!!.jsonObject)) { "body#$i got=${ascii(body.take(160))}" }
+        }
+        for ((i, c) in o["completion"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val out = co["out"]!!.jsonObject
+            val key = co["key"]!!.jsonPrimitive.content
+            val raw = b64(co["raw"]!!.jsonPrimitive.content)
+            try {
+                val got = AiProvider.parseCompletion(raw, key)
+                if (out.containsKey("ok")) rep.check(encMatches(got, out["ok"]!!.jsonObject)) { "completion#$i ok text differs: ${ascii(got.take(80))}" }
+                else rep.check(false) { "completion#$i accepted, want error '${ascii(out["err"]!!.jsonPrimitive.content.take(80))}'" }
+            } catch (e: ProviderError) {
+                if (out.containsKey("err")) rep.check(e.message == out["err"]!!.jsonPrimitive.content) { "completion#$i error got='${ascii(e.message!!.take(80))}' want='${ascii(out["err"]!!.jsonPrimitive.content.take(80))}'" }
+                else rep.check(false) { "completion#$i rejected: ${ascii(e.message!!.take(80))}" }
+            }
+        }
+        for ((i, c) in o["http_error"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val got = AiProvider.httpErrorMessage(co["code"]!!.jsonPrimitive.int, b64(co["body"]!!.jsonPrimitive.content), co["key"]!!.jsonPrimitive.content)
+            val want = co["out"]!!.jsonPrimitive.content
+            rep.check(got == want) { "http_error#$i got='${ascii(got.take(80))}' want='${ascii(want.take(80))}'" }
+        }
+        for ((i, c) in o["data_uri"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            rep.check(AiProvider.imageDataUri(b64(co["data"]!!.jsonPrimitive.content), co["mime"]!!.jsonPrimitive.content) == co["out"]!!.jsonPrimitive.content) { "data_uri#$i" }
+        }
+        for ((i, c) in o["build"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val project = Project.fromJson(co["project"]!!.jsonObject)
+            val img = nullable(co["image"])?.let { b64(it) }
+            val tag = "build#$i ${co["task"]!!.jsonPrimitive.content}/${ascii(co["box"]!!.jsonPrimitive.content)}"
+            val req = try {
+                AiTasks.build(co["task"]!!.jsonPrimitive.content, project, box = co["box"]!!.jsonPrimitive.content,
+                    extra = co["extra"]!!.jsonPrimitive.content, n = co["n"]!!.jsonPrimitive.int, image = img, imageMime = co["mime"]!!.jsonPrimitive.content)
+            } catch (e: IllegalArgumentException) {
+                rep.check(co.containsKey("err") && e.message == co["err"]!!.jsonPrimitive.content) { "$tag error got='${e.message}' want=${co["err"]}" }
+                continue
+            }
+            if (co.containsKey("err")) { rep.check(false) { "$tag accepted, want error '${co["err"]}'" }; continue }
+            val w = co["req"]!!.jsonObject
+            rep.check(req.task == w["task"]!!.jsonPrimitive.content && req.expect == w["expect"]!!.jsonPrimitive.content &&
+                req.needsVision == w["needs_vision"]!!.jsonPrimitive.boolean && req.box == w["box"]!!.jsonPrimitive.content) { "$tag fields" }
+            rep.check(req.allowedVars == w["allowed"]!!.jsonArray.map { it.jsonPrimitive.content }) { "$tag allowed got=${req.allowedVars} want=${w["allowed"]}" }
+            val msgs = PyJson.dumps(JsonArray(req.messages), ensureAscii = true)
+            rep.check(encMatches(msgs, w["messages"]!!.jsonObject)) { "$tag messages got=${ascii(msgs.take(200))}" }
+            val flat = AiTasks.flatten(req)
+            rep.check(encMatches(flat, w["flat"]!!.jsonObject)) { "$tag flatten got=${ascii(flat.take(120))}" }
+        }
+        for ((i, c) in o["clean"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val inp = encText(co["in"]!!.jsonObject)
+            val got = AiTasks.cleanText(inp)
+            rep.check(encMatches(got, co["out"]!!.jsonObject)) { "clean#$i in=${ascii(inp.take(80))} got=${ascii(got.take(80))}" }
+        }
+        for ((i, c) in o["parse"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val project = Project.fromJson(co["project"]!!.jsonObject)
+            val req = AiRequest(co["task"]!!.jsonPrimitive.content, emptyList(), co["allowed"]!!.jsonArray.map { it.jsonPrimitive.content },
+                co["expect"]!!.jsonPrimitive.content, false, co["box"]!!.jsonPrimitive.content)
+            val raw = encText(co["raw"]!!.jsonObject)
+            val tag = "parse#$i ${req.task} ${ascii(raw.take(60))}"
+            val res = try { AiTasks.parse(req, raw) } catch (e: Rejected) {
+                rep.check(co.containsKey("rej") && e.message == co["rej"]!!.jsonPrimitive.content) { "$tag rejected '${e.message}' want=${co["rej"]}" }
+                continue
+            }
+            if (co.containsKey("rej")) { rep.check(false) { "$tag accepted, want rejection '${co["rej"]}'" }; continue }
+            val w = co["res"]!!.jsonObject
+            val wt = w["texts"]!!.jsonArray
+            rep.check(res.texts.size == wt.size && res.texts.indices.all { encMatches(res.texts[it], wt[it].jsonObject) }) { "$tag texts got=${res.texts.map { ascii(it.take(40)) }}" }
+            val ws = w["sections"]!!.jsonArray
+            rep.check(res.sections.size == ws.size && res.sections.entries.withIndex().all { (j, e) ->
+                e.key == ws[j].jsonArray[0].jsonPrimitive.content && encMatches(e.value, ws[j].jsonArray[1].jsonObject) }) { "$tag sections got=${res.sections.keys} want=${ws.map { it.jsonArray[0] }}" }
+            rep.check(res.notes == w["notes"]!!.jsonArray.map { it.jsonPrimitive.content }) { "$tag notes got=${res.notes.map { ascii(it) }} want=${w["notes"]}" }
+            val want = co["apply"]!!.jsonArray.map { it.jsonPrimitive.content }
+            val got = listOf(0, 1, 5, 99, -1, -50).map { v -> AiTasks.applyResult(project, res, req.box, v) } + AiTasks.applyResult(project, res)
+            for ((j, p) in got.withIndex()) {
+                val sha = sha256(PyJson.dumps(p.toJson(), sortKeys = true, ensureAscii = true).toByteArray(Charsets.US_ASCII))
+                rep.check(sha == want[j]) { "$tag apply#$j project differs" }
+            }
+        }
+        return rep
+    }
+
+    fun all(): List<Report> = listOf(rng(), charclass(), dsl(), weights(), articles(), profiles(), compose(), lint(), export(), forge(), library(), mackbridge(), ai())
 }
