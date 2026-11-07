@@ -2,6 +2,7 @@ package app.promptbeast
 
 import android.graphics.Bitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -10,6 +11,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
 import androidx.lifecycle.ViewModelProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -38,6 +40,22 @@ class AppTest {
         File(dir, "$name.png").outputStream().use {
             rule.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100, it)
         }
+    }
+
+    /** Fires the node's click action directly: a snackbar sitting over the node can't swallow it the way a touch can. */
+    private fun tap(tag: String, scroll: Boolean = true) {
+        val n = rule.onNodeWithTag(tag)
+        (if (scroll) n.performScrollTo() else n).performSemanticsAction(SemanticsActions.OnClick)
+    }
+
+    private fun aiState(): String =
+        ("kind=${vm.aiKind} task=${vm.aiTask} box=${vm.aiBox} busy=${vm.aiBusy} problem=${vm.aiProblem.take(90)} status=${vm.aiStatus.take(90)} " +
+            "instr=${vm.aiInstruction.length} paste=${vm.aiPaste.take(20)} result=${vm.aiResult != null} out=${vm.aiOut.take(40)} " +
+            "main=${vm.boxes["main"]?.take(40)} rollNodes=${rule.onAllNodesWithTag("roll").fetchSemanticsNodes().size}").replace("\n", " ")
+
+    /** waitUntil that names the step and dumps the AI state, so one CI failure says where it died. */
+    private fun await(label: String, ms: Long = 5_000, cond: () -> Boolean) {
+        try { rule.waitUntil(ms, cond) } catch (e: Throwable) { throw AssertionError("timeout[$label] " + aiState()) }
     }
 
     @Test
@@ -167,32 +185,32 @@ class AppTest {
                 vm.onAiKind("openai"); vm.onAiBaseUrl("http://127.0.0.1:${srv.port}/v1"); vm.onAiModel("m1")
                 vm.onAiTask("enhance"); vm.onAiBox("main"); vm.onAiExtra("rainy")
             }
-            rule.onNodeWithTag("nav_ai").performClick()
-            rule.onNodeWithTag("ai_run").performScrollTo().performClick()
-            rule.waitUntil(20_000) { vm.aiResult != null }
+            tap("nav_ai", scroll = false)
+            tap("ai_run")
+            await("enhance reply", 20_000) { vm.aiResult != null }
             rule.waitForIdle()
             assertEquals("a {red|blue} wool coat on [WHO], stitched seams", vm.aiOut)
             val sent = String(srv.seen.single().body, Charsets.US_ASCII)
             assertTrue("prompt reached the endpoint: " + sent.take(200), sent.contains("rainy") && sent.contains("[WHO]") && sent.contains("\"model\": \"m1\""))
             shot("7_ai")
-            rule.onNodeWithTag("ai_apply").performScrollTo().performClick()
-            rule.waitUntil(5_000) { vm.boxes["main"] == "a {red|blue} wool coat on [WHO], stitched seams" }
-            rule.waitUntil(5_000) { rule.onAllNodesWithTag("roll").fetchSemanticsNodes().isNotEmpty() }      // back on Compose
+            tap("ai_apply")
+            await("apply wrote main") { vm.boxes["main"] == "a {red|blue} wool coat on [WHO], stitched seams" }
+            await("back on compose") { rule.onAllNodesWithTag("roll").fetchSemanticsNodes().isNotEmpty() }
         }
 
         // manual provider: build the instruction, paste a refusal (discarded), then a good reply (read)
         rule.runOnUiThread { vm.onBox("style", "35mm film"); vm.onAiKind("manual"); vm.onAiTask("doctor") }
-        rule.onNodeWithTag("nav_ai").performClick()
-        rule.onNodeWithTag("ai_run").performScrollTo().performClick()
-        rule.waitUntil(5_000) { vm.aiInstruction.isNotEmpty() }
+        tap("nav_ai", scroll = false)
+        tap("ai_run")
+        await("manual instruction") { vm.aiInstruction.isNotEmpty() }
         assertTrue(vm.aiInstruction.contains("Review this prompt") && vm.aiInstruction.contains("18+"))
         rule.runOnUiThread { vm.onAiPaste("REFUSED: minor") }
-        rule.onNodeWithTag("ai_read").performScrollTo().performClick()
-        rule.waitUntil(5_000) { vm.aiProblem.contains("declined") }
+        tap("ai_read")
+        await("refusal discarded") { vm.aiProblem.contains("declined") }
         assertEquals("35mm film", vm.boxes["style"])
         rule.runOnUiThread { vm.onAiPaste("### notes\n- sharper\n\n### style\n35mm film, grain") }
-        rule.onNodeWithTag("ai_read").performScrollTo().performClick()
-        rule.waitUntil(5_000) { vm.aiResult?.sections?.get("style") == "35mm film, grain" }
+        tap("ai_read")
+        await("doctor reply read") { vm.aiResult?.sections?.get("style") == "35mm film, grain" }
         assertEquals(listOf("sharper"), vm.aiResult!!.notes)
     }
 
