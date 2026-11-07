@@ -796,8 +796,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         aiVariant = 0
         aiOut = if (res.sections.isNotEmpty()) res.sections.entries.joinToString("\n\n") { "### ${it.key}\n${it.value}" } else res.texts.firstOrNull() ?: ""
         aiNotes = if (res.notes.isEmpty()) listOf("No notes.") else res.notes.toList()
-        aiProblem = ""
-        say("Result ready. Review it, then Apply.")
+        aiProblem = ""      // no toast here: a snackbar would sit right over the Apply button
     }
 
     fun aiPickVariant(i: Int) {
