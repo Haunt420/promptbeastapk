@@ -517,6 +517,15 @@ object GoldenSuite {
                 rep.check(got.clicked == want["clicked"]!!.strOrNull()) { "reply#$i clicked ${shown()}" }
             }
         }
+        rep.check(MackBridge.MAX_SEEN == o["max_seen"]!!.jsonPrimitive.int) { "const max_seen" }
+        for ((i, c) in o["seen"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val replies = co["parts"]!!.jsonArray.map { p ->
+                MackReply("click", 1L, emptyList(), if (p is JsonNull) emptyMap() else mapOf("seen" to encText(p.jsonObject)), null)
+            }
+            val got = MackBridge.seenReport(replies)
+            rep.check(encMatches(got, co["out"]!!.jsonObject)) { "seen#$i got=${got.take(80)}" }
+        }
         return rep
     }
 

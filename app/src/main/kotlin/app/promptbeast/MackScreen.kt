@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -62,6 +63,12 @@ fun MackScreen(vm: PbViewModel) {
                 Spacer(Modifier.weight(1f))
                 TextButton(onClick = { vm.mackReload() }, contentPadding = pad, modifier = Modifier.testTag("mack_reload")) { Text("Reload") }
                 TextButton(onClick = { vm.mackOpenInBrowser() }, contentPadding = pad, modifier = Modifier.testTag("mack_browser")) { Text("Browser") }
+            }
+            if (vm.mackDiag.isNotEmpty()) {
+                SelectionContainer {
+                    Text(vm.mackDiag, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error,
+                        maxLines = 4, modifier = Modifier.padding(top = 2.dp).testTag("mack_diag"))
+                }
             }
             if (vm.mackState == "loading") {
                 LinearProgressIndicator(progress = { vm.mackProgress / 100f }, modifier = Modifier.fillMaxWidth().padding(top = 4.dp))

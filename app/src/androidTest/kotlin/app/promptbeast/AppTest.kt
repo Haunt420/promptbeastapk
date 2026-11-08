@@ -3,6 +3,7 @@ package app.promptbeast
 import android.graphics.Bitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.assertExists
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
@@ -170,6 +171,31 @@ class AppTest {
         rule.onNodeWithTag("mack_fill_go").performClick()
         waitForPage(top, "\"second\"")
         waitForPage("String(window.__gen||0)", "\"1\"")
+    }
+
+    /** Fill & go on pages that do not look like the stand-in: odd labels still match; a real miss reports what the page has. */
+    @Test
+    fun mackGenerateFindsOddButtonsAndReportsMisses() {
+        val odd = """<!doctype html><html><body><textarea name="description"></textarea>
+            <button onclick="window.__other=1">Copy link</button>
+            <div role="button" style="cursor:pointer;width:80px;height:20px" onclick="window.__gen=(window.__gen||0)+1">&#127922; Generate!</div>
+            </body></html>"""
+        rule.runOnUiThread { vm.newProject(); vm.onBox("main", "odd"); vm.mackLoadHtml(odd) }
+        rule.waitUntil(20_000) { vm.mackState == "live" }
+        rule.onNodeWithTag("nav_mack").performClick()
+        rule.waitForIdle()
+        tap("mack_fill_go", scroll = false)
+        waitForPage("String(window.__gen||0)", "\"1\"")
+        assertEquals("", vm.mackDiag)
+
+        val none = """<!doctype html><html><body><textarea name="description"></textarea>
+            <button>Roll</button><a href="#top">Help</a></body></html>"""
+        rule.runOnUiThread { vm.mackLoadHtml(none) }
+        rule.waitUntil(20_000) { vm.mackState == "live" }
+        rule.waitForIdle()
+        tap("mack_fill_go", scroll = false)
+        await("miss report") { vm.mackDiag.contains("Roll") && vm.mackDiag.contains("Help") }
+        rule.onNodeWithTag("mack_diag").assertExists()
     }
 
     // ---- AI Tools: a real round trip to a loopback endpoint, apply to Compose, and the manual paste-back path -------------

@@ -83,6 +83,16 @@ object MackBridge {
         return MackReply(d["event"].str()!!, id, filled, values, clicked)
     }
 
+    const val MAX_SEEN = 240
+    private val SEEN_BAD = Regex("[\u0000-\u001f\u007f-\u009f\u2028\u2029\u200b-\u200f\u202a-\u202e\u2060-\u2064\ufeff]")
+    private val SPACES = Regex(" +")
+
+    /** No Generate button matched: each frame said what it could click (untrusted text). One short, control-free line, or "". */
+    fun seenReport(replies: List<MackReply>): String {
+        val text = SEEN_BAD.replace(replies.mapNotNull { it.values["seen"] }.joinToString(" ; "), " ")
+        return PyText.prefix(SPACES.replace(text, " ").trim(' '), MAX_SEEN)
+    }
+
     /** Pulled Mack inputs -> Compose parts. Unknown keys and non-strings are ignored. */
     fun valuesToProjectParts(values: Map<String, JsonElement>): MackParts {
         val boxes = LinkedHashMap<String, String>()

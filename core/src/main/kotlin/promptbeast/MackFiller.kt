@@ -45,6 +45,66 @@ internal const val FILLER_JS_TEXT = """
     var r = el.getBoundingClientRect();
     return !!(r.width || r.height);
   }
+  function plain(s) {
+    return String(s || '').replace(/[^A-Za-z0-9]+/g, ' ').replace(/^ +| +$/g, '').toLowerCase();
+  }
+  function everything(root, out, depth) {
+    var els = root.querySelectorAll('*');
+    for (var i = 0; i < els.length && out.length < 6000; i++) {
+      out.push(els[i]);
+      if (els[i].shadowRoot && depth < 4) everything(els[i].shadowRoot, out, depth + 1);
+    }
+    return out;
+  }
+  function labelOf(el) {
+    var t = el.innerText;
+    if (t === undefined) t = el.textContent;
+    if (!t && el.tagName === 'INPUT') t = el.value;
+    if (!t) t = el.getAttribute('aria-label') || el.getAttribute('title') || el.getAttribute('alt');
+    return String(t || '').replace(/\s+/g, ' ').replace(/^ +| +$/g, '');
+  }
+  function clickable(el) {
+    var t = el.tagName;
+    if (t === 'BUTTON' || t === 'A' || t === 'SUMMARY') return true;
+    if (t === 'INPUT') return /^(button|submit|image)$/i.test(el.type || '');
+    if (el.getAttribute('role') === 'button' || el.hasAttribute('onclick') || typeof el.onclick === 'function') return true;
+    try { return getComputedStyle(el).cursor === 'pointer'; } catch (e) { return false; }
+  }
+  function usable(el) {
+    if (el.disabled || el.getAttribute('aria-disabled') === 'true') return false;
+    try {
+      var cs = getComputedStyle(el);
+      if (cs.visibility === 'hidden' || cs.pointerEvents === 'none') return false;
+    } catch (e) {}
+    return true;
+  }
+  function score(el, label) {
+    var n = plain(label);
+    if (n.length > 40) return 0;
+    if (n === 'generate') return 100;
+    if (/^generate( |$)/.test(n)) return 90;
+    if (/(^| )generate( |$)/.test(n) || /^generat/.test(n)) return 70;
+    var h = plain((el.id || '') + ' ' + (typeof el.className === 'string' ? el.className : '') + ' ' + (el.getAttribute('name') || ''));
+    return /generate/.test(h) ? 60 : 0;
+  }
+  function pickGenerate() {
+    var els = everything(document, [], 0), best = null, top = 0, seen = [];
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.tagName !== 'INPUT' && (el.textContent || '').length > 80) continue;
+      if (!clickable(el) || !visible(el)) continue;
+      var label = labelOf(el);
+      var tag = label || (el.id ? '#' + el.id : '') ||
+        (typeof el.className === 'string' && el.className ? '.' + el.className.split(' ')[0] : '') || el.tagName.toLowerCase();
+      var off = !usable(el);
+      var s = tag.slice(0, 30) + (off ? ' (off)' : '');
+      if (seen.length < 12 && seen.indexOf(s) < 0) seen.push(s);
+      if (off) continue;
+      var sc = score(el, label);
+      if (sc > top) { top = sc; best = {el: el, label: label || tag}; }
+    }
+    return {best: best, top: top, seen: seen};
+  }
   function say(o) { try { console.log('PB:' + JSON.stringify(o)); } catch (e) {} }
 
   window.addEventListener('message', function (ev) {
@@ -68,15 +128,15 @@ internal const val FILLER_JS_TEXT = """
       });
       if (Object.keys(vals).length) { out.values = vals; say(out); }
     } else if (m.action === 'click') {
-      var cands = document.querySelectorAll('button, input[type=button], input[type=submit], a[role=button]');
-      for (var i = 0; i < cands.length; i++) {
-        var txt = (cands[i].innerText || cands[i].value || '').trim();
-        if (/^generate\b/i.test(txt) && visible(cands[i])) {
-          cands[i].click();
-          out.clicked = txt;
-          say(out);
-          break;
-        }
+      var pick = pickGenerate();
+      if (pick.best && pick.top >= 60) {
+        try { pick.best.el.scrollIntoView({block: 'center'}); } catch (e) {}
+        pick.best.el.click();
+        out.clicked = pick.best.label.slice(0, 40) || 'generate';
+        say(out);
+      } else if (pick.seen.length) {
+        out.values = {seen: location.hostname + ': ' + pick.seen.join(' | ')};
+        say(out);
       }
     }
   }, false);

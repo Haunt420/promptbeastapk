@@ -21,7 +21,7 @@ No distribution work yet: CI builds a debug APK and attaches it to the run.
 * Library tab: search, views (all / favourites / kept / history / archive), tags, title and note, load back into Compose,
   archive then delete for good. Settings: theme, JSON backup export / import, parity self-test.
 * Mack tab: Mack's McGenerator in an embedded page (needs network; only perchance.org is loaded in the pane, any other
-  link opens in your browser). **Fill** copies Compose into Mack's inputs, **Fill & generate** also presses Generate,
+  link opens in your browser). **Fill** copies Compose into Mack's inputs, **Fill & generate** also presses Generate (it finds the button by label, aria-label, id or class in every frame; if it can't, it lists the buttons it saw under the header),
   **Pull** brings Mack's inputs back into Compose. The bridge script and the reply parser are ports of the desktop's and are
   checked against it (`mackbridge` suite); replies from the page are treated as untrusted (size / depth capped, strictly
   parsed). If the page can't load, Copy Mack key still works by hand.

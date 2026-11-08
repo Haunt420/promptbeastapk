@@ -389,6 +389,8 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     /** idle -> loading -> live | failed. The page is only fetched the first time the Mack tab is opened. */
     var mackState by mutableStateOf("idle")
     var mackNote by mutableStateOf("")
+    /** When Fill & go cannot find Generate: the buttons the page does have (shown under the header so it can be read and reported). */
+    var mackDiag by mutableStateOf("")
     var mackProgress by mutableStateOf(0)
     var mackPad by mutableStateOf(true)
     var mackUrl: String = MackBridge.URL
@@ -570,12 +572,19 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun mackFillAndGenerate() = mackFill(then = {
-        mackSend({ MackBridge.clickJs(it) }) { replies ->
-            val hit = replies.firstNotNullOfOrNull { it.clicked }
-            say(if (hit != null) "Generating…" else "Couldn't find Mack's Generate button. Press it in the pane.")
-        }
-    })
+    fun mackFillAndGenerate() {
+        mackDiag = ""
+        mackFill(then = {
+            mackSend({ MackBridge.clickJs(it) }) { replies ->
+                val hit = replies.firstNotNullOfOrNull { it.clicked }
+                if (hit == null) {
+                    val seen = MackBridge.seenReport(replies)
+                    mackDiag = if (seen.isEmpty()) "No clickable buttons found in the page yet." else "Buttons seen: $seen"
+                }
+                say(if (hit != null) "Generating…" else "Couldn't find Mack's Generate button. Press it in the pane.")
+            }
+        })
+    }
 
     fun mackPull() {
         val keys = MackBridge.KEYS.filter { it != Boxes.SCRATCHPAD_KEY || mackPad }
