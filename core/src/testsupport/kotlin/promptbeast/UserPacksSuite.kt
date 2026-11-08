@@ -51,6 +51,10 @@ object UserPacksSuite {
         r.check(UserPacks.load(listOf("ad" to adult, "t" to plain), adults = false).map { it.id } == listOf("mine")) { "adult pack must stay hidden" }
         r.check(UserPacks.load(listOf("ad" to adult, "t" to plain), adults = true).map { it.id } == listOf("ad", "mine")) { "adult pack shown when asked" }
 
+        val three = listOf("a" to plain, "b" to adult, "c" to byteArrayOf(0xFF.toByte()))
+        r.check(UserPacks.load(three, true).size == 3 && UserPacks.load(three, false).size == 2) { "load pairs one pack per file when adults=true" }
+        r.check(UserPacks.load(three, true).map { it.id } == listOf("mine", "ad", "c")) { "load order ${UserPacks.load(three, true).map { it.id }}" }
+
         // unreadable files never throw and show up as issues
         val bad = UserPacks.load(listOf("junk" to byteArrayOf(0xFF.toByte()), "big" to ByteArray(UserPacks.MAX_BYTES + 1)), true)
         r.check(bad.size == 2 && bad.all { it.issues.single().contains("unreadable") } && bad[0].issues[0].startsWith("junk.pbpack")) { "unreadable $bad" }

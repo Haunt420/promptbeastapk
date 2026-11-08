@@ -322,8 +322,10 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     private fun refreshUserPacks() {
-        userPacks = UserPacks.load(packFiles(), true).map { p ->
-            UserPackInfo(p.id, p.name, p.slots.size, p.slots.values.sumOf { it.tags.size }, p.adults, p.issues.size)
+        val files = packFiles()
+        // with adults = true, load() returns exactly one Pack per file, in order: pair them with the file's stem (the pack's own id may differ)
+        userPacks = files.zip(UserPacks.load(files, true)).map { (f, p) ->
+            UserPackInfo(f.first, p.name, p.slots.size, p.slots.values.sumOf { it.tags.size }, p.adults, p.issues.size)
         }
     }
 

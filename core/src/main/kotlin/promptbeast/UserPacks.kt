@@ -78,7 +78,10 @@ a {red|green|navy} baseball cap ; give=casual
         return PackImport(true, "Imported $stem: ${p.slots.size} slot${if (p.slots.size != 1) "s" else ""}, ${tagCount(p)} tags$adult$notes", stem, text, p)
     }
 
-    /** Parse the installed files (stem to bytes, in name order). Never throws; an unreadable file becomes an empty pack with an issue. */
+    /**
+     * Parse the installed files (stem to bytes, in name order). Never throws; an unreadable file becomes an empty pack with an issue.
+     * With [adults] = true nothing is skipped, so the result pairs up one-to-one with [files].
+     */
     fun load(files: List<Pair<String, ByteArray>>, adults: Boolean): List<Pack> {
         val out = ArrayList<Pack>()
         for ((stem, bytes) in files) {
