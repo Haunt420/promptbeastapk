@@ -1,5 +1,7 @@
 package app.promptbeast
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -15,6 +17,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
@@ -102,7 +105,8 @@ fun ForgeScreen(vm: PbViewModel, onSent: () -> Unit) {
                     }
                 }
             }
-            items(slots, key = { it.id }) { slot ->
+            item(key = "packs") { PacksCard(vm) }
+            items(slots, key = { "slot:" + it.id }) { slot ->      // a user pack may name a slot "notes" or "head"
                 SlotRow(vm, slot, res?.picks?.get(slot.id), boxLabel[slot.box] ?: slot.box)
             }
             item(key = "notes") {
@@ -171,6 +175,34 @@ private fun SlotRow(vm: PbViewModel, slot: Slot, pick: SlotResult?, boxName: Str
                 FilterChip(selected = locked, onClick = { vm.forgeToggleLock(slot.id) }, label = { Text(if (locked) "Locked" else "Lock") })
                 TextButton(onClick = { vm.forgeRerollSlot(slot.id) }) { Text("Reroll") }
             }
+        }
+    }
+}
+
+
+/** Your own .pbpack files: import from the file picker, see what loaded, delete. */
+@Composable
+private fun PacksCard(vm: PbViewModel) {
+    val pick = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> if (uri != null) vm.packImport(uri) }
+    PbCard {
+        Label("Your packs")
+        Dim("Add .pbpack files (one tag per line). Same format as the desktop app; Copy template shows it.")
+        Gap(4)
+        for (p in vm.userPacks) {
+            Row(Modifier.fillMaxWidth().testTag("pack_row_" + p.stem), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(p.name, maxLines = 1)
+                    Dim("${p.slots} slots, ${p.tags} tags" + (if (p.adults) ", 18+ (hidden unless Adult packs is on)" else "") +
+                        (if (p.notes > 0) ", ${p.notes} notes" else ""))
+                }
+                TextButton(onClick = { vm.packDelete(p.stem) }, modifier = Modifier.testTag("pack_delete_" + p.stem)) { Text("Delete") }
+            }
+        }
+        if (vm.userPacks.isEmpty()) Dim("None yet.")
+        Gap(4)
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(onClick = { pick.launch(arrayOf("*/*")) }, modifier = Modifier.testTag("pack_import")) { Text("Import pack") }
+            OutlinedButton(onClick = { vm.packCopyTemplate() }, modifier = Modifier.testTag("pack_template")) { Text("Copy template") }
         }
     }
 }

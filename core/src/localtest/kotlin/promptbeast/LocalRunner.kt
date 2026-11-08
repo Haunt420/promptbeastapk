@@ -18,6 +18,12 @@ fun main(args: Array<String>) {
         rep.failures.forEach { println("  FAIL $it") }
         bad += rep.failures.size
     }
+    if (only.isEmpty() || "userpacks" in only) {
+        val rep = UserPacksSuite.run()
+        println(rep)
+        rep.failures.forEach { println("  FAIL $it") }
+        bad += rep.failures.size
+    }
     if (bad > 0) exitProcess(1)
     println("ALL GOLDEN SUITES PASS")
 }

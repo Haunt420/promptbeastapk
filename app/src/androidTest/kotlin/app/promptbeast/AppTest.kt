@@ -197,6 +197,50 @@ class AppTest {
         rule.onNodeWithTag("mack_diag").assertExists()
     }
 
+    /** User packs: import, they show in Forge (even with slot ids that clash with the screen's own list keys), age guard, delete. */
+    @Test
+    fun userPacksImportShowAndDelete() {
+        val pack = """@pack id=hats name="Hats and such" adults=false
+            @slot notes label="Notes" box=fashion order=60
+            a fez
+            a teen beanie
+            a bowler hat
+            @slot head label="Head" box=fashion order=61
+            a laurel wreath
+            """.trimIndent().toByteArray()
+        try {
+            var ok = false
+            rule.runOnUiThread { ok = vm.packImportBytes("Hats & Such.pbpack", pack) }
+            assertTrue("import: " + vm.toast, ok)
+            await("pack in library") { vm.forgeLib.slots.containsKey("notes") && vm.forgeLib.slots.containsKey("head") }
+            assertEquals(listOf("a fez", "a bowler hat"), vm.forgeLib.slots["notes"]!!.tags.map { it.text })   // age guard dropped the teen tag
+            assertTrue(File(rule.activity.filesDir, "packs/hats-such.pbpack").exists())
+            assertEquals(1, vm.userPacks.size)
+            assertEquals(1, vm.userPacks[0].notes)
+            // a second import with the same name gets its own file, not an overwrite
+            rule.runOnUiThread { ok = vm.packImportBytes("Hats & Such.pbpack", pack) }
+            assertTrue(ok && File(rule.activity.filesDir, "packs/hats-such-2.pbpack").exists())
+            rule.runOnUiThread { vm.packDelete("hats-such-2") }
+            // refusals leave nothing behind
+            rule.runOnUiThread { ok = vm.packImportBytes("junk.pbpack", byteArrayOf(0x41, 0xFF.toByte())) }
+            assertTrue(!ok && !File(rule.activity.filesDir, "packs/junk.pbpack").exists())
+
+            tap("nav_forge", scroll = false)
+            await("packs card in Forge") { rule.onAllNodesWithTag("pack_row_hats-such").fetchSemanticsNodes().isNotEmpty() }
+            shot("8_packs")
+
+            // they survive a restart of the view-model's state: re-reading from disk gives the same library
+            rule.runOnUiThread { vm.onForgeAdults(false) }
+            assertTrue(vm.forgeLib.slots.containsKey("head"))
+
+            tap("pack_delete_hats-such")
+            await("pack removed") { !vm.forgeLib.slots.containsKey("notes") && vm.userPacks.isEmpty() }
+            assertTrue(!File(rule.activity.filesDir, "packs/hats-such.pbpack").exists())
+        } finally {
+            File(rule.activity.filesDir, "packs").listFiles()?.forEach { it.delete() }
+        }
+    }
+
     // ---- AI Tools: a real round trip to a loopback endpoint, apply to Compose, and the manual paste-back path -------------
 
     @Test

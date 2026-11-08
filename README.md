@@ -29,9 +29,13 @@ No distribution work yet: CI builds a debug APK and attaches it to the run.
   (key kept on the phone, out of backups) or by the manual copy-paste round trip. Every reply is cleaned and checked: minor-coded
   wording discards it, `{a|b}` braces and `[NAME]` variables are verified, and nothing is written to Compose until you Apply.
   The request builder, reply parser and provider helpers are ports of the desktop's, checked against it (`ai` suite).
+* Your own packs: Forge → Your packs → Import pack (any `.pbpack`, up to 2 MB, UTF-8). Same format as the desktop; Copy template gives a
+  commented starting point. They are validated like the built-in ones: unreadable files are refused, bad lines are dropped and
+  listed under Notes, the age guard strips minor-coded tags, and 18+ packs stay hidden until Adult packs is on. A slot id that
+  matches a built-in one adds your tags to it. Stored in the app's private files (`packs/`).
 * The project autosaves; the library is SQLite with the desktop's schema.
 
-Not yet: user packs, full desktop parity.
+Not yet: full desktop parity.
 
 ## CI
 

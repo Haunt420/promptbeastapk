@@ -25,4 +25,5 @@ class GoldenTest {
     @Test fun mackbridge() = run(GoldenSuite.mackbridge())
     @Test fun ai() = run(GoldenSuite.ai())
     @Test fun aiHttp() = run(AiHttpSuite.run())
+    @Test fun userPacks() = run(UserPacksSuite.run())
 }

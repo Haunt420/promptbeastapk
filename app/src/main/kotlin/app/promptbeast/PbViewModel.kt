@@ -64,6 +64,7 @@ import promptbeast.PyText
 import promptbeast.Rejected
 import promptbeast.StrictJson
 import promptbeast.TagLibrary
+import promptbeast.UserPacks
 import promptbeast.parsePack
 import java.io.File
 import java.io.IOException
@@ -272,6 +273,11 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     // ---- forge -----------------------------------------------------------------------------------------------------
+    /** One line per installed user pack (adult ones too, even while hidden from the library). */
+    class UserPackInfo(val stem: String, val name: String, val slots: Int, val tags: Int, val adults: Boolean, val notes: Int)
+    var userPacks by mutableStateOf<List<UserPackInfo>>(emptyList())
+    private val packDir: File get() = File(app.filesDir, "packs")
+
     var forgeAdults by mutableStateOf(prefs.getBoolean("adults", false))
     var adultsAcked by mutableStateOf(prefs.getBoolean("adults_ack", false))
     var forgeLib by mutableStateOf(loadForgeLib(prefs.getBoolean("adults", false)))
@@ -299,8 +305,83 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
             if (p.adults && !adults) continue
             packs += p
         }
+        packs += UserPacks.load(packFiles(), adults)
         return TagLibrary(packs)
     }
+
+    /** The installed user packs as (stem, bytes), in name order. Nothing here throws. */
+    private fun packFiles(): List<Pair<String, ByteArray>> {
+        val files = try {
+            packDir.listFiles { f -> f.isFile && f.name.endsWith(UserPacks.EXT) }
+        } catch (e: SecurityException) { null } ?: return emptyList()
+        return files.sortedBy { it.name }.mapNotNull { f ->
+            try {
+                f.name.removeSuffix(UserPacks.EXT) to (if (f.length() > UserPacks.MAX_BYTES) ByteArray(UserPacks.MAX_BYTES + 1) else f.readBytes())
+            } catch (e: IOException) { null }
+        }
+    }
+
+    private fun refreshUserPacks() {
+        userPacks = UserPacks.load(packFiles(), true).map { p ->
+            UserPackInfo(p.id, p.name, p.slots.size, p.slots.values.sumOf { it.tags.size }, p.adults, p.issues.size)
+        }
+    }
+
+    /** Re-reads every pack, drops locks on slots that no longer exist, and re-rolls. */
+    private fun reloadPacks() {
+        forgeLib = loadForgeLib(forgeAdults)
+        refreshUserPacks()
+        val ids = forgeLib.slots.keys
+        forgeLocks = forgeLocks.filterKeys { it in ids }
+        forgeOff = forgeOff.filter { it in ids }.toSet()
+        runForge()
+    }
+
+    /** A file picked in the document picker. Read off the main thread; the checks and the save happen in [packImportBytes]. */
+    fun packImport(uri: Uri) {
+        Thread {
+            var bytes: ByteArray? = null
+            var name: String? = null
+            var err: String? = null
+            try {
+                val cr = app.contentResolver
+                bytes = cr.openInputStream(uri)?.use { s ->
+                    val out = java.io.ByteArrayOutputStream()
+                    val buf = ByteArray(65536)
+                    while (out.size() <= UserPacks.MAX_BYTES) { val n = s.read(buf); if (n < 0) break; out.write(buf, 0, n) }
+                    out.toByteArray()
+                } ?: throw IOException("can't open it")
+                cr.query(uri, arrayOf(android.provider.OpenableColumns.DISPLAY_NAME), null, null, null)?.use { c -> if (c.moveToFirst()) name = c.getString(0) }
+            } catch (e: Exception) { err = e.message ?: e.javaClass.simpleName }
+            val got = bytes          // (copies: a var captured by the posted lambda can't be smart-cast)
+            val label = name
+            val why = err
+            handler.post { if (got != null) packImportBytes(label, got) else say("Can't read that file: $why") }
+        }.start()
+    }
+
+    /** Checks the file (size, UTF-8, at least one tag, age guard via the parser), saves it as packs/<stem>.pbpack and reloads. */
+    fun packImportBytes(displayName: String?, bytes: ByteArray): Boolean {
+        val taken = (packDir.list() ?: emptyArray()).filter { it.endsWith(UserPacks.EXT) }.map { it.removeSuffix(UserPacks.EXT) }.toSet()
+        val res = UserPacks.check(displayName, bytes, taken)
+        if (!res.ok) { say(res.message); return false }
+        try {
+            packDir.mkdirs()
+            val tmp = File(packDir, res.stem + ".tmp")
+            tmp.writeBytes(res.text.toByteArray(Charsets.UTF_8))
+            if (!tmp.renameTo(File(packDir, res.stem + UserPacks.EXT))) { tmp.delete(); throw IOException("couldn't move it into place") }
+        } catch (e: IOException) { say("Couldn't save the pack: ${e.message}"); return false }
+        reloadPacks()
+        say(res.message)
+        return true
+    }
+
+    fun packDelete(stem: String) {
+        if (!Regex("[a-z0-9_-]{1,40}").matches(stem)) return
+        if (File(packDir, stem + UserPacks.EXT).delete()) { reloadPacks(); say("Deleted $stem") } else say("Couldn't delete $stem")
+    }
+
+    fun packCopyTemplate() = clip(UserPacks.TEMPLATE, "Pack template")
 
     fun runForge() {
         val st = ForgeState(
@@ -649,7 +730,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     var aiNotes by mutableStateOf<List<String>>(emptyList())
     var aiProblem by mutableStateOf("")
 
-    init { loadAiSettings() }
+    init { loadAiSettings(); refreshUserPacks() }
 
     private fun loadAiSettings() {
         try {
