@@ -151,6 +151,8 @@ fun ForgeScreen(vm: PbViewModel, onSent: () -> Unit) {
         }
     }
 
+    if (vm.packEditOpen) PackEditorDialog(vm)
+
     if (askAdult) {
         AlertDialog(
             onDismissRequest = { askAdult = false },
@@ -207,7 +209,7 @@ private fun PacksCard(vm: PbViewModel) {
     val pick = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> if (uri != null) vm.packImport(uri) }
     PbCard {
         Label("Your packs")
-        Dim("Add .pbpack files (one tag per line). Same format as the desktop app; Copy template shows it.")
+        Dim("Write your own in the app (New pack), or import .pbpack files. Same format as the desktop app; one tag per line.")
         Gap(4)
         for (p in vm.userPacks) {
             Row(Modifier.fillMaxWidth().testTag("pack_row_" + p.stem), verticalAlignment = Alignment.CenterVertically) {
@@ -216,13 +218,15 @@ private fun PacksCard(vm: PbViewModel) {
                     Dim("${p.slots} slots, ${p.tags} tags" + (if (p.adults) ", 18+ (hidden unless Adult packs is on)" else "") +
                         (if (p.notes > 0) ", ${p.notes} notes" else ""))
                 }
+                TextButton(onClick = { vm.packEditExisting(p.stem) }, modifier = Modifier.testTag("pack_edit_" + p.stem)) { Text("Edit") }
                 TextButton(onClick = { vm.packDelete(p.stem) }, modifier = Modifier.testTag("pack_delete_" + p.stem)) { Text("Delete") }
             }
         }
         if (vm.userPacks.isEmpty()) Dim("None yet.")
         Gap(4)
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Button(onClick = { pick.launch(arrayOf("*/*")) }, modifier = Modifier.testTag("pack_import")) { Text("Import pack") }
+            Button(onClick = { vm.packEditNew() }, modifier = Modifier.testTag("pack_new")) { Text("New pack") }
+            OutlinedButton(onClick = { pick.launch(arrayOf("*/*")) }, modifier = Modifier.testTag("pack_import")) { Text("Import pack") }
             OutlinedButton(onClick = { vm.packCopyTemplate() }, modifier = Modifier.testTag("pack_template")) { Text("Copy template") }
         }
     }

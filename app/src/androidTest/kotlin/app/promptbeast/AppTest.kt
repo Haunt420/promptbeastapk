@@ -317,6 +317,44 @@ class AppTest {
         }
     }
 
+    /** The pack editor: new pack from the template, Insert slot, save, edit in place, refuse an empty pack, age guard note. */
+    @Test
+    fun packEditorCreatesEditsAndRefuses() {
+        val packs = File(rule.activity.filesDir, "packs")
+        try {
+            tap("nav_forge", scroll = false)
+            rule.runOnUiThread { vm.packEditNew(); vm.onPackEditName("Hat Rack") }
+            await("editor open") { rule.onAllNodesWithTag("pack_editor").fetchSemanticsNodes().isNotEmpty() }
+            tap("pack_edit_slot", scroll = false)
+            await("slot inserted") { vm.packEditText.contains("@slot new_slot") }
+            rule.runOnUiThread { vm.onPackEditText(vm.packEditText + "a teen beanie\n") }
+            rule.waitForIdle()
+            shot("10_pack_editor")
+            tap("pack_edit_save", scroll = false)
+            await("saved") { !vm.packEditOpen && File(packs, "hat-rack.pbpack").exists() }
+            await("in the library") { vm.forgeLib.slots.containsKey("charm") && vm.forgeLib.slots.containsKey("new_slot") }
+            assertTrue(vm.forgeLib.slots["new_slot"]!!.tags.none { it.text.contains("teen") })        // age guard
+
+            // edit in place (same file), then a refusal that keeps the editor open
+            tap("pack_edit_hat-rack")
+            await("editor reopened") { vm.packEditOpen && vm.packEditStem == "hat-rack" && vm.packEditText.contains("a first tag") }
+            rule.runOnUiThread { vm.onPackEditText(vm.packEditText + "a deerstalker\n") }
+            tap("pack_edit_save", scroll = false)
+            await("edit saved") { !vm.packEditOpen && vm.forgeLib.slots["new_slot"]!!.tags.any { it.text == "a deerstalker" } }
+            assertEquals(1, packs.listFiles { f -> f.name.endsWith(".pbpack") }!!.size)
+            rule.runOnUiThread { vm.packEditExisting("hat-rack"); vm.onPackEditText("# nothing here") }
+            tap("pack_edit_save", scroll = false)
+            await("refused") { vm.packEditOpen && vm.packEditProblem.startsWith("No tags found") }
+            rule.onNodeWithTag("pack_edit_problem").assertExists()
+            assertTrue(File(packs, "hat-rack.pbpack").readText().contains("a deerstalker"))          // the good file is untouched
+            tap("pack_edit_cancel", scroll = false)
+            await("closed") { !vm.packEditOpen }
+        } finally {
+            rule.runOnUiThread { vm.packEditClose() }
+            packs.listFiles()?.forEach { it.delete() }
+        }
+    }
+
     // ---- AI Tools: model picker, streamed reply, Stop ---------------------------------------------------------------------
 
     @Test

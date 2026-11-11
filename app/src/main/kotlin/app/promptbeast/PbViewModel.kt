@@ -387,6 +387,52 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
 
     fun packCopyTemplate() = clip(UserPacks.TEMPLATE, "Pack template")
 
+    // ---- pack editor: write or edit a .pbpack in the app, checked by the real parser as you type ------------------------------
+    var packEditOpen by mutableStateOf(false)
+    /** The stem being edited, or null for a new pack (named from [packEditName]). */
+    var packEditStem by mutableStateOf<String?>(null)
+    var packEditName by mutableStateOf("my-pack")
+    var packEditText by mutableStateOf("")
+    var packEditProblem by mutableStateOf("")
+
+    fun onPackEditName(v: String) { packEditName = v.take(60) }
+    fun onPackEditText(v: String) { packEditText = v; packEditProblem = "" }
+    fun packEditClose() { packEditOpen = false }
+
+    fun packEditNew() {
+        packEditStem = null; packEditName = "my-pack"; packEditText = UserPacks.TEMPLATE; packEditProblem = ""; packEditOpen = true
+    }
+
+    fun packEditExisting(stem: String) {
+        if (!Regex("[a-z0-9_-]{1,40}").matches(stem)) return
+        val text = try { UserPacks.decode(File(packDir, stem + UserPacks.EXT).readBytes()) } catch (e: IOException) { null }
+        if (text == null) { say("Can't read $stem as a pack"); return }
+        packEditStem = stem; packEditName = stem; packEditText = text; packEditProblem = ""; packEditOpen = true
+    }
+
+    fun packEditInsertSlot() { packEditText = packEditText.trimEnd('\n') + "\n" + UserPacks.SLOT_SNIPPET; packEditProblem = "" }
+
+    /** Check, save (atomically) and reload; on a problem the editor stays open and says why. */
+    fun packEditSave(): Boolean {
+        val text = packEditText
+        val bad = UserPacks.validateText(text)
+        if (bad != null) { packEditProblem = bad; return false }
+        val existing = packEditStem
+        val taken = (packDir.list() ?: emptyArray()).filter { it.endsWith(UserPacks.EXT) }.map { it.removeSuffix(UserPacks.EXT) }.toSet()
+        if (existing == null && taken.size >= UserPacks.MAX_PACKS) { packEditProblem = "You already have ${UserPacks.MAX_PACKS} packs. Delete one first."; return false }
+        val stem = existing ?: UserPacks.uniqueStem(UserPacks.stemFor(packEditName), taken)
+        try {
+            packDir.mkdirs()
+            val tmp = File(packDir, "$stem.tmp")
+            tmp.writeBytes((if (text.endsWith("\n")) text else text + "\n").toByteArray(Charsets.UTF_8))
+            if (!tmp.renameTo(File(packDir, stem + UserPacks.EXT))) { File(packDir, "$stem.tmp").delete(); throw IOException("couldn't move it into place") }
+        } catch (e: IOException) { packEditProblem = "Couldn't save: ${e.message}"; return false }
+        packEditOpen = false
+        reloadPacks()
+        say("Saved $stem")
+        return true
+    }
+
     fun runForge() {
         val st = ForgeState(
             seed = forgeSeed, salts = HashMap(forgeSalts), locks = HashMap(forgeLocks), disabled = HashSet(forgeOff),

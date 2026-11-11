@@ -23,7 +23,13 @@ object UserPacksSuite {
 
         // the shipped template must itself be a valid, importable pack
         val t = UserPacks.check("template.pbpack", b(UserPacks.TEMPLATE), emptySet())
-        r.check(t.ok && t.pack!!.slots.keys == setOf("headwear") && t.pack!!.slots["headwear"]!!.tags.size == 4 && t.pack!!.issues.isEmpty()) { "template ${t.message} ${t.pack?.issues}" }
+        r.check(UserPacks.validateText(UserPacks.TEMPLATE) == null) { "validateText(template)" }
+        r.check(UserPacks.validateText("# only a comment")?.startsWith("No tags found") == true) { "validateText(comment)" }
+        r.check(UserPacks.validateText("@slot x label=X box=misc\na teen in a hoodie\n")?.startsWith("No tags found") == true) { "validateText(age guard empties it)" }
+        r.check(UserPacks.validateText("a".repeat(UserPacks.MAX_BYTES + 1))?.contains("too big") == true) { "validateText(huge)" }
+        r.check(UserPacks.validateText(UserPacks.TEMPLATE.trimEnd('\n') + "\n" + UserPacks.SLOT_SNIPPET) == null &&
+            parsePack(UserPacks.TEMPLATE + UserPacks.SLOT_SNIPPET, "d").slots.size == 2) { "slot snippet adds a slot" }
+        r.check(t.ok && t.pack!!.slots.keys == setOf("charm") && t.pack!!.slots["charm"]!!.tags.size == 4 && t.pack!!.issues.isEmpty()) { "template ${t.message} ${t.pack?.issues}" }
         r.check(t.stem == "template" && t.message.startsWith("Imported template: 1 slot, 4 tags")) { "template message ${t.message}" }
 
         // refusals

@@ -30,12 +30,30 @@ object UserPacks {
 # Reusing a built-in slot id adds your tags to that slot. Everyone in a pack must be an adult.
 @pack id=mine name="My pack" adults=false
 
-@slot headwear label="Headwear" box=fashion order=45 chance=0.5
-a knitted beanie ; give=casual ; not=formal
-a wide-brim felt hat ; w=2
-a silk headscarf
-a {red|green|navy} baseball cap ; give=casual
+@slot charm label="Pocket charm" box=fashion order=46 chance=0.5
+a brass key on a leather cord ; give=casual ; not=formal
+a tiny enamel pin on the lapel ; w=2
+a pressed flower tucked behind the ear
+a {red|green|navy} ribbon tied to a wrist ; give=casual
 """.trimStart()
+
+    /** A new @slot block for the pack editor's "Insert slot". */
+    val SLOT_SNIPPET: String = """
+@slot new_slot label="New slot" box=misc order=60 chance=0.5
+a first tag
+a second tag ; w=2
+"""
+
+    /** Why this text can't be saved as a pack (the editor's checks), or null when it can. */
+    fun validateText(text: String): String? {
+        if (text.toByteArray(Charsets.UTF_8).size > MAX_BYTES) return "That is over ${MAX_BYTES / 1_000_000} MB, which is too big for a pack."
+        val p = parsePack(text, "draft")
+        if (p.slots.isEmpty() || tagCount(p) == 0) {
+            val why = p.issues.firstOrNull()?.let { " ($it)" } ?: ""
+            return "No tags found$why. A pack needs an @slot line followed by one tag per line."
+        }
+        return null
+    }
 
     /** File stem for a picked document's display name: lowercase [a-z0-9_-], at most 40 characters, never empty. */
     fun stemFor(displayName: String?): String {
