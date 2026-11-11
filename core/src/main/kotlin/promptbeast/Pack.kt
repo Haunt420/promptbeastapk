@@ -4,8 +4,8 @@ package promptbeast
  * Tag packs: plain-text `.pbpack` files -> slots of weighted tags with coherence traits. Port of core/forge/pack.py
  * (see that file for the format). Loading never throws: bad lines are dropped and reported in [Pack.issues].
  */
-val TIER_NAMES = listOf("base", "sensual", "nude", "partner")
-private val TIER_BY_NAME = mapOf("" to 0, "base" to 0, "sensual" to 1, "nude" to 2, "partner" to 3)
+val TIER_NAMES = listOf("base", "sensual", "nude", "partner", "explicit")
+private val TIER_BY_NAME = mapOf("" to 0, "base" to 0, "sensual" to 1, "nude" to 2, "partner" to 3, "explicit" to 4)
 
 data class Tag(
     val text: String,

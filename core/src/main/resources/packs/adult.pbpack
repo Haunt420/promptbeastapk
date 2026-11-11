@@ -5,6 +5,7 @@
 #   sensual  lingerie, boudoir, implied nudity, smouldering looks
 #   nude     artistic and plain nudity, body detail
 #   partner  adults being intimate together (non-graphic: embraces, kissing, entwined bodies)
+#   explicit sexual acts between consenting adults, named plainly; only drawn when "How far" is set to Explicit
 # Merges into the base slots (outfit, setting, pose, ...) so coherence rules apply across both packs.
 
 @pack id=adult name="PromptBeast adult" adults=true tier=sensual
@@ -29,28 +30,120 @@ a swimsuit cut high on the hip with a plunging neckline ; give=swimwear ; any=ho
 a towel wrapped loosely and held at the chest ; give=lingerie ; need=indoor,private,water
 only an unbuttoned shirt, falling off one shoulder ; give=lingerie,sleepwear ; need=indoor,private ; tier=nude
 completely nude ; give=nude,swimwear ; any=private,water ; not=cold,public ; tier=nude
-nude, wrapped in a bedsheet ; give=nude,swimwear ; need=indoor,private ; tier=nude
-nude, draped in a silk scarf ; give=nude,swimwear ; need=private ; tier=nude
+nude, wrapped in a bedsheet ; give=nude,swimwear ; need=indoor,private ; not=cold ; tier=nude
+nude, draped in a silk scarf ; give=nude,swimwear ; need=private ; not=cold ; tier=nude
 nude except for a long necklace ; give=nude,swimwear ; any=private,water ; not=cold ; tier=nude
 topless in high-waisted trousers ; give=nude ; any=private,hot ; not=cold ; tier=nude
-nude beneath an open trench coat ; give=nude ; need=private ; tier=nude
+nude beneath an open trench coat ; give=nude ; need=private ; not=cold ; tier=nude
 nude, hair falling over the chest ; give=nude,swimwear ; any=private,water ; not=cold ; tier=nude
 nude, skin beaded with water ; give=nude,swimwear ; need=water ; not=cold ; tier=nude
+a plunging satin nightgown with thin straps ; give=lingerie,sleepwear ; need=indoor,private
+a lace teddy with scalloped edges ; give=lingerie ; need=indoor,private
+a sheer babydoll with a ribbon tie at the bust ; give=lingerie,sleepwear ; need=indoor,private
+a velvet bralette and high-cut briefs in deep emerald ; give=lingerie ; need=indoor,private
+a wrap-front silk robe worn loose over nothing but matching briefs ; give=lingerie,sleepwear ; need=indoor,private
+a high-neck lace bodysuit with a keyhole cut-out ; give=lingerie ; need=indoor,private
+a strappy cage bra and thong in black ; give=lingerie ; need=indoor,private
+sheer thigh-high stockings and a lace-trimmed bra ; give=lingerie ; need=indoor,private
+a cropped cotton tank and plain briefs, sleep-rumpled ; give=lingerie,sleepwear ; need=indoor,private
+an unbuttoned men's dress shirt and nothing else visible ; give=lingerie,sleepwear ; need=indoor,private
+a harness-style bra with delicate chains ; give=lingerie ; need=indoor,private
+a red lace set with a matching garter belt ; give=lingerie ; need=indoor,private
+a sheer black robe over a plunging bodysuit ; give=lingerie ; need=indoor,private
+a bandeau top and low-slung lounge shorts ; give=lingerie,sleepwear ; need=indoor,private
+a mesh crop top and lace boyshorts ; give=lingerie ; need=indoor,private
+a long satin slip, one strap slipped off the shoulder ; give=lingerie,sleepwear ; need=indoor,private
+a pair of unzipped jeans and an open shirt, no bra ; give=lingerie ; need=indoor,private
+a sports bra and bikini briefs, damp with sweat ; give=lingerie,athletic ; need=indoor,private
+a tailored waistcoat buttoned over bare skin, with stockings ; give=lingerie,formal ; need=indoor,private
+a long cardigan hanging open over a lace bralette ; give=lingerie ; need=indoor,private
+a corset in dark burgundy with delicate boning and a thong ; give=lingerie ; need=indoor,private
+a lace-up leather bralette and matching shorts ; give=lingerie ; need=indoor,private
+a one-piece swimsuit with side cut-outs ; give=swimwear ; any=hot,water ; not=cold
+a high-cut bikini bottom and a knotted shirt ; give=swimwear ; any=hot,water ; not=cold
+a pareo knotted low on the hips over a bikini ; give=swimwear ; any=hot,water ; not=cold
+a wet-look swimsuit, soaked and clinging ; give=swimwear ; need=water ; not=cold
+a sheer white cover-up over a bikini ; give=swimwear ; any=hot,water ; not=cold
+a thin cotton sundress with nothing underneath, clinging in the heat ; give=swimwear ; need=hot ; not=cold
+a micro bikini in glossy black ; give=swimwear ; any=hot,water ; not=cold
+a monokini with a plunging back ; give=swimwear ; any=hot,water ; not=cold
+a lace body stocking ; give=lingerie ; need=indoor,private
+a satin kimono robe untied at the waist ; give=lingerie,sleepwear ; need=indoor,private
+a fitted slip dress and garter belt ; give=lingerie ; need=indoor,private
+a toga-style sheet knotted at the shoulder ; give=lingerie ; need=indoor,private
+a barely-there thong and a silk scarf draped across the chest ; give=lingerie ; need=indoor,private
+only a strand of pearls and a pair of heels ; give=lingerie ; need=indoor,private
+a ribbon-laced bodysuit ; give=lingerie ; need=indoor,private
+a suspender belt and a loose cotton shirt ; give=lingerie ; need=indoor,private
+cotton pyjama shorts and nothing on top ; give=nude,sleepwear ; need=indoor,private ; not=cold ; tier=nude
+a sheet pulled up to the waist and nothing else ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+an open dressing gown, nothing underneath ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+fully nude, lit gold by the lamp ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+nude in the half-dark, bare skin glowing ; give=nude ; need=indoor,private,night ; not=cold ; tier=nude
+nude, one arm across the chest ; give=nude ; need=private ; not=cold ; tier=nude
+nude except for a pair of heels ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+nude with a loosely draped blanket ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+nude in the sunlight, hair messy from sleep ; give=nude ; need=indoor,private,day ; not=cold ; tier=nude
+topless, hands covering the chest ; give=nude ; need=private ; not=cold ; tier=nude
+nude and barefoot on the cool floor ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+nude, with a towel slung over one shoulder ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+nude beneath a sheer curtain ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+nude, skin damp with steam ; give=nude ; need=indoor,private,water,hot ; not=cold ; tier=nude
+nude, rinsing in a waterfall pool ; give=nude,swimwear ; need=nature,water,private ; not=cold ; tier=nude
+nude on a sun-warmed rock ; give=nude ; need=nature,private,hot ; not=cold ; tier=nude
+nude in a moonlit lake ; give=nude,swimwear ; need=nature,water,private,night ; not=cold ; tier=nude
+nude on a private terrace, wrapped in the warm night air ; give=nude ; need=outdoor,private,hot ; not=cold ; tier=nude
+completely bare except for a thin chain at the waist ; give=nude ; need=private ; not=cold ; tier=nude
+nude, back turned, a robe puddled at the feet ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+nude, one knee raised, hair falling forward ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+nude in a sheet of silk, a shoulder bare ; give=nude ; need=indoor,private ; not=cold ; tier=nude
+nude, wet hair slicked back, towel at the feet ; give=nude ; need=indoor,private,water ; not=cold ; tier=nude
+nude and unselfconscious in front of a tall mirror ; give=nude ; need=indoor,private ; not=cold ; tier=nude
 
 # ---------------------------------------------------------------- setting
 @slot setting label="Setting" box=scene order=10
-an unmade bed in morning light ; give=indoor,private,mild,dawn
-a clawfoot tub ringed with candles ; give=indoor,private,water,hot,night
-a satin-sheeted four-poster bed ; give=indoor,private,mild
-a velvet-draped boudoir ; give=indoor,private,mild,night
+an unmade bed in morning light ; give=indoor,private,mild,dawn ; not=cold,hot
+a clawfoot tub ringed with candles ; give=indoor,private,water,hot,night ; not=cold,mild
+a satin-sheeted four-poster bed ; give=indoor,private,mild ; not=cold,hot
+a velvet-draped boudoir ; give=indoor,private,mild,night ; not=cold,hot
 a hotel suite with floor-to-ceiling windows over the city ; give=indoor,private,urban,night
-a cedar sauna filled with steam ; give=indoor,private,water,hot
-a private plunge pool under the stars ; give=outdoor,private,water,hot,night
-a candle-lit bedroom with the window open ; give=indoor,private,mild,night
-a secluded cove with no one else for miles ; give=outdoor,private,nature,water,hot,day
-a canopy bed in a beach villa ; give=indoor,private,hot
-a rumpled bed with the morning sun striping the sheets ; give=indoor,private,mild,dawn
-a moonlit balcony with the door ajar ; give=outdoor,private,urban,night,mild
+a cedar sauna filled with steam ; give=indoor,private,water,hot ; not=cold,mild
+a private plunge pool under the stars ; give=outdoor,private,water,hot,night ; not=cold,mild
+a candle-lit bedroom with the window open ; give=indoor,private,mild,night ; not=cold,hot
+a secluded cove with no one else for miles ; give=outdoor,private,nature,water,hot,day ; not=cold,mild
+a canopy bed in a beach villa ; give=indoor,private,hot ; not=cold,mild
+a rumpled bed with the morning sun striping the sheets ; give=indoor,private,mild,dawn ; not=cold,hot
+a moonlit balcony with the door ajar ; give=outdoor,private,urban,night,mild ; not=cold,hot
+a loft apartment with a bed in the middle of the room ; give=indoor,private,urban,mild ; not=cold,hot
+a hotel bathroom with a deep tub and a wall of mirrors ; give=indoor,private,water,hot ; not=cold,mild
+a four-poster bed in a country house ; give=indoor,private,mild ; not=cold,hot
+a farmhouse bedroom with a quilt and a wood stove ; give=indoor,private,cold ; not=hot,mild
+a steamy hammam with warm marble ; give=indoor,private,water,hot ; not=cold,mild
+a bedroom with the shutters half closed against the afternoon ; give=indoor,private,hot,day ; not=cold,mild
+a houseboat cabin rocking gently on the water ; give=indoor,private,water,mild ; not=cold,hot
+a rooftop terrace with a daybed and string lights ; give=outdoor,private,urban,night,mild ; not=cold,hot
+a hotel room with the curtains open on the city ; give=indoor,private,urban,night
+a tent in the dark, a lantern glowing ; give=indoor,private,nature,night,mild ; not=cold,hot
+a log cabin with a fire crackling ; give=indoor,private,nature,cold,night ; not=hot,mild
+an infinity pool at the edge of a cliff ; give=outdoor,private,water,hot ; not=cold,mild
+a steaming hot tub on a deck under the stars ; give=outdoor,private,water,hot,night ; not=cold,mild
+a secluded beach at dusk ; give=outdoor,private,nature,water,hot,dusk ; not=cold,mild
+a bedroom in a stone villa above the sea ; give=indoor,private,hot,day ; not=cold,mild
+a sleeper train cabin, curtains drawn ; give=indoor,private,night
+a library after closing, a lamp still lit ; give=indoor,private,night
+a candle-lit studio with a mattress on the floor ; give=indoor,private,night
+a photographer's studio with a velvet backdrop ; give=indoor,private
+an attic bedroom under a sloping roof ; give=indoor,private,mild ; not=cold,hot
+a tropical bungalow with the doors wide open ; give=indoor,private,hot,day ; not=cold,mild
+a ryokan room with paper screens and a private bath ; give=indoor,private,water,mild ; not=cold,hot
+a vineyard guesthouse at harvest ; give=indoor,private,mild,dusk ; not=cold,hot
+a spa suite with a plunge pool ; give=indoor,private,water,hot ; not=cold,mild
+a bedroom washed in blue by the neon outside ; give=indoor,private,urban,night
+an unmade bed in a sun-drenched room ; give=indoor,private,hot,day ; not=cold,mild
+a conservatory full of plants and humid air ; give=indoor,private,hot,day ; not=cold,mild
+a moonlit meadow, the grass warm ; give=outdoor,private,nature,night,mild ; not=cold,hot
+a clifftop villa terrace in the warm dark ; give=outdoor,private,nature,night,hot ; not=cold,mild
+a bedroom in a old castle with heavy drapes ; give=indoor,private,cold ; not=hot,mild
 
 # ---------------------------------------------------------------- lighting / mood
 @slot lighting label="Lighting" box=scene order=16
@@ -60,6 +153,26 @@ light through sheer curtains ; need=indoor,private ; not=night
 steam diffusing the light ; need=indoor,water
 a strip of city light across the sheets ; need=indoor,urban,private ; any=night,dusk
 low amber firelight ; need=indoor,private
+amber lamplight pooling on the sheets ; need=indoor,private
+the blue glow of a city at night through glass ; need=indoor,urban,private
+low, flickering candlelight ; need=indoor,private
+warm side light raking across the skin ; need=indoor,private
+a soft golden-hour glow through the blinds ; need=indoor,private ; any=dusk,dawn
+the silvery spill of moonlight ; need=private ; any=night
+neon pink bleeding in from the window ; need=indoor,urban,private ; any=night
+steam softening every edge ; need=indoor,water,private
+a single bare bulb, hard and warm ; need=indoor,private
+fire glow on bare skin ; need=indoor,private ; any=cold,night
+a string of fairy lights blurring behind ; need=private ; any=night,dusk
+hard window light striping the body with shadow ; need=indoor,private ; any=day
+the dim red of a darkroom lamp ; need=indoor,private
+rim light tracing the shoulders and hips ; need=indoor,private
+backlight turning loose hair to gold ; need=private
+low-key lighting with deep shadows and one warm highlight ; need=indoor,private
+a pool of lamplight and a lot of dark ; need=indoor,private ; any=night
+dappled sun through leaves on bare skin ; need=nature,outdoor,private ; any=day
+the last orange light of sunset across the shoulders ; need=private ; any=dusk
+the pale blue light of early morning ; need=indoor,private ; any=dawn
 
 @slot mood label="Mood" box=aesthetic order=51
 sultry and unhurried
@@ -69,6 +182,26 @@ tender and playful
 confident and unapologetic
 slow, close and quiet
 heady and a little reckless
+slow-burning and hungry
+playful and breathless
+tender, trusting and close
+bold, confident and unhurried
+secret and intimate
+sun-warmed and lazy
+feverish and impatient
+reverent and slow
+intimate, like a stolen hour
+easy, shameless and warm
+charged, a held breath
+romantic and soft-edged
+daring and a little wicked
+quiet, private and unguarded
+sensuous and slow as syrup
+glossy, glamorous and knowing
+raw, honest and unposed
+late-night heat
+lush, humid and heavy-lidded
+dreamy, soft and half-asleep
 
 # ---------------------------------------------------------------- expression / pose
 @slot expression label="Expression" box=pose order=20
@@ -80,6 +213,38 @@ flushed cheeks and bright eyes
 a slow, challenging stare straight into the lens
 eyes half closed, head tipped back
 a lazy, satisfied smile
+a bitten lip and a slow exhale
+a heated look over the rim of a glass
+eyes locked on the lens, daring it to look away
+a lazy half-smile, lids heavy
+lips parted, a flush climbing the throat
+a sly, knowing grin
+a long, slow blink and a smile
+a slow tongue across the lower lip
+eyes closed, brow tight with pleasure ; tier=partner
+a gasp caught mid-breath ; tier=partner
+mouth open in a silent moan ; tier=partner
+head thrown back, throat bare ; tier=partner
+eyes rolled back, lips parted ; tier=explicit
+flushed, panting, eyes wild ; tier=explicit
+a shudder and a stifled cry, eyes squeezed shut ; tier=explicit
+a face caught at the edge of climax ; tier=explicit
+a hungry look at a partner's mouth ; tier=partner
+jaw slack, eyes unfocused, utterly lost in it ; tier=explicit
+smiling through a moan ; tier=partner
+a brazen, unashamed smile at the camera
+biting the back of a hand to stay quiet ; tier=partner
+eyes glittering, a smile just starting
+a look of open invitation
+a satisfied, sleepy smile ; tier=partner
+heavy-lidded and glowing from the inside
+a slow smile with the chin lowered
+brows lifted, a challenge in the eyes
+a gaze that drops to the mouth and lifts again
+flushed, breathless and laughing ; tier=partner
+a teasing pout
+an expression of rapt, helpless desire ; tier=partner
+eyes shut, lips pressed hard together as pleasure builds ; tier=explicit
 
 @slot pose label="Pose" box=pose order=36
 lounging on silk sheets with one knee raised ; need=indoor,private
@@ -102,6 +267,68 @@ nude in classical contrapposto, weight on one leg ; need=nude,private ; tier=nud
 emerging from the water, nude, hair streaming ; need=nude,water ; tier=nude
 lying nude on a bearskin rug in front of a fire ; need=nude,indoor,private ; tier=nude
 nude, seated astride a chair, arms folded over the backrest ; need=nude,indoor,private ; tier=nude
+reclining on a bed with an arm over the head ; need=indoor,private
+sitting back on the heels, hands on the thighs ; need=indoor,private
+lying on one side, head propped on a hand ; need=indoor,private
+curled up on a rug in front of the fire ; need=indoor,private
+sitting on the bathroom counter with knees up ; need=indoor,private
+leaning against the headboard, one knee bent ; need=indoor,private
+standing before a window, back to the room ; need=indoor,private
+stretched out on the bed, ankles crossed ; need=indoor,private
+kneeling at the foot of the bed, hands behind the back ; need=indoor,private
+bending to pick up a dropped robe, glancing back ; need=indoor,private
+lounging in an armchair with one leg over the arm ; need=indoor,private
+arching up from the sheets, arms stretched overhead ; need=indoor,private
+lying on a bed of cushions, hair spread out ; need=indoor,private
+leaning back on both hands on the edge of the tub ; need=water,indoor,private
+resting on the stomach, chin on folded hands, feet kicking ; need=indoor,private
+poised on hands and knees, looking back over the shoulder ; need=indoor,private
+sitting sideways on the bed, glancing over a shoulder ; need=indoor,private
+standing with one hand on the doorframe, hip jutted ; need=indoor,private
+sitting astride a pillow, hands in the hair ; need=indoor,private
+lying on the floor beside the bed, legs propped up on the mattress ; need=indoor,private
+rising from a bath, water sheeting down ; need=water,indoor,private
+leaning over the sink, face in the mirror ; need=indoor,private
+standing in a doorway, one hand on the lintel, light behind ; need=indoor,private
+reclining on a daybed, a leg drawn up ; need=indoor,private
+lying across the bed with the head hanging over the edge ; need=indoor,private
+sitting on a vanity stool, legs crossed and the robe open ; need=indoor,private
+stepping into a dress and glancing back ; need=indoor,private
+bending forward to fasten a stocking ; need=lingerie,indoor,private
+adjusting a strap, chin tucked ; need=lingerie,indoor,private
+leaning in a window frame, curtain blowing ; need=indoor,private
+hands pushing back the hair, elbows raised ; need=lingerie,private
+lounging on a velvet sofa with one arm along the back ; need=indoor,private
+lying prone in the sun on a towel ; need=outdoor,private,hot ; not=cold
+lying on a sunbed with the sun on bare skin ; need=outdoor,private,hot ; not=cold
+sitting at the edge of a pool with feet in the water ; need=water,outdoor,private,hot ; not=cold
+standing in the surf with the waves at the knees ; need=water,outdoor,private,hot ; not=cold
+stretched on a rock in the sun ; need=nature,outdoor,private,hot ; not=cold
+nude on a bed, body arched, one arm over the face ; need=nude,indoor,private ; tier=nude
+nude on all fours, back curved ; need=nude,indoor,private ; tier=nude
+nude, kneeling upright with palms on the thighs ; need=nude,indoor,private ; tier=nude
+nude on the stomach, one leg bent, looking back ; need=nude,indoor,private ; tier=nude
+nude on the back, one knee raised, one hand on the stomach ; need=nude,indoor,private ; tier=nude
+nude, seated on the edge of a bed with legs crossed ; need=nude,indoor,private ; tier=nude
+nude, standing with hands in the hair and elbows lifted ; need=nude,private ; tier=nude
+nude, leaning against a wall, one foot flat behind ; need=nude,indoor,private ; tier=nude
+nude, sitting with knees apart and hands behind ; need=nude,indoor,private ; tier=nude
+nude, lying on a bearskin, legs stretched out ; need=nude,indoor,private ; tier=nude
+nude, hanging over the back of a chair ; need=nude,indoor,private ; tier=nude
+nude, reclined in a bath with one leg out of the water ; need=nude,water,indoor,private ; tier=nude
+nude, crouched low with arms around the knees ; need=nude,private ; tier=nude
+nude, curled around a pillow, shoulders bare ; need=nude,indoor,private ; tier=nude
+nude, stretching on tiptoes with arms raised ; need=nude,private ; tier=nude
+nude, seated cross-legged on silk sheets ; need=nude,indoor,private ; tier=nude
+nude, lying open on the sheets, hips tilted up ; need=nude,indoor,private ; tier=nude
+nude, on a rooftop terrace in the warm dark ; need=nude,outdoor,private,hot,night ; tier=nude
+nude, standing under a shower, head tilted back ; need=nude,water,indoor,private ; tier=nude
+nude, kneeling on a bed with the head thrown back ; need=nude,indoor,private ; tier=nude
+nude, bending forward with the hair spilling ; need=nude,private ; tier=nude
+nude, perched on a windowsill ; need=nude,indoor,private ; tier=nude
+nude, sprawled on a bed with arms flung wide ; need=nude,indoor,private ; tier=nude
+nude, striding toward the camera ; need=nude,indoor,private ; tier=nude
+nude, seated on a stool with the back straight ; need=nude,indoor,private ; tier=nude
 
 # ---------------------------------------------------------------- accessories
 @slot accessory label="Accessories" box=fashion order=32
@@ -114,6 +341,30 @@ a silk eye mask pushed up into the hair ; need=sleepwear
 high-heeled mules dangling from one foot ; any=lingerie,nude
 a single strand of pearls ; any=lingerie,nude
 a garter with a tiny bow ; need=lingerie
+a delicate waist chain ; any=lingerie,nude
+a velvet ribbon choker ; any=lingerie,nude
+lace wrist cuffs ; need=lingerie
+a long silk scarf looped loosely around the neck ; any=lingerie,nude
+strappy black heels ; any=lingerie,nude
+a pair of garters in black satin ; need=lingerie
+cat-eye glasses pushed up into the hair ; any=lingerie,nude
+a satin sleep mask over the forehead ; need=sleepwear
+a tiny gold belly chain ; any=lingerie,nude,swimwear
+a pair of drop earrings and nothing else ; need=nude
+a pendant resting in the hollow of the throat ; any=lingerie,nude
+a stack of thin bangles ; any=lingerie,nude
+seamed stockings with a dark back seam ; need=lingerie
+a tie loosened and hanging open ; any=lingerie,nude
+a leather collar with a small ring ; any=lingerie,nude
+sheer gloves to the wrist ; need=lingerie
+an anklet and bare feet ; any=lingerie,nude,swimwear
+a feathered fan held loosely ; need=lingerie
+a single red rose between the teeth ; any=lingerie,nude
+a long string of pearls trailing between the breasts ; any=lingerie,nude
+a hairpin about to let go of a twist of hair ; any=lingerie,nude
+lipstick-smudged teeth and a smeared mouth ; any=lingerie,nude
+a wrist wrapped in a loosened silk tie ; any=lingerie,nude
+a necklace of tiny pearls drawn tight at the throat ; any=lingerie,nude
 
 @slot body label="Body detail" box=subject order=8 chance=0.6 count=1-2 tier=nude
 soft curves lit by lamplight
@@ -130,6 +381,71 @@ body hair left natural
 a faint scar across the ribs, worn proudly
 strong thighs and a softly rounded belly
 broad chest with a scatter of dark hair
+a long, graceful neck and sloping shoulders
+a strong, narrow waist
+generous hips and a soft stomach
+lean, defined arms
+muscular thighs
+a flat stomach and visible hip bones
+a soft, full chest
+a broad back with a deep spinal groove
+firm calves from years of running
+a hollow at the base of the throat
+a long torso and narrow hips
+a sprinkle of moles across the shoulder
+fine, downy hair along the forearms
+a trail of dark hair below the navel
+small, high breasts
+heavy, rounded breasts
+a muscular, hairy chest
+softly freckled shoulders and chest
+a wide, strong chest and thick arms
+a curved, powerful back
+long legs and sharp hip bones
+stretch marks silvering the hips
+a pale, soft belly
+dark skin glowing with oil
+a scatter of beauty marks across the back
+a pair of dimples above the hips
+a lean, hard stomach
+thick, strong thighs
+a tattoo winding up one side
+a delicate tattoo behind the ear and along the collarbone
+a hip tattoo half hidden by a waistband
+a rib tattoo, black and detailed
+a belly-button ring
+a thin gold chain resting on a bare hip
+nipple piercings glinting in the light
+a tan line cutting across the hips
+a bruise-free, even expanse of unmarked skin
+a faint line of muscle along the sternum
+an old surgical scar, healed to silver
+thin pale scars across the thighs, unhidden
+a patch of sun-reddened skin across the shoulders
+a sheen of sweat along the collarbone
+muscle shifting under damp skin
+a flushed chest and throat
+skin marked pink where fingers pressed
+a soft, rounded behind
+a firm, athletic behind
+a strong, curved lower back
+sloped, broad shoulders
+a pronounced collarbone
+the curve of a waist and the flare of a hip
+the muscled outline of a thigh
+a rounded stomach, relaxed and unposed
+broad hips and heavy thighs
+a narrow, androgynous frame
+a scattering of fine freckles from shoulder to hip
+body hair left natural under the arms and below
+smooth, shaved skin glistening
+a neatly trimmed line of hair
+gym-built shoulders and a tapered waist
+a soft, curved belly and strong arms
+a long scar curving along one hip, proudly shown
+a back dusted with freckles
+a sculpted chest and ridged abdomen
+glistening skin, freshly oiled
 
 # ---------------------------------------------------------------- partner
 @slot partner label="Partner" box=subject order=9 chance=0.8 tier=partner
@@ -139,6 +455,44 @@ embracing their wife ; give=partner
 with a long-term partner, both completely at ease ; give=partner
 with a new lover, both adults and eager ; give=partner
 with their partner, laughing between kisses ; give=partner
+with two lovers, all adults and at ease ; give=partner
+with a woman beside her, both completely relaxed ; give=partner
+with a man beside him, both smiling ; give=partner
+a couple sharing a bed, tangled together ; give=partner
+two women, lovers, close and unhurried ; give=partner
+two men, lovers, close and unhurried ; give=partner
+a husband and wife on their anniversary night ; give=partner
+two lovers reunited after a long separation ; give=partner
+a long-married couple still hungry for each other ; give=partner
+a man and a woman, both in their forties and sure of themselves ; give=partner
+two experienced lovers, in no hurry ; give=partner
+a pair of adults on a first night together, nervous and laughing ; give=partner
+a couple on a honeymoon ; give=partner
+a confident dominant partner and a willing lover ; give=partner
+a woman with a man behind her ; give=partner
+a man with a woman astride him ; give=partner
+three adult lovers sharing a bed ; give=partner
+a couple in a quiet hotel room ; give=partner
+a woman and a nonbinary lover ; give=partner
+two nonbinary lovers ; give=partner
+a couple who cannot wait to be alone ; give=partner
+a lover, silhouetted against the bed lamp ; give=partner
+a lover's hands on her hips ; give=partner
+a partner's arms around his waist ; give=partner
+a lover's mouth close to a bare shoulder ; give=partner
+a pair of friends who just crossed the line ; give=partner
+a woman and her lover, laughing in the dark ; give=partner
+a man and his lover, wrapped in a duvet ; give=partner
+two bodies in the half-light, strangers no longer ; give=partner
+partners at ease in each other's company ; give=partner
+with an old flame, tonight ; give=partner
+two athletes, still flushed from the gym ; give=partner
+two coworkers who finally stopped pretending ; give=partner
+a couple surprised by the rain, pulling each other inside ; give=partner
+lovers kissing under a stairwell light ; give=partner
+two lovers in a hot, cramped sauna ; give=partner ; need=water,hot
+two lovers in a candle-lit tub ; give=partner ; need=water,private
+two lovers in a moonlit pool ; give=partner ; need=water,night
 
 @slot intimacy label="Intimacy" box=pose order=38 chance=0.95 tier=partner
 foreheads touching, eyes closed ; need=partner
@@ -153,6 +507,54 @@ slow dancing, barely clothed ; need=partner,indoor,private
 waking up tangled together ; need=partner,indoor,private
 straddling a partner's lap, hands in their hair ; need=partner,indoor,private
 a partner's mouth at the curve of a neck ; need=partner,private
+mouths barely touching, breath mingling ; need=partner
+a long, slow kiss with hands in hair ; need=partner
+kissing along a collarbone ; need=partner,private
+a hand sliding under a shirt ; need=partner,private
+fingers laced above the head, bodies pressed together ; need=partner,indoor,private
+a hand at the small of the back, pulling closer ; need=partner
+dancing close in the dark, hips together ; need=partner,indoor,private
+lying on top of a partner, kissing slowly ; need=partner,indoor,private
+a partner's hand cupping a jaw, thumbs on cheekbones ; need=partner
+a kiss at the base of the throat ; need=partner,private
+legs wrapped around a partner's waist, kissing ; need=partner,private
+lifted against the wall, kissing hard ; need=partner,private
+tugging a partner onto the bed by the shirt ; need=partner,indoor,private
+rolling together on tangled sheets ; need=partner,indoor,private
+pressed chest to chest in the shower ; need=partner,water,private
+kissing a bare shoulder from behind ; need=partner,private
+a partner unbuttoning a shirt, slowly ; need=partner,private
+a partner's lips tracing a line down the stomach ; need=partner,indoor,private
+undressing each other, hands unhurried ; need=partner,indoor,private
+sitting in a lap, foreheads together ; need=partner,indoor,private
+a hand slipping inside a waistband ; need=partner,private
+a kiss that has turned urgent, hands everywhere ; need=partner,private
+laughing in bed, bodies tangled ; need=partner,indoor,private
+caressing a back with both palms ; need=partner,private
+a partner's chin resting on a bare shoulder ; need=partner,private
+pushing hair back from a flushed face ; need=partner,private
+a hand resting on a thigh, thumb stroking ; need=partner,private
+sharing one breath, eyes locked ; need=partner
+biting a partner's lower lip gently ; need=partner,private
+a partner's hips drawn in by a hand on the belt ; need=partner,private
+a quiet kiss on the stomach ; need=partner,indoor,private
+kissing a partner's hand, then wrist, then forearm ; need=partner,private
+a slow strip, partner watching from the bed ; need=partner,indoor,private
+two bodies curved together under a thin sheet ; need=partner,indoor,private
+a whispered word at the ear, hands low on the hips ; need=partner,private
+a leg hooked around a partner's thigh ; need=partner,private
+hands exploring bare backs ; need=partner,private
+wet bodies pressed together in the rain ; need=partner,outdoor,wet,private
+lying under a partner, hands pinned gently above the head ; need=partner,indoor,private
+tangled in hotel sheets, afternoon light ; need=partner,indoor,private
+a long embrace from behind, hands crossed over the stomach ; need=partner,private
+dancing slowly in lingerie and an open shirt ; need=partner,indoor,private
+a partner kneeling in front, hands on the hips ; need=partner,indoor,private
+a mouth and a hand trailing down the ribs ; need=partner,private
+two bodies framed in a doorway, kissing ; need=partner,indoor,private
+a partner's lips at the inside of the wrist ; need=partner,private
+a heated kiss on the staircase ; need=partner,indoor,private
+a pinned wrist and a kiss at the jaw ; need=partner,private
 
 # ---------------------------------------------------------------- style
 @slot shot label="Shot" box=style order=40
@@ -163,6 +565,28 @@ a shot from the doorway as if watching ; need=indoor,private
 fine-art nude study ; need=nude ; tier=nude
 a tasteful low-key nude with deep shadows ; need=nude ; tier=nude
 a candid, unposed moment of two lovers ; need=partner ; tier=partner
+a close portrait with a bare shoulder in the corner ; need=private
+a low-angle boudoir shot from the foot of the bed ; need=indoor,private
+a half-length shot, the sheet low on the hips ; need=indoor,private
+an over-the-shoulder shot from behind ; need=indoor,private
+a close-up of eyes and lips ; need=private
+a reflected shot in a bedroom mirror ; need=indoor,private
+a looking-down shot from above the bed ; need=indoor,private
+a long lens across the room ; need=indoor,private
+a full-length nude pose from the front ; need=nude ; tier=nude
+a three-quarter nude in side light ; need=nude ; tier=nude
+a close study of shoulder, spine and hip ; need=nude ; tier=nude
+a nude shot from low behind, hips toward the lens ; need=nude ; tier=nude
+a wide shot of a couple on a bed, camera at the foot ; need=partner ; tier=partner
+an intimate close-up of a couple's faces, almost touching ; need=partner ; tier=partner
+a candid shot of lovers mid-embrace ; need=partner ; tier=partner
+a tight shot on hands and skin ; need=partner ; tier=partner
+a shot from behind a lover's shoulder ; need=partner ; tier=partner
+an explicit, centred, full-body shot of the act ; need=partner,nude ; tier=explicit
+a close, low-angle shot of the bodies joined ; need=partner,nude ; tier=explicit
+a POV shot, hands visible at the edges of the frame ; need=partner,nude ; tier=explicit
+a mirror shot of a couple on the bed ; need=partner,nude,indoor ; tier=explicit
+a high-angle shot looking straight down at the bed ; need=partner,nude,indoor ; tier=explicit
 
 @slot medium label="Medium" box=style order=43
 boudoir photograph with soft grain ; need=private
@@ -171,3 +595,322 @@ high-contrast black-and-white fashion editorial ; need=private
 figure drawing in charcoal ; need=nude ; tier=nude
 oil painting in the manner of a classical reclining nude ; need=nude ; tier=nude
 soft-focus erotic-art photograph, film grain ; any=nude,partner ; tier=nude
+a warm film photograph with heavy grain ; need=private
+a glossy magazine editorial in high contrast ; need=private
+a soft-focus pinup illustration in gouache ; need=lingerie
+a polaroid-style snapshot, slightly overexposed ; need=private
+a sultry noir photograph in black and white ; need=private
+a digital painting with smooth skin and deep shadows ; need=private
+a grainy 35mm photograph taken with a flash ; need=private
+an oil painting in the manner of an old master's boudoir ; need=nude ; tier=nude
+a charcoal figure study with strong chiaroscuro ; need=nude ; tier=nude
+a watercolour nude with bleeding edges ; need=nude ; tier=nude
+an ink wash drawing of two figures ; need=partner ; tier=partner
+a photorealistic render with studio lighting ; any=nude,partner ; tier=nude
+a hyper-detailed erotic illustration with painted skin ; any=nude,partner ; tier=explicit
+a cinematic still from an adult drama ; need=partner ; tier=partner
+a retro erotica illustration with halftone shading ; any=nude,partner ; tier=explicit
+
+# ---------------------------------------------------------------- more slots (ad_1.txt)
+@slot undress label="State of dress" box=fashion order=31 chance=0.7
+a strap slipping off the shoulder ; need=lingerie
+a shirt unbuttoned to the waist ; need=lingerie
+a robe sliding open ; need=lingerie
+one stocking half rolled down ; need=lingerie
+a bra strap undone ; need=lingerie
+panties hooked on one finger ; need=lingerie
+the zip of a dress pulled halfway down ; need=lingerie
+a dress pooled around the hips ; need=lingerie
+a shirt half pulled over the head ; need=lingerie
+a slip riding up over the thighs ; need=lingerie
+clothes scattered across the floor ; need=lingerie,indoor
+a belt unbuckled, jeans low on the hips ; need=lingerie
+lace edges just visible beneath a lifted hem ; need=lingerie
+a loose thread of lingerie strap trailing down an arm ; need=lingerie
+one cup of the bra pulled down ; need=lingerie ; tier=nude
+a silk top pushed up above the bust ; need=lingerie ; tier=nude
+a robe fallen to the elbows ; need=lingerie ; tier=nude
+panties pushed aside ; need=lingerie ; tier=partner
+a shirt pulled open, buttons flying ; need=lingerie ; tier=partner
+a skirt hitched up to the waist ; need=lingerie ; tier=partner
+a bodysuit unsnapped and peeled down ; need=lingerie ; tier=partner
+a garter belt left on, all else removed ; need=lingerie ; tier=nude
+only stockings left on ; need=lingerie ; tier=nude
+unclasping a bra with both hands ; need=lingerie
+stepping out of fallen underwear ; need=lingerie ; tier=nude
+pulling a nightgown over the head ; need=lingerie ; tier=nude
+sliding a strap down with one finger ; need=lingerie
+caught halfway out of a robe ; need=lingerie
+clothes half off, in a hurry ; need=lingerie ; tier=partner
+a belt pulled free ; need=lingerie ; tier=partner
+the buttons of a blouse undone one by one ; need=lingerie
+a towel dropping from the hips ; need=nude ; tier=nude
+a sheet falling away ; need=nude ; tier=nude
+nothing on but a tousled bedsheet ; need=nude ; tier=nude
+one arm hiding the chest, the other hand lowered ; need=nude ; tier=nude
+bare from the waist up ; need=nude ; tier=nude
+bare skin, goosebumps rising ; need=nude ; tier=nude
+clothes folded neatly on a chair, nothing left on ; need=nude,indoor ; tier=nude
+a long mirror reflecting bare shoulders ; need=nude,indoor ; tier=nude
+
+# ---------------------------------------------------------------- more slots (ad_2.txt)
+@slot solo label="Solo" box=pose order=39 chance=0.9 tier=nude
+running a hand slowly down the stomach ; need=private ; not=partner
+trailing fingertips along the inside of a thigh ; need=private ; not=partner
+cupping the chest, eyes closed ; need=private ; not=partner
+one hand sliding beneath the waistband of the underwear ; need=private,lingerie ; not=partner ; tier=explicit
+touching herself, head thrown back ; need=private,nude ; not=partner ; tier=explicit
+touching himself, jaw tight and eyes shut ; need=private,nude ; not=partner ; tier=explicit
+fingers working between her thighs, back arched ; need=private,nude,indoor ; not=partner ; tier=explicit
+legs spread on the bed, hand between them ; need=private,nude,indoor ; not=partner ; tier=explicit
+stroking himself on the edge of the bed ; need=private,nude,indoor ; not=partner ; tier=explicit
+lying back with a hand pressed low on the stomach, breath unsteady ; need=private,indoor ; not=partner ; tier=explicit
+pleasuring herself in front of a mirror ; need=private,nude,indoor ; not=partner ; tier=explicit
+with a vibrator pressed between her thighs ; need=private,nude,indoor ; not=partner ; tier=explicit
+grinding against a pillow, eyes half closed ; need=private,indoor ; not=partner ; tier=explicit
+touching under the water of a shower ; need=private,nude,water ; not=partner ; tier=explicit
+touching in the bath, knees apart and one foot on the tap ; need=private,nude,water,indoor ; not=partner ; tier=explicit
+caught mid-touch, lips parted, flush climbing the chest ; need=private,nude ; not=partner ; tier=explicit
+squeezing the thighs together, hand pressed between ; need=private,indoor ; not=partner ; tier=explicit
+teasing a nipple between finger and thumb ; need=private,nude ; not=partner ; tier=explicit
+slowly pulling down the underwear, watching the camera ; need=private,lingerie ; not=partner ; tier=nude
+slipping a hand inside an open shirt ; need=private ; not=partner
+rolling onto the stomach, hips lifting off the sheets ; need=private,indoor ; not=partner ; tier=nude
+reclined on a pile of pillows, knees falling apart ; need=private,nude,indoor ; not=partner ; tier=explicit
+face half buried in a pillow, one hand low ; need=private,indoor ; not=partner ; tier=explicit
+legs hooked over the back of an armchair ; need=private,nude,indoor ; not=partner ; tier=explicit
+spread on a bed, back arched off the sheets ; need=private,nude,indoor ; not=partner ; tier=explicit
+sitting on the edge of the tub, touching, steam rising ; need=private,nude,water,indoor ; not=partner ; tier=explicit
+with a hand wrapped around his thick shaft, eyes locked on the lens ; need=private,nude,indoor ; not=partner ; tier=explicit
+slowly stroking, head tipped back against the headboard ; need=private,nude,indoor ; not=partner ; tier=explicit
+kneeling on the bed, hand between the legs ; need=private,nude,indoor ; not=partner ; tier=explicit
+riding a toy, thighs trembling ; need=private,nude,indoor ; not=partner ; tier=explicit
+rubbing slowly in circles, mouth open ; need=private,nude ; not=partner ; tier=explicit
+squirming against the sheets, one hand gripping the headboard ; need=private,nude,indoor ; not=partner ; tier=explicit
+finishing with a shudder, body bowed ; need=private,nude ; not=partner ; tier=explicit
+spent and flushed, hand still resting low ; need=private,nude ; not=partner ; tier=explicit
+legs apart on a chaise, fingers circling ; need=private,nude,indoor ; not=partner ; tier=explicit
+cupping and squeezing both breasts, thumbs at the nipples ; need=private,nude ; not=partner ; tier=nude
+arching into her own touch with a gasp ; need=private,nude ; not=partner ; tier=explicit
+lying open on the bed, hips tilted up ; need=private,nude,indoor ; not=partner ; tier=explicit
+leaning on the sink, a hand between the legs, eyes on the mirror ; need=private,nude,indoor ; not=partner ; tier=explicit
+a hand gripping the base of his erection, thumb sweeping the tip ; need=private,nude,indoor ; not=partner ; tier=explicit
+pulling the sheets tight with the free hand while touching ; need=private,indoor ; not=partner ; tier=explicit
+
+@slot acts label="NSFW Acts" box=pose order=40 chance=0.95 tier=explicit
+deep, open-mouthed kissing, tongues meeting ; need=partner
+kissing and sucking along the neck ; need=partner
+licking and sucking at a nipple ; need=partner,private
+a mouth kissing down the stomach toward the hips ; need=partner,private
+oral sex, her head between his thighs ; need=partner,private,nude
+oral sex, his head between her thighs, her fingers in his hair ; need=partner,private,nude
+a woman going down on her lover, eyes up at the camera ; need=partner,private,nude
+a man kneeling and kissing between a woman's thighs ; need=partner,private,nude
+licking slowly, tongue swirling ; need=partner,private,nude
+giving a blowjob, lips wrapped around the length ; need=partner,private,nude
+taking him deep, one hand at the base ; need=partner,private,nude
+sucking him slowly while looking up ; need=partner,private,nude
+kneeling and sucking, a hand on the back of the head ; need=partner,private,nude
+mutual oral sex in a sixty-nine, each face between the other's thighs ; need=partner,private,nude
+head tipped back as a partner kisses between the thighs ; need=partner,private,nude
+fingering her slowly while kissing her neck ; need=partner,private
+two fingers curling inside her while the thumb circles ; need=partner,private,nude
+a hand sliding down her underwear, her hips rising ; need=partner,private,lingerie
+a hand wrapped around his cock, stroking slowly ; need=partner,private,nude
+a handjob, her wrist twisting at the tip ; need=partner,private,nude
+mutual touching, each hand between the other's thighs ; need=partner,private
+grinding on a partner's lap, clothed and breathless ; need=partner,private
+rubbing hard against each other through thin fabric ; need=partner,private
+his cock pressed between her breasts, her hands squeezing them together ; need=partner,private,nude
+rubbing the tip against her, teasing ; need=partner,private,nude
+pushing slowly inside, her hands on his chest ; need=partner,private,nude
+a first slow thrust, mouths open ; need=partner,private,nude
+sex, slow and deep, hips rolling together ; need=partner,private,nude
+sex, hard and fast, bodies slapping together ; need=partner,private,nude
+penetration, his cock disappearing slowly inside her ; need=partner,private,nude
+penetrated from behind, her fingers clutching the sheets ; need=partner,private,nude
+filled to the base, both trembling ; need=partner,private,nude
+a man thrusting between her thighs, her legs locked around him ; need=partner,private,nude
+a woman riding him, hands braced on his chest ; need=partner,private,nude
+a woman riding him backward, looking over her shoulder ; need=partner,private,nude
+two women with intertwined legs, hips grinding together ; need=partner,private,nude
+two women kissing between each other's thighs ; need=partner,private,nude
+two women, one wearing a strap-on ; need=partner,private,nude
+two men entwined, one sliding inside the other ; need=partner,private,nude
+two men in a mutual blowjob, kneeling on the bed ; need=partner,private,nude
+one lover pinned to the mattress as the other moves inside ; need=partner,private,nude
+a threesome, one lover kissing while another moves between her thighs ; need=partner,private,nude
+three bodies tangled together on the bed ; need=partner,private,nude
+a hand gripping a thigh and pulling closer ; need=partner,private
+fingers clutching the back, nails raking ; need=partner,private
+a mouth on the clit, a partner's thighs clamped round the head ; need=partner,private,nude
+her fingers tangled in his hair as his mouth works between her thighs ; need=partner,private,nude
+hips thrusting up to meet a mouth ; need=partner,private,nude
+a partner's cock sliding between the lips ; need=partner,private,nude
+a man kissing the inside of her thigh, mouth inches from her sex ; need=partner,private,nude
+a woman kissing the length of his shaft ; need=partner,private,nude
+tongue flicking at a nipple while a hand works lower ; need=partner,private
+a mouth closing around the head, eyes closed ; need=partner,private,nude
+a lover's hand sliding through wetness, slow and teasing ; need=partner,private,nude
+sex in the shower, water streaming over joined bodies ; need=partner,private,nude,water
+sex on a kitchen counter, her legs wrapped around him ; need=partner,private,nude,indoor
+sex against a wall, his hands holding her up ; need=partner,private,nude
+sex across the arm of a sofa ; need=partner,private,nude,indoor
+sex in an armchair, her knees on either side of him ; need=partner,private,nude,indoor
+sex on a bed of rumpled sheets, afternoon light on their skin ; need=partner,private,nude,indoor
+sex in front of a mirror, watching each other ; need=partner,private,nude,indoor
+lazy morning sex, still half asleep ; need=partner,private,nude,indoor
+slow, silent sex under the covers ; need=partner,private,nude,indoor
+frantic sex with half their clothes still on ; need=partner,private,lingerie
+sex in the bath, water sloshing over the rim ; need=partner,private,nude,water,indoor
+sex on a balcony, the city below ; need=partner,private,nude,outdoor,urban,night
+sex on a blanket in the sun ; need=partner,private,nude,outdoor,nature,hot
+sex in a hammock, swaying ; need=partner,private,nude,outdoor,nature,hot
+sex in a pool, legs wrapped around the waist ; need=partner,private,nude,water,outdoor,hot
+bodies slick with oil, sliding together ; need=partner,private,nude
+a massage that turns to sex, oiled hands everywhere ; need=partner,private,nude
+a woman sitting on his face, thighs shaking ; need=partner,private,nude,indoor
+a lover bent over a table, gripping the edge ; need=partner,private,nude,indoor
+a lover pressed against a window, breath fogging the glass ; need=partner,private,nude,indoor
+climaxing together, bodies locked ; need=partner,private,nude
+an orgasm, back bowed and mouth open, a partner holding her through it ; need=partner,private,nude
+a partner shuddering through a climax, fingers digging in ; need=partner,private,nude
+holding each other through the aftershocks ; need=partner,private,nude
+
+@slot position label="Position" box=pose order=41 chance=0.8 tier=explicit
+missionary, legs wrapped around the waist ; need=partner,private,nude,indoor
+missionary with her ankles on his shoulders ; need=partner,private,nude,indoor
+cowgirl, hands braced on his chest ; need=partner,private,nude
+reverse cowgirl, back arched, looking over the shoulder ; need=partner,private,nude
+doggy style, hips lifted, head turned to the camera ; need=partner,private,nude
+doggy style, chest down, behind raised ; need=partner,private,nude,indoor
+prone bone, flat on the stomach with a partner above ; need=partner,private,nude,indoor
+spooning, a partner's arm around the waist ; need=partner,private,nude,indoor
+standing, one leg hooked high around the hip ; need=partner,private,nude
+lifted and carried, legs wrapped around the waist ; need=partner,private,nude
+lotus position, face to face, arms around each other ; need=partner,private,nude,indoor
+sitting up, her legs around his waist, rocking ; need=partner,private,nude,indoor
+her on the edge of the bed, him standing between her knees ; need=partner,private,nude,indoor
+bent over the edge of the bed, gripping the sheets ; need=partner,private,nude,indoor
+bent over a desk, hands flat on the wood ; need=partner,private,nude,indoor
+over the back of a sofa, one knee on the cushion ; need=partner,private,nude,indoor
+on all fours, a hand tangled in her hair ; need=partner,private,nude,indoor
+on the side, one leg lifted high ; need=partner,private,nude,indoor
+seated facing away, riding in his lap ; need=partner,private,nude,indoor
+sixty-nine on a rumpled bed ; need=partner,private,nude,indoor
+face-sitting with thighs trembling ; need=partner,private,nude,indoor
+scissoring, legs interlocked ; need=partner,private,nude,indoor
+legs spread wide over a partner's shoulders ; need=partner,private,nude,indoor
+the amazon position, a woman pinning him to the bed ; need=partner,private,nude,indoor
+the pretzel, side by side with one leg lifted ; need=partner,private,nude,indoor
+standing against the wall, hands pinned above the head ; need=partner,private,nude
+standing behind, one hand around the waist and the other on the wall ; need=partner,private,nude
+kneeling on the floor, a partner behind and above ; need=partner,private,nude,indoor
+bridge position, hips off the sheets ; need=partner,private,nude,indoor
+a man on his back, a woman astride him, hips grinding ; need=partner,private,nude,indoor
+half on the bed, half off, legs thrown wide ; need=partner,private,nude,indoor
+on a chair, her knees on either side of him ; need=partner,private,nude,indoor
+sitting on a counter, legs open, a partner between them ; need=partner,private,nude,indoor
+folded legs-to-chest, deep and slow ; need=partner,private,nude,indoor
+her bent over the sink, face in the mirror ; need=partner,private,nude,indoor
+face to face on the floor, legs entwined ; need=partner,private,nude,indoor
+from behind in the shower, palms on the tile ; need=partner,private,nude,water
+on the stairs, a leg propped on a step ; need=partner,private,nude,indoor
+a pile-driver position, knees to shoulders ; need=partner,private,nude,indoor
+stacked on a bed, one lover over another ; need=partner,private,nude,indoor
+her on top, leaning forward until their lips meet ; need=partner,private,nude,indoor
+
+@slot afterglow label="Afterglow" box=pose order=42 chance=0.3 tier=partner
+lying tangled in damp sheets, catching their breath ; need=partner,indoor,private
+a head resting on a bare chest, fingertips tracing circles ; need=partner,indoor,private
+laughing and spent, hair stuck to flushed skin ; need=partner,indoor,private
+sharing a glass of water on the edge of the bed ; need=partner,indoor,private
+spooned together, half asleep ; need=partner,indoor,private
+sprawled across each other, limbs heavy ; need=partner,indoor,private
+a lazy kiss between slow breaths ; need=partner,indoor,private
+a partner's hand on a hip, the sheet barely covering ; need=partner,indoor,private
+one lover propped on an elbow, smiling down ; need=partner,indoor,private
+a cigarette shared by the window ; need=partner,indoor,private
+sleeping in a heap of pillows, skin still shining ; need=partner,indoor,private
+smiling at the ceiling, pulse still racing ; need=partner,indoor,private
+a trail of discarded clothes behind them ; need=partner,indoor,private
+a hand drifting through damp hair ; need=partner,indoor,private
+flushed, glowing and unashamed ; need=partner,private
+kissing a shoulder as the sun comes up ; need=partner,indoor,private,dawn
+
+@slot toys label="Toys & props" box=misc order=63 chance=0.35 tier=partner
+a silk blindfold ; need=partner,private
+loose silk ties at the wrists ; need=partner,private,indoor
+a feather trailing down the spine ; need=partner,private
+an ice cube melting on bare skin ; need=partner,private
+a bottle of massage oil glinting on the nightstand ; need=partner,private,indoor
+a pair of soft leather cuffs ; need=partner,private,indoor ; tier=explicit
+a slim vibrator on the sheets ; need=private,indoor ; tier=explicit
+a glass toy beside the bed ; need=private,indoor ; tier=explicit
+a rope of silk across the headboard ; need=partner,private,indoor ; tier=explicit
+a leather collar and a loose lead ; need=partner,private,indoor ; tier=explicit
+a riding crop on the pillow ; need=partner,private,indoor ; tier=explicit
+a bowl of strawberries and cream on the sheets ; need=partner,private,indoor
+a box of toys left open on the bed ; need=private,indoor ; tier=explicit
+a tangle of ribbon and lace on the floor ; need=private,indoor
+a pair of handcuffs on the bedpost ; need=partner,private,indoor ; tier=explicit
+candles dripping onto a tray beside the bed ; need=partner,private,indoor
+a satin sash looped through the fingers ; need=partner,private
+a bottle of lubricant uncapped on the nightstand ; need=partner,private,indoor ; tier=explicit
+a mirror angled toward the bed ; need=private,indoor
+a strap-on harness on the floor ; need=partner,private,indoor ; tier=explicit
+a tray of wine glasses and a crumpled napkin beside the bed ; need=partner,private,indoor
+a roll of silk rope beside the pillows ; need=partner,private,indoor ; tier=explicit
+a camera on a tripod facing the bed ; need=private,indoor
+an open window with a curtain stirring ; need=private,indoor
+a stack of folded towels at the end of the bed ; need=private,indoor
+a scatter of rose petals across the bed ; need=partner,private,indoor
+a warm bath running in the next room ; need=private,indoor
+a condom wrapper torn open on the nightstand ; need=partner,private,indoor ; tier=explicit
+
+@slot dynamic label="Dynamic" box=aesthetic order=53 chance=0.6 tier=partner
+playful teasing, a lot of laughter ; need=partner
+a dominant partner taking the lead, the other eager to follow ; need=partner
+roles switching back and forth ; need=partner
+slow, worshipful attention ; need=partner
+hungry and impatient ; need=partner
+tender, close, and in no rush ; need=partner
+a game of tease and denial, both enjoying it ; need=partner
+confident, shameless, and unashamed ; need=partner
+wordless, all eye contact ; need=partner
+whispered encouragement and laughter ; need=partner
+rough, passionate and fully consensual ; need=partner ; tier=explicit
+gentle and exploratory, learning each other ; need=partner
+a long-held anticipation finally broken ; need=partner
+a teasing power-play between equals ; need=partner ; tier=explicit
+a role-play scene both partners are clearly enjoying ; need=partner ; tier=explicit
+completely in sync ; need=partner
+a quiet intensity, nothing hurried ; need=partner
+an easy trust between longtime partners ; need=partner
+slow-burning, building with each kiss ; need=partner
+hot, sweaty, and unselfconscious ; need=partner
+
+@slot focus label="Body focus" box=style order=44 chance=0.4 tier=nude
+a close crop on the curve of the waist and hip ; need=nude
+the line of the spine from nape to hips ; need=nude
+a low shot along the length of a stretched body ; need=nude
+a tight crop on parted lips and a bare shoulder ; need=private
+the arch of a back lit from the side ; need=nude
+hands gripping the sheets in close-up ; need=private
+fingers pressed into a thigh ; need=partner,private
+a shot framed by the legs, camera low ; need=nude ; tier=explicit
+a close crop on the chest rising with a breath ; need=nude
+a crop on the hips and the top of the thighs ; need=nude
+a close-up on a partner's hand on a hip ; need=partner,private
+the line of a throat and a jaw, head tipped back ; need=private
+a focus on the stomach muscles tightening ; need=nude
+a back view, shoulder blades flexing ; need=nude
+a detail of skin beaded with sweat ; need=nude
+a close shot of lips against skin ; need=partner,private
+a crop on joined hands pinned to the pillow ; need=partner,private
+a shot along a bare leg, toes pointed ; need=nude
+a shot from behind of the hips and lower back ; need=nude ; tier=explicit
+a tight shot on the joined bodies ; need=partner,nude ; tier=explicit
+a mirror shot capturing the reflection of a bare back ; need=nude,indoor
+a silhouette against the window, the body in outline ; need=nude,indoor
+a shot over the shoulder at a lover's face ; need=partner,private

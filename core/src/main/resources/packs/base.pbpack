@@ -29,6 +29,42 @@ a man in his sixties ; give=m ; w=0.4
 an androgynous person in their twenties ; give=nb
 an androgynous person in their thirties ; give=nb
 a person in their forties with an androgynous look ; give=nb ; w=0.6
+a woman in her early twenties ; give=f ; w=1.5
+a woman in her mid-twenties ; give=f ; w=2
+a woman around thirty ; give=f ; w=2
+a woman in her mid-thirties ; give=f ; w=1.5
+a woman just past forty ; give=f
+a woman in her early forties ; give=f
+a woman in her mid-forties ; give=f
+a woman in her late forties ; give=f ; w=0.8
+a woman in her early fifties ; give=f ; w=0.7
+a woman in her mid-fifties ; give=f ; w=0.6
+a woman nearing sixty ; give=f ; w=0.4
+a woman in her early sixties ; give=f ; w=0.4
+a man in his early twenties ; give=m ; w=1.5
+a man in his mid-twenties ; give=m ; w=2
+a man around thirty ; give=m ; w=2
+a man in his mid-thirties ; give=m ; w=1.5
+a man just past forty ; give=m
+a man in his early forties ; give=m
+a man in his mid-forties ; give=m
+a man in his late forties ; give=m ; w=0.8
+a man in his early fifties ; give=m ; w=0.7
+a man in his mid-fifties ; give=m ; w=0.6
+a man nearing sixty ; give=m ; w=0.4
+a man in his early sixties ; give=m ; w=0.4
+a nonbinary person in their mid-twenties ; give=nb
+a nonbinary person in their late twenties ; give=nb
+a nonbinary person in their thirties ; give=nb
+a nonbinary person in their early forties ; give=nb
+an agender person in their late thirties ; give=nb ; w=0.7
+a gender-fluid person in their forties ; give=nb ; w=0.7
+a person in their mid-thirties with a gender-neutral look ; give=nb ; w=0.7
+a person in their late forties with a quietly androgynous presence ; give=nb ; w=0.6
+a nonbinary person in their fifties ; give=nb ; w=0.6
+an androgynous person in their early fifties ; give=nb ; w=0.5
+a nonbinary person in their sixties ; give=nb ; w=0.4
+a nonbinary person in their early twenties ; give=nb ; w=0.8
 
 @slot role label="Role" box=subject order=2 chance=0.75
 a night-shift nurse
@@ -73,6 +109,151 @@ a fashion editor
 a clockmaker
 a rooftop beekeeper
 a retired rally driver
+a stonemason restoring a cathedral wall
+a blacksmith with a coal-dark forge
+a shipyard welder
+a master glassblower
+a saddle maker
+a village cobbler
+a hand-loom weaver
+a thatcher
+a luthier
+a bookbinder
+a boatbuilder
+a locksmith
+a tailor with pins in the cuff
+a milliner
+a letterpress printer
+a sign painter
+a furniture restorer
+a tall-ship rigger
+a scaffolder
+a tile setter
+a jazz saxophonist ; w=1.5
+a puppeteer
+a circus aerialist
+a stand-up comedian
+a calligrapher
+a mural painter
+a documentary filmmaker
+a theatre costume designer
+a stage lighting technician
+a session drummer
+a contemporary choreographer
+a novelist stuck on chapter nine
+a gallery conservator
+a flamenco guitarist
+a taiko drummer
+a storyteller who works the night market
+a fiddle player at a village dance
+a marathon runner
+a rock-climbing guide
+a surf lifeguard
+a judo instructor
+a fencing master
+a rowing coach
+a freediver
+a mountain guide
+a muay thai fighter
+a kayak guide
+a skateboard coach
+a retired goalkeeper
+a downhill ski racer
+a rodeo rider
+a tennis coach
+a parkour trainer
+a long-distance cyclist
+a retired sumo wrestler ; w=0.5
+a fell runner
+a marine biologist
+a volcanologist
+a glaciologist
+a seismologist
+a particle physicist
+an entomologist
+a meteorologist
+an ornithologist
+a field geologist
+a radio astronomer
+a palaeontologist
+a soil scientist
+a cartographer
+a large-animal vet
+a research chemist
+an observatory technician on the night shift
+a tea-plantation overseer
+a rice farmer
+a shepherd
+a fishmonger
+a rickshaw driver
+a tram conductor
+a deckhand on a cargo ship
+a market herbalist
+a spice trader
+a noodle-shop owner
+a pearl diver
+a camel guide
+a reindeer herder
+a salt harvester
+a tuk-tuk driver
+a second-hand bookshop owner
+a night-train conductor
+a hotel concierge
+a freight-train driver
+a harbour pilot
+an air-traffic controller
+a flight attendant
+a crane operator
+a firefighter
+a midwife
+a hospice nurse
+a wildfire lookout
+a park ranger
+a smokejumper
+a mountain rescue volunteer
+a coast guard rescue swimmer
+a sound engineer
+a pharmacist
+a barber
+a librarian
+a conference interpreter
+a courtroom sketch artist
+a photojournalist back from the field
+a bush pilot
+a ship's engineer
+an oil-rig medic
+a wind-turbine technician
+a vintner
+a cheesemaker
+a baker who starts before dawn
+a craft brewer
+a sushi chef
+a coffee roaster
+a falconer
+a horse trainer
+a zookeeper
+a diving instructor
+a street photographer
+a tarot reader on a seaside pier
+a pawnbroker
+an antiques dealer
+a chimney sweep
+a chocolatier
+a taxi driver on the night shift
+a landscape architect
+a surveyor with a theodolite
+a sheep-shearer
+a university lecturer in medieval history
+a village priest
+a temple bell-ringer
+a public defender
+a lamplighter in an old town ; w=0.7
+an airship navigator ; w=0.7
+a deep-space salvager ; w=0.7
+a desert caravan scout ; w=0.7
+a back-alley fixer in a neon city ; w=0.7
+a hacker for hire ; w=0.7
+a wandering herbalist ; w=0.7
 
 @slot hair label="Hair" box=subject order=3
 long auburn hair in loose waves
@@ -105,6 +286,103 @@ mint-green hair fading to silver at the tips
 a classic pompadour
 close-cropped natural hair
 long copper-brown hair tied in a thick plait
+deep burgundy hair, straight and heavy
+ink-black hair with a blue sheen
+strawberry-blonde hair in soft waves
+sun-streaked brown hair
+bright tangerine hair, freshly dyed
+rose-gold hair at shoulder length
+pastel lilac hair, a little faded
+deep teal hair with darker roots
+bleached white-blonde hair
+steel-grey hair, thick and coarse
+a black-to-copper ombre
+split-dyed hair, half black and half white
+chunky blonde highlights over mid-brown
+auburn hair with grey at the temples
+coarse, wiry grey hair
+fine, flyaway hair the colour of straw
+heavy, thick hair in dark walnut brown
+silky straight jet-black hair down to the hip
+tight spiral curls in rich chestnut
+loose caramel ringlets
+a rounded natural afro, black as night
+a short natural afro with a sharp edge-up
+a shaggy mullet in dark blond
+a sharp asymmetrical bob in glossy black
+a long layered shag, brown with copper lights
+a textured crop in ash blond
+a tight tapered fade with a crisp part
+a long curtain of straight silver hair
+a chin-length blunt bob dyed deep violet
+an undercut with a long dark top
+a pageboy cut in ginger
+shaved sides with a long swept top
+a feathered cut in sandy brown
+a grown-out pixie in dusty rose
+a razor-sharp blunt fringe over long black hair
+thick, wavy hair in dirty blond
+sandy hair bleached by the sun at the ends
+a mop of unruly dark curls
+black hair streaked with silver
+dark cherry-red hair
+jet-black hair with rust-red highlights
+snow-white hair, soft as down
+grey hair falling in a loose natural wave
+a receding hairline with dark hair cropped close ; w=0.6
+a smooth bald head ; w=0.4
+a balding crown with grey hair at the sides ; w=0.5
+a short silver crew cut
+a long, wild mane of dark brown hair
+a cloud of fine, pale-blonde curls
+ginger hair with a hint of gold
+deep brown hair with caramel balayage
+blue-black hair cut to the jaw
+a sleek lob in warm brown
+bleached blonde hair with dark roots showing
+a neon-green shag cut
+pastel-blue hair, thick and wavy
+hair dyed {plum|forest green|oxblood|cobalt}
+platinum curls in a tight crop
+a high-top fade
+a curly top with shaved sides
+loose waves in dark espresso brown
+thin, fine silver hair to the collar
+a thick mane of salt-white hair
+warm chestnut hair with a slight wave
+a glossy black cut blunt at the collarbone
+long, loose, sun-bleached hair
+tightly coiled hair to the shoulders
+a shaved head with a red stripe above one ear ; w=0.6
+a thick head of dark hair going silver at the front
+unfussy, layered brown hair going grey
+straight dark-blonde hair to the shoulders
+golden-brown hair with soft face-framing layers
+a long black fringe over a bleached back
+a short silver bob
+pale ash-blonde hair, almost white at the ends
+heavy, glossy dark auburn hair to the waist
+a shock of ginger curls
+fine, straight mouse-brown hair
+dark hair with a bright blue streak at the front
+bleached hair with pastel rainbow tips
+a short wavy cut in rich plum
+burnished copper hair
+a thick, cropped head of white curls
+a close crop with a razored part line
+thick locs with honey-blond ends
+short locs, freshly twisted
+sandy-blond curls, sun-faded
+a grown-out bob in mousy brown
+hair the colour of old gold, wavy and heavy
+a fluffy cloud of grey-white hair
+side-swept black hair with a glossy sheen
+a taper cut with tight curls on top
+smooth honey-brown hair to the elbows
+a heavy, even bob in ash brown
+a shaggy bleached cut with dark roots
+silver-lavender hair, bleached and toned
+thick, springy hair dyed a bold crimson
 
 @slot eyes label="Eyes" box=subject order=4 chance=0.7
 sharp green eyes
@@ -121,6 +399,60 @@ unusually light, wolfish eyes
 green-gold eyes
 steady dark eyes with laugh lines
 sea-glass green eyes
+wide-set grey-blue eyes
+hooded dark eyes
+almond-shaped hazel eyes
+light brown eyes that turn gold in sunlight
+ice-blue eyes
+eyes the colour of strong tea
+deep-set eyes beneath heavy brows
+round, dark, expressive eyes
+red-rimmed, sleepless eyes
+bright green eyes ringed with dark lashes
+violet-tinged blue eyes
+eyes crinkled at the corners from squinting into the sun
+long dark lashes over tired eyelids
+a fleck of amber in one blue eye
+hazel eyes shifting between green and brown
+upturned, cat-like eyes
+gentle, downturned eyes
+dark circles under pale eyes
+clear blue-green eyes like shallow water
+near-black eyes with a hard glint
+warm, honey-coloured eyes
+light hazel eyes with a dark limbal ring
+pale green eyes, almost translucent
+slate-blue eyes flecked with gold
+big, dark, liquid eyes
+narrow, watchful eyes
+one green eye and one hazel eye, subtly different
+amber-brown eyes with a ring of green
+steel-blue eyes
+dark monolid eyes with a sharp upper line
+bright, restless brown eyes
+faded denim-blue eyes
+olive-green eyes with gold near the pupil
+clear grey eyes edged with long pale lashes
+eyes so dark the pupils disappear
+bright hazel eyes
+rain-grey eyes with a blue ring
+deep blue eyes like the sea at depth
+brown eyes with a golden-green halo around the pupil
+shadowed, thoughtful eyes
+sharp light-brown eyes
+pale blue eyes with faint crow's feet
+smiling brown eyes under arched brows
+impossibly green eyes
+grey eyes with a milky ring at the edge of the iris
+dark eyes with a lively spark
+wide hazel eyes with an intent stare
+slightly sunken eyes with deep shadow beneath
+teal-green eyes
+eyes the colour of dark honey
+wide, deep-lashed brown eyes
+grey-green eyes with a dark rim
+a slightly drooping left eyelid over warm brown eyes
+sharp blue eyes under straight dark brows
 
 @slot skin label="Skin" box=subject order=5 chance=0.6
 warm olive skin
@@ -135,6 +467,58 @@ weathered, sun-lined skin
 cool porcelain skin
 bronze skin glowing with sweat
 light brown skin with a warm glow
+pale skin with a pink flush across the cheeks
+deep umber skin with a warm glow
+olive skin with a golden undertone
+tan lines from sunglasses framing the eyes
+sunburnt nose and cheeks, peeling slightly
+skin dewy with humidity
+dark brown skin with silvery highlights on the cheekbones
+freckled shoulders and forearms
+fair skin that reddens in the cold
+honey-brown skin with faint freckles
+even, matte brown skin
+skin with soft patches of lighter pigment across the cheeks and neck
+ruddy, wind-chapped cheeks
+sun spots across the nose and cheekbones
+tired, slightly sallow skin ; w=0.5
+sun-bleached freckles on tan skin
+smooth tawny skin
+rich, deep brown skin, luminous at the cheekbones
+pale, almost translucent skin with blue veins at the temple
+warm beige skin with a rosy undertone
+weathered brown skin creased like old leather
+clear, fine-pored light skin
+dark skin with a cool blue undertone
+sun-flushed cheeks over fair skin
+mahogany skin with a satin finish
+neutral-toned medium skin
+golden-brown skin with sun-lightened hair on the forearms
+skin pale and unmarked as paper
+a deep tan with a sharp white line at the collar
+olive skin with faint dark circles under the eyes
+skin with a few old acne scars, left unretouched
+chalky pale skin with rosy ears and nose
+coppery skin catching the light
+a peaches-and-cream complexion
+ashen-pale skin with violet shadows under the eyes
+smooth dark skin with a glossy shine at the temples
+freckles dense as spilled cinnamon across fair skin
+sun-roughened skin with deep crow's feet
+warm brown skin with a scatter of darker moles
+light skin with a pink undertone and faint redness across the cheeks
+pale gold skin with soft pigment spots
+luminous skin with a natural, healthy glow
+mottled sun-damaged skin on the neck and chest
+deep brown skin freckled across the nose
+a ruddy complexion with fine broken veins on the nose ; w=0.5
+milky skin with a smattering of beauty spots
+sandalwood-toned skin with warm shadows
+pale skin with a blush that spreads down to the throat
+deeply sun-darkened skin with pale laugh lines
+cool-toned olive skin
+glowing brown skin lit from within
+an even, light-brown complexion with a faint sheen
 
 @slot build label="Build" box=subject order=6 chance=0.8
 athletic build
@@ -151,6 +535,68 @@ rangy and weathered
 full-figured and confident
 swimmer's shoulders and a narrow waist
 compact and powerful
+lanky with narrow shoulders
+barrel-chested and thick-armed
+wide hips and strong legs
+heavyset and warm
+willowy and long-necked
+short and stout
+a runner's lean frame
+a rower's thick thighs and powerful back
+a climber's wiry forearms on a light frame
+top-heavy with narrow hips
+an hourglass figure
+broad-backed with a thick waist
+a dancer's posture and a long neck
+plus-size, solid and unapologetic
+big-bellied and broad-shouldered
+bony and angular
+tall with a slight stoop
+a lifter's thick, powerful frame
+soft-bodied with rounded shoulders
+lithe and quick
+gaunt, with hollow cheeks
+rawboned and tall
+sinewy, all tendon and muscle
+compact with a low centre of gravity
+towering and imposing
+average height and an easy medium build
+slender and narrow-hipped
+a boxer's thick neck and sloping shoulders
+soft and round, with a comfortable presence
+long legs and a short torso
+broad across the shoulders, slim through the hips
+thick-set with powerful hands
+a gymnast's compact, muscled frame
+tall and heavy, with a farmer's build
+slight and delicate-boned
+curvy with strong shoulders
+built like a retired rugby forward
+straight up and down, narrow all through
+solid and low-slung, like a wrestler
+a statuesque, long-limbed frame
+petite and curvy
+broad, soft and strong
+wiry, with veins standing out in the forearms
+apple-shaped with slim legs
+slim-hipped with a deep chest
+lean with a faint paunch
+fit and loose-limbed
+a heavyweight's thick trunk and short neck
+slender but toned
+big-boned and tall
+narrow shoulders and generous hips
+a middle-aged spread worn comfortably
+stooped shoulders from years at a desk
+a body built by years of manual work
+sturdy and short-legged
+stretched out and gangly
+petite but unmistakably strong
+powerfully built with a soft middle
+solid shoulders and a surprisingly narrow waist
+trim and upright
+long-torsoed and slim
+sculpted by years of training
 
 @slot feature label="Features" box=subject order=7 chance=0.5 count=1-2
 a scatter of freckles across the nose
@@ -173,45 +619,117 @@ beauty marks like constellations
 a chipped front tooth
 calloused hands
 a tiny gold ring in the nostril
+a short beard flecked with grey ; any=m,nb
+a neat, waxed moustache ; any=m,nb ; w=0.6
+a three-day stubble ; any=m,nb
+thick-framed glasses sliding down the nose
+a small scar on the chin
+a stud in each earlobe
+a septum ring
+a row of small hoops up one ear
+a swallow tattooed on the forearm
+a rose inked on the collarbone
+geometric tattoos across the knuckles
+a compass tattooed on the side of the neck
+a sleeve of koi and waves in black ink
+a port-wine birthmark across one cheek
+a strong nose with a bump at the bridge
+a prominent Adam's apple ; any=m,nb
+a widow's peak
+heavy, expressive eyebrows
+a lip ring
+a pair of studs below the lower lip
+gold half-moon reading glasses on a chain
+a hearing aid behind one ear
+a carbon-fibre prosthetic lower leg
+a thin scar along the jaw
+a gold front tooth ; w=0.6
+a cleft chin
+high, sharp cheekbones
+stretched earlobes with wooden plugs ; w=0.6
+a fine gold chain looped from nose stud to ear
+a faint scar across the bridge of the nose
+a pencil tucked behind one ear
+a deep frown crease between the brows
+a lopsided, crooked smile
+crow's feet etched deep from years outdoors
+a cowlick at the hairline that will not behave
+a pronounced overbite
+a full, bushy beard with a tidy line along the cheek ; any=m,nb
+a long grey beard braided at the end ; any=m,nb ; w=0.4
+long, thick sideburns ; any=m,nb ; w=0.6
+a tiny {star|wave|sparrow|key} tattooed on the inner wrist
+a faded anchor tattooed on the forearm
+a line of script tattooed along the collarbone
+a tiny constellation of dots tattooed at the temple
+a hummingbird tattooed on the shoulder
+a surgical scar at the base of the throat
+a pale scar curving around one knee
+a softly hooked nose
+round tortoiseshell glasses
+narrow rimless glasses that catch the light
+a dimple in the chin
+deep dimples in both cheeks
+a beauty spot at the corner of the eye
+a thin white crescent scar on one cheek
+a split earlobe from an old piercing
+a tooth slightly overlapping the others, left uncorrected
+prominent smile lines bracketing the mouth
+a deeply furrowed brow
+wire-rimmed glasses mended with tape at the hinge
+big, bold-framed glasses
+uneven eyebrows, one always arched
+a white scar on the upper lip from an old fall
+a smattering of tiny moles along the jaw
+a habitual squint
+a soul patch ; any=m,nb
+a notch shaved through one eyebrow
+a close-trimmed goatee ; any=m,nb
+a dusting of silver stubble ; any=m,nb
+a black feather tattooed down one arm
+a mandala tattooed at the nape of the neck
+small, neat studs along the curve of one ear
+a prominent, strong jaw
+a mole on one cheekbone
 
 # ---------------------------------------------------------------- scene
 @slot setting label="Setting" box=scene order=10
-a city rooftop with the skyline behind ; give=outdoor,urban,mild
-a narrow cobblestone alley ; give=outdoor,urban,mild
+a city rooftop with the skyline behind ; give=outdoor,urban,mild ; not=cold,hot
+a narrow cobblestone alley ; give=outdoor,urban,mild ; not=cold,hot
 a neon-lit night market ; give=outdoor,urban,night
 a busy crosswalk at rush hour ; give=outdoor,urban,day
-a quiet bus stop on an empty road ; give=outdoor,urban,mild
+a quiet bus stop on an empty road ; give=outdoor,urban,mild ; not=cold,hot
 a fire escape above a side street ; give=outdoor,urban
-a stone bridge over a slow river ; give=outdoor,urban,water,mild
-a harbour at low tide ; give=outdoor,water,mild
+a stone bridge over a slow river ; give=outdoor,urban,water,mild ; not=cold,hot
+a harbour at low tide ; give=outdoor,water,mild ; not=cold,hot
 a graffiti-covered underpass ; give=outdoor,urban
 a train platform with the last train gone ; give=outdoor,urban,public,night
 a diner parking lot with a buzzing sign ; give=outdoor,urban,night
-a rooftop garden among tomato vines ; give=outdoor,urban,nature,mild
-a misty pine forest ; give=outdoor,nature,mild
-a sunlit meadow of wildflowers ; give=outdoor,nature,mild,day
-a windswept clifftop above the sea ; give=outdoor,nature,mild
-a black-sand beach ; give=outdoor,nature,water,mild
-a tropical beach lined with palms ; give=outdoor,nature,water,hot,day
-a dune field under a huge sky ; give=outdoor,nature,hot
-a frozen lake ; give=outdoor,nature,water,cold
-a snowy mountain pass ; give=outdoor,nature,cold
+a rooftop garden among tomato vines ; give=outdoor,urban,nature,mild ; not=cold,hot
+a misty pine forest ; give=outdoor,nature,mild ; not=cold,hot
+a sunlit meadow of wildflowers ; give=outdoor,nature,mild,day ; not=cold,hot
+a windswept clifftop above the sea ; give=outdoor,nature,mild ; not=cold,hot
+a black-sand beach ; give=outdoor,nature,water,mild ; not=cold,hot
+a tropical beach lined with palms ; give=outdoor,nature,water,hot,day ; not=cold,mild
+a dune field under a huge sky ; give=outdoor,nature,hot ; not=cold,mild
+a frozen lake ; give=outdoor,nature,water,cold ; not=hot,mild
+a snowy mountain pass ; give=outdoor,nature,cold ; not=hot,mild
 a steaming hot spring in the mountains ; give=outdoor,nature,water,private
-a bamboo grove ; give=outdoor,nature,mild
-a lavender field ; give=outdoor,nature,hot,day
-a rocky riverbank ; give=outdoor,nature,water,mild
-an autumn orchard ; give=outdoor,nature,mild
-a salt flat at the edge of the world ; give=outdoor,nature,hot
-a volcanic crater rim ; give=outdoor,nature,hot
-a lighthouse gallery high above the waves ; give=outdoor,mild
-a vineyard at harvest ; give=outdoor,nature,mild,day
-a boardwalk with closed arcades ; give=outdoor,urban,water,mild
-a candle-lit library ; give=indoor,private,mild
-a sunlit loft apartment ; give=indoor,private,mild
+a bamboo grove ; give=outdoor,nature,mild ; not=cold,hot
+a lavender field ; give=outdoor,nature,hot,day ; not=cold,mild
+a rocky riverbank ; give=outdoor,nature,water,mild ; not=cold,hot
+an autumn orchard ; give=outdoor,nature,mild ; not=cold,hot
+a salt flat at the edge of the world ; give=outdoor,nature,hot ; not=cold,mild
+a volcanic crater rim ; give=outdoor,nature,hot ; not=cold,mild
+a lighthouse gallery high above the waves ; give=outdoor,mild ; not=cold,hot
+a vineyard at harvest ; give=outdoor,nature,mild,day ; not=cold,hot
+a boardwalk with closed arcades ; give=outdoor,urban,water,mild ; not=cold,hot
+a candle-lit library ; give=indoor,private,mild ; not=cold,hot
+a sunlit loft apartment ; give=indoor,private,mild ; not=cold,hot
 a cramped night-shift kitchen ; give=indoor,night
 a late-night laundromat ; give=indoor,urban,public,night
-a tiled public bath house ; give=indoor,water,hot,public
-a greenhouse full of ferns ; give=indoor,nature,hot,private
+a tiled public bath house ; give=indoor,water,hot,public ; not=cold,mild
+a greenhouse full of ferns ; give=indoor,nature,hot,private ; not=cold,mild
 an empty ballroom ; give=indoor,formal,private
 a velvet-curtained theatre stage ; give=indoor,formal
 a cluttered record shop ; give=indoor,public
@@ -224,18 +742,356 @@ an old cinema lobby ; give=indoor,public
 a conservatory with a grand piano ; give=indoor,formal,private
 a boathouse at the water's edge ; give=indoor,water
 a hotel corridor at three in the morning ; give=indoor,public,night
-a bedroom with sheer curtains ; give=indoor,private,mild
-a steamy bathroom with a fogged mirror ; give=indoor,private,water,hot
+a bedroom with sheer curtains ; give=indoor,private,mild ; not=cold,hot
+a steamy bathroom with a fogged mirror ; give=indoor,private,water,hot ; not=cold,mild
 a small kitchen at dawn ; give=indoor,private,dawn
-an indoor pool under a glass roof ; give=indoor,water,hot
-a poolside terrace ; give=outdoor,water,hot
+an indoor pool under a glass roof ; give=indoor,water,hot ; not=cold,mild
+a poolside terrace ; give=outdoor,water,hot ; not=cold,mild
 a rain-streaked window seat in a cafe ; give=indoor,public,wet
 a workshop smelling of sawdust ; give=indoor,private
 a cluttered attic with a round window ; give=indoor,private
 a concrete stairwell ; give=indoor,urban
 a boxing gym with a heavy bag ; give=indoor,public
 a market stall under a striped awning ; give=outdoor,urban,day
-a wooden pier at the end of the day ; give=outdoor,water,mild
+a wooden pier at the end of the day ; give=outdoor,water,mild ; not=cold,hot
+a hillside tram stop with the city fanned out below ; give=outdoor,urban,mild ; not=cold,hot
+a covered arcade of shuttered shops ; give=outdoor,urban,mild ; not=cold,hot
+a rain-slick shopping street after closing ; give=outdoor,urban,wet,night ; not=day,dawn
+a concrete skate bowl behind a retail park ; give=outdoor,urban,mild ; not=cold,hot
+the top deck of a multi-storey car park ; give=outdoor,urban,mild ; not=cold,hot
+a flea market spread across an empty car park ; give=outdoor,urban,day ; not=night
+a canal towpath lined with houseboats ; give=outdoor,urban,water,mild ; not=cold,hot
+a floating market of laden wooden boats ; w=1.5 ; give=outdoor,urban,water,hot,day ; not=cold,mild,night
+a ferry terminal at the end of the last crossing ; give=outdoor,urban,water,night ; not=day,dawn
+a souk lane roofed in lattice and hanging lamps ; give=outdoor,urban,hot ; not=cold,mild
+a stepped alley in a hillside fishing town ; give=outdoor,urban,water,mild ; not=cold,hot
+a tuk-tuk rank outside a railway station ; give=outdoor,urban,hot ; not=cold,mild
+a plaza with a dry fountain and a few pigeons ; give=outdoor,urban,day ; not=night
+a karaoke street of stacked neon signs ; w=1.5 ; give=outdoor,urban,night ; not=day,dawn
+a ramen alley fogged with steam from the vents ; give=outdoor,urban,night ; not=day
+a lane of grey brick courtyard houses ; give=outdoor,urban,mild ; not=cold,hot
+a bike lane under a canopy of plane trees ; give=outdoor,urban,mild ; not=cold,hot
+a construction site at lunch break ; give=outdoor,urban,day ; not=night
+a scrapyard stacked with crushed cars ; give=outdoor,urban
+a container port under floodlights ; give=outdoor,urban,water,night ; not=day,dawn
+a high-rise balcony far above the traffic ; give=outdoor,urban,private,mild ; not=cold,hot
+a cobbled square beneath a stopped clock tower ; give=outdoor,urban,mild ; not=cold,hot
+a staircase street lined with potted geraniums ; give=outdoor,urban,mild ; not=cold,hot
+a taxi rank in the rain ; give=outdoor,urban,wet
+a viaduct arch converted into workshops ; give=outdoor,urban
+a bus depot after the last service ; give=outdoor,urban,night ; not=day,dawn
+a drive-in cinema lot ; give=outdoor,urban,night,mild ; not=cold,dawn,day,hot
+a rooftop water tank among a thicket of antennas ; give=outdoor,urban
+a deserted fairground at the end of the season ; give=outdoor,urban,mild ; not=cold,hot
+a frontier-style main street of wooden boardwalks ; give=outdoor,urban,hot,day ; not=cold,mild,night
+a snow-banked city street under yellow lamps ; give=outdoor,urban,cold,night ; not=dawn,day,hot,mild
+a riverside promenade lined with iron lamp posts ; give=outdoor,urban,water,mild ; not=cold,hot
+a footbridge crowded with love-lock padlocks ; give=outdoor,urban,water,mild ; not=cold,hot
+a lonely petrol station forecourt ; give=outdoor,urban,night ; not=day,dawn
+a rooftop basketball court between two towers ; give=outdoor,urban,mild ; not=cold,hot
+a hillside staircase of brightly painted houses ; give=outdoor,urban,hot ; not=cold,mild
+a sunken plaza of a brutalist housing estate ; give=outdoor,urban,mild ; not=cold,hot
+a tiled courtyard with a single lemon tree ; give=outdoor,urban,private,hot ; not=cold,mild
+an old tram depot with rusted rails ; give=outdoor,urban,mild ; not=cold,hot
+a pedestrian tunnel under a ring road ; give=outdoor,urban
+a street of open-fronted spice shops ; give=outdoor,urban,hot,day ; not=cold,mild,night
+a late-night food truck with a glowing serving hatch ; give=outdoor,urban,night ; not=day,dawn
+a small shrine wedged between office towers ; give=outdoor,urban,mild ; not=cold,hot
+a narrow canal between crumbling palazzo walls ; give=outdoor,urban,water,mild ; not=cold,hot
+a street corner under a rattling elevated railway ; give=outdoor,urban
+a park corner with concrete chess tables ; give=outdoor,urban,nature,mild,day ; not=cold,hot,night
+a rain-darkened bandstand in an empty park ; give=outdoor,urban,nature,wet
+a noodle stall with plastic stools on the pavement ; give=outdoor,urban,night ; not=day
+a rooftop swimming pool above the skyline ; give=outdoor,urban,water,hot ; not=cold,mild
+a back-street mechanic's yard ; give=outdoor,urban,mild ; not=cold,hot
+a tiled roof terrace in a hill town ; give=outdoor,urban,mild ; not=cold,hot
+a snow-covered tram terminus ; give=outdoor,urban,cold ; not=hot,mild
+a cathedral square on market day ; give=outdoor,urban,public,mild,day ; not=cold,hot,night
+a harbour-front fish market at first light ; give=outdoor,urban,water,dawn ; not=night,dusk
+a quiet street of terraced houses ; give=outdoor,urban,mild ; not=cold,hot
+a suburban cul-de-sac with a basketball hoop ; give=outdoor,urban,mild ; not=cold,hot
+a wet crossroads with blinking traffic lights ; give=outdoor,urban,wet,night ; not=day,dawn
+a pavement cafe table beneath a patio heater ; give=outdoor,urban,cold ; not=hot,mild
+a courtyard of grey apartment blocks from the Soviet era ; give=outdoor,urban,mild ; not=cold,hot
+a half-flooded street in a monsoon town ; give=outdoor,urban,wet,hot ; not=cold,mild
+a graffiti-heavy railway siding ; give=outdoor,urban
+a lantern-hung street in an old walled town ; give=outdoor,urban,dusk,mild ; not=cold,dawn,hot
+a night bazaar of tarpaulin stalls and generators ; give=outdoor,urban,hot,night ; not=cold,dawn,day,mild
+a cobbled hill street with trams grinding past ; give=outdoor,urban,mild ; not=cold,hot
+a tiled metro entrance gaping into the ground ; give=outdoor,urban,public
+a canal lock with a sleepy keeper's cottage ; give=outdoor,water,mild ; not=cold,hot
+a harbour wall slick with spray ; give=outdoor,urban,water,wet
+a side street of sizzling grills and plastic crates ; give=outdoor,urban,hot,night ; not=cold,day,mild
+a cedar forest threaded with shafts of mist ; give=outdoor,nature,mild ; not=cold,hot
+a boulder-strewn alpine meadow ; give=outdoor,nature,mild ; not=cold,hot
+a moss-furred ravine with a thin waterfall ; give=outdoor,nature,water,mild ; not=cold,hot
+a glacier tongue of blue ice ; give=outdoor,nature,cold ; not=hot,mild
+a tundra plain under a vast pale sky ; give=outdoor,nature,cold ; not=hot,mild
+a tidepool shelf of black rock ; give=outdoor,nature,water,mild ; not=cold,hot
+a mangrove creek at slack water ; give=outdoor,nature,water,hot ; not=cold,mild
+a terraced rice hillside, each step a mirror of sky ; w=1.5 ; give=outdoor,nature,water,hot ; not=cold,mild
+a dry oak savanna with long yellow grass ; give=outdoor,nature,hot ; not=cold,mild
+a canyon of layered red sandstone ; give=outdoor,nature,hot ; not=cold,mild
+a slot canyon with a single bar of light ; give=outdoor,nature,hot,day ; not=cold,mild,night
+a jungle clearing hung with vines ; give=outdoor,nature,hot,wet ; not=cold,mild
+a cloud forest dripping with ferns ; give=outdoor,nature,wet,mild ; not=cold,hot
+a peat bog crossed by a plank walkway ; give=outdoor,nature,wet,mild ; not=cold,hot
+a heather moor with a ring of standing stones ; give=outdoor,nature,mild ; not=cold,hot
+a sunflower field gone to seed ; give=outdoor,nature,hot,day ; not=cold,mild,night
+a wheat field rippling in the wind ; give=outdoor,nature,mild ; not=cold,hot
+a birch wood under fresh snow ; give=outdoor,nature,cold ; not=hot,mild
+a frozen waterfall ; give=outdoor,nature,water,cold ; not=hot,mild
+an ice-fishing hut on a white lake ; give=outdoor,nature,water,cold ; not=hot,mild
+a sea cave lit turquoise from below ; give=outdoor,nature,water,mild ; not=cold,hot
+a limestone sinkhole pool ringed with roots ; give=outdoor,nature,water,hot ; not=cold,mild
+a rope bridge over a river gorge ; give=outdoor,nature,mild ; not=cold,hot
+a high-desert plateau of sagebrush ; give=outdoor,nature,hot ; not=cold,mild
+a lava-rock coast with spouting blowholes ; give=outdoor,nature,water,mild ; not=cold,hot
+an olive grove on a dry hillside ; give=outdoor,nature,hot ; not=cold,mild
+a gravel lane lined with tall cypresses ; give=outdoor,nature,mild ; not=cold,hot
+a reed marsh with a single flat-bottomed punt ; give=outdoor,nature,water,mild ; not=cold,hot
+a tea plantation in curving green rows ; give=outdoor,nature,mild ; not=cold,hot
+a pebble beach beneath chalk cliffs ; give=outdoor,nature,water,mild ; not=cold,hot
+a sandbar stretching out at low tide ; give=outdoor,nature,water,mild ; not=cold,hot
+a mountain hut porch above the treeline ; give=outdoor,nature,cold ; not=hot,mild
+a ridge trail above a sea of cloud ; w=1.5 ; give=outdoor,nature,mild ; not=cold,hot
+a rainforest waterfall pool ; give=outdoor,nature,water,hot,wet ; not=cold,mild
+a baobab-dotted savanna at the dry season's end ; give=outdoor,nature,hot ; not=cold,mild
+a lakeside campsite with a dark tent ; give=outdoor,nature,water,mild ; not=cold,hot
+a forest clearing with a smouldering campfire ; give=outdoor,nature,mild ; not=cold,hot
+an alpine lake with a lone rowing boat ; give=outdoor,nature,water,mild ; not=cold,hot
+a dry riverbed of bleached white stones ; give=outdoor,nature,hot ; not=cold,mild
+an apricot orchard in full blossom ; give=outdoor,nature,mild ; not=cold,hot
+a hay meadow dotted with round bales ; give=outdoor,nature,mild,day ; not=cold,hot,night
+a driftwood-strewn shingle beach ; give=outdoor,nature,water,mild ; not=cold,hot
+a flooded forest where the river has risen between the trunks ; give=outdoor,nature,water,hot,wet ; not=cold,mild
+an abandoned quarry filled with green water ; give=outdoor,nature,water,mild ; not=cold,hot
+the shade of a banyan with hanging roots ; give=outdoor,nature,hot ; not=cold,mild
+a salt marsh with a boardwalk and the tide going out ; give=outdoor,nature,water,mild ; not=cold,hot
+a scree slope under a jagged skyline ; give=outdoor,nature,mild ; not=cold,hot
+a thorn-scrub desert track ; give=outdoor,nature,hot ; not=cold,mild
+a mossy stream crossing on stepping stones ; give=outdoor,nature,water,mild ; not=cold,hot
+a pine ridge smelling of resin in the heat ; give=outdoor,nature,hot ; not=cold,mild
+a snowy larch forest with a single ski track ; give=outdoor,nature,cold ; not=hot,mild
+a glassy fjord between steep green walls ; give=outdoor,nature,water,mild ; not=cold,hot
+an ice cave glowing blue ; w=0.6 ; give=outdoor,nature,cold ; not=hot,mild
+a white-sand cay ringed by turquoise shallows ; give=outdoor,nature,water,hot,day ; not=cold,mild,night
+a hidden cove reached by a rope ladder ; give=outdoor,nature,water,mild ; not=cold,hot
+a clifftop meadow with a lone bench ; give=outdoor,nature,mild ; not=cold,hot
+a bush track under peeling red gums ; give=outdoor,nature,hot ; not=cold,mild
+a canopy walkway strung through the rainforest ; give=outdoor,nature,hot,wet ; not=cold,mild
+a grove of enormous ancient trees ; give=outdoor,nature,mild ; not=cold,hot
+a prairie road running dead straight to the horizon ; give=outdoor,nature,hot ; not=cold,mild
+a beech wood in autumn gold ; give=outdoor,nature,mild ; not=cold,hot
+a grassy volcano rim with sheep? ; give=outdoor,nature,mild ; not=cold,hot
+a farmyard with a rusted tractor ; give=outdoor,nature,mild ; not=cold,hot
+a dirt road cutting between cornfields ; give=outdoor,nature,hot ; not=cold,mild
+a hayloft with light through the slats ; give=indoor,private,mild ; not=cold,hot
+a drystone-walled sheep pasture ; give=outdoor,nature,mild ; not=cold,hot
+a roadside fruit stand ; give=outdoor,hot,day ; not=cold,mild,night
+a dusty village square with a stone well ; give=outdoor,hot,day ; not=cold,mild,night
+a muddy horse paddock ; give=outdoor,nature,wet,mild ; not=cold,hot
+a stable at night with breath hanging in the air ; give=indoor,private,cold,night ; not=dawn,day,hot,mild
+a bus shelter beside a wheat field ; give=outdoor,nature,mild ; not=cold,hot
+a vegetable allotment with mismatched sheds ; give=outdoor,nature,mild ; not=cold,hot
+a windmill on a polder dyke ; give=outdoor,nature,water,mild ; not=cold,hot
+a cattle corral at the edge of the ranch ; give=outdoor,nature,hot ; not=cold,mild
+a salt pan with long-handled rakes ; give=outdoor,nature,hot ; not=cold,mild
+a slate-roofed mountain village ; give=outdoor,cold ; not=hot,mild
+a shearing shed smelling of lanolin ; give=indoor,mild ; not=cold,hot
+a fishing-village slipway ; give=outdoor,water,mild ; not=cold,hot
+a stilt hut over a flooded paddy ; give=outdoor,nature,water,hot ; not=cold,mild
+a cider shed in an apple orchard ; give=indoor,nature,mild ; not=cold,hot
+a farmhouse kitchen with a wood-fired range ; give=indoor,private,cold ; not=hot,mild
+a farm gate at the end of a long track ; give=outdoor,nature,mild ; not=cold,hot
+a village green with a weathered pavilion ; give=outdoor,nature,mild,day ; not=cold,hot,night
+a polytunnel of ripening tomatoes ; give=indoor,nature,private,hot ; not=cold,mild
+a chicken yard at first light ; give=outdoor,nature,dawn ; not=night,dusk
+a goat track above a terraced village ; give=outdoor,nature,hot ; not=cold,mild
+a narrow galley kitchen overlooking a courtyard ; give=indoor,private,mild ; not=cold,hot
+a reading nook under the stairs ; give=indoor,private,mild ; not=cold,hot
+a sunroom crowded with wicker chairs and plants ; give=indoor,private,hot ; not=cold,mild
+a tatami room with paper sliding doors ; give=indoor,private,mild ; not=cold,hot
+a high-ceilinged flat with peeling plaster ; give=indoor,private,mild ; not=cold,hot
+a mezzanine bedroom in a converted warehouse ; give=indoor,private,mild ; not=cold,hot
+a mudroom heaped with coats and boots ; give=indoor,private,cold ; not=hot,mild
+a log cabin with a ticking wood stove ; give=indoor,private,cold ; not=hot,mild
+a bedsit crowded with books and plants ; give=indoor,private,mild ; not=cold,hot
+a basement music room lined with egg-crate foam ; give=indoor,private
+a walk-in wardrobe lit by a single lamp ; give=indoor,private
+a penthouse living room walled in glass ; give=indoor,private,mild ; not=cold,hot
+a cedar sauna with a bucket and ladle ; give=indoor,private,hot ; not=cold,mild
+a claw-foot bath beneath a skylight ; give=indoor,private,water,hot ; not=cold,mild
+a screened porch on a thick summer night ; give=outdoor,private,hot,night ; not=cold,dawn,day,mild
+a garage workshop with a half-built motorbike ; give=indoor,private
+a utility room with a humming dryer ; give=indoor,private
+a sewing room stacked with bolts of cloth ; give=indoor,private
+a darkroom bathed in red light ; give=indoor,private
+a pantry lined with jars and tins ; give=indoor,private
+a narrow townhouse with a spiral staircase ; give=indoor,private
+a houseboat cabin with a low ceiling ; give=indoor,private,water
+a caravan interior with a fold-down table ; give=indoor,private
+a veranda hammock in the afternoon heat ; give=outdoor,private,hot,day ; not=cold,mild,night
+a back stoop with a cracked flowerpot ; give=outdoor,urban,private,mild ; not=cold,hot
+a living room lit only by a television ; give=indoor,private,night ; not=day,dawn
+a bedroom with rain running down the window ; give=indoor,private,wet
+a window seat in a snowed-in cottage ; give=indoor,private,cold ; not=hot,mild
+a dining room laid for a dinner nobody came to ; give=indoor,private,formal
+a study lined with dark panelling and globes ; give=indoor,private,formal
+a bathroom with a cracked mosaic floor ; give=indoor,private,water
+a loft studio with a mattress on the floor ; give=indoor,private,mild ; not=cold,hot
+a rooftop laundry terrace ; give=outdoor,urban,private,hot ; not=cold,mild
+a shared stairwell landing crowded with bicycles and plants ; give=indoor,urban,mild ; not=cold,hot
+a garage rehearsal room with amps and cables ; give=indoor,private
+a ground-floor flat with the shutters half closed ; give=indoor,private,hot ; not=cold,mild
+a kitchen island at midnight under one pendant lamp ; give=indoor,private,night ; not=day,dawn
+a hospital ward at night with a pool of lamplight ; give=indoor,public,night ; not=day,dawn
+a bakery before opening ; give=indoor,public,dawn ; not=day,dusk
+a butcher's shop with a sawdust floor ; give=indoor,public
+a courtroom panelled in dark oak ; give=indoor,formal,public
+a newsroom at deadline ; give=indoor,public
+a wholesale flower market at five in the morning ; give=indoor,public,dawn ; not=day,dusk
+an empty lecture hall with tiered seats ; give=indoor,public
+a print shop with a clattering press ; give=indoor
+a pottery studio with turning wheels ; give=indoor,private
+a call-centre floor in the small hours ; give=indoor,public,night ; not=day,dawn
+a hotel kitchen at the pass ; give=indoor
+a pharmacy at closing time ; give=indoor,public
+a barbershop with a striped pole outside ; give=indoor,public
+a tailor's back room with headless mannequins ; give=indoor,private
+a luthier's workshop hung with unfinished guitars ; give=indoor,private
+a blacksmith's forge glowing orange ; give=indoor,private,hot ; not=cold,mild
+a glass-blowing studio with a roaring furnace ; give=indoor,hot ; not=cold,mild
+a distillery cellar of oak barrels ; give=indoor,private,cold ; not=hot,mild
+a cheese cellar with wooden shelves ; give=indoor,private,cold ; not=hot,mild
+an observatory dome slid open to the stars ; give=indoor,night ; not=day,dawn
+a ship's bridge at night ; give=indoor,water,night ; not=day,dawn
+an engine room throbbing with pipes ; give=indoor,hot ; not=cold,mild
+an airport gate at four in the morning ; give=indoor,public,night ; not=day,dusk
+a subway car with swaying straps ; give=indoor,urban,public
+a long-distance coach at night ; give=indoor,public,night ; not=day,dawn
+the cab of a truck at a rest stop ; give=indoor,night ; not=day
+a ferry's passenger lounge ; give=indoor,water,public
+a taxi back seat on a rainy night ; give=indoor,urban,wet,night ; not=day,dawn
+a motorway service station at midnight ; give=indoor,public,night ; not=day,dawn
+a dining car with white tablecloths rattling over the rails ; give=indoor,public,formal
+a control room full of glowing screens ; give=indoor,private,night ; not=day
+a fire station bay with the engine pulled out ; give=indoor,public
+a laboratory with fume hoods and glassware ; give=indoor,private
+a radio station booth with a red on-air light ; give=indoor,private,night ; not=day
+a recording studio's live room ; give=indoor,private
+a signal box with a wall of brass levers ; give=indoor,private
+a shipyard dry dock ; give=outdoor,urban,water
+a wharf warehouse stacked with crates ; give=indoor,water
+a hardware store with aisles of bins ; give=indoor,public
+a lighthouse lamp room full of brass and glass ; give=indoor,water
+a stage door alley behind a theatre ; give=outdoor,urban,night ; not=day,dawn
+a costume store with rails of garments ; give=indoor,private
+a dressing room ringed with bare bulbs ; give=indoor,private
+a rehearsal studio with a sprung floor ; give=indoor,private
+a stockroom of stacked cardboard and a humming fridge ; give=indoor,private
+a bank vault corridor lined with steel boxes ; give=indoor,formal
+a covered market hall under iron rafters ; give=indoor,public,day ; not=night
+a railway terminus concourse full of echoes ; give=indoor,public
+a bookshop with rolling ladders and crooked aisles ; give=indoor,public
+a tea house with low tables and cushions ; give=indoor,public,mild ; not=cold,hot
+a hotel lobby with a revolving door ; give=indoor,public,formal
+a small-town diner counter ; give=indoor,public
+an arcade parlour glowing with cabinets ; give=indoor,public,night ; not=day,dawn
+a bowling alley after midnight ; give=indoor,public,night ; not=day,dawn
+a public library reading room with green-shaded lamps ; give=indoor,public,formal
+a natural-history hall under a whale skeleton ; give=indoor,public,formal
+a white-walled gallery with a single painting ; give=indoor,public,formal
+a low-ceilinged basement club ; give=indoor,public,night ; not=day,dawn
+a marble steam room ; give=indoor,water,hot,public ; not=cold,mild
+a wooden inn corridor lit with paper lanterns ; give=indoor,public
+a cathedral nave with banks of candles ; give=indoor,formal,public
+a cloister garden with a stone fountain ; give=outdoor,formal,mild ; not=cold,hot
+a temple hall hazy with incense ; give=indoor,formal,public
+an opera house box above the stalls ; give=indoor,formal,public
+a dance studio with a barre and long mirrors ; give=indoor,private
+a roller rink under a mirrorball ; give=indoor,public,night ; not=day,dawn
+a swimming bath with high steamed windows ; give=indoor,water,public,hot ; not=cold,mild
+a ski-lodge bar around a stone fireplace ; give=indoor,public,cold ; not=hot,mild
+a cafe fogged with condensation ; give=indoor,public,cold ; not=hot,mild
+a rooftop bar ringed with patio heaters ; give=outdoor,urban,public,cold,night ; not=dawn,day,hot,mild
+a hidden bar behind an unmarked door ; give=indoor,public,night ; not=day,dawn
+a gym floor at dawn with the first lifters ; give=indoor,public,dawn ; not=night,dusk
+a climbing gym with coloured holds ; give=indoor,public
+a pawn shop crowded with instruments ; give=indoor,public
+a thrift shop with racks of old coats ; give=indoor,public
+a station cafe at the end of the line ; give=indoor,public
+a hotel bar with a lone pianist ; give=indoor,public,formal,night ; not=day,dawn
+an indoor food court at closing time ; give=indoor,public
+a covered bazaar of brass and carpets ; give=indoor,public,hot ; not=cold,mild
+a museum stairwell with a marble balustrade ; give=indoor,formal,public
+a crumbling castle courtyard ; give=outdoor,formal,mild ; not=cold,hot
+a ruined abbey with grass for a floor ; give=outdoor,nature,mild ; not=cold,hot
+a Roman-style colonnade of broken pillars ; give=outdoor,hot ; not=cold,mild
+a medieval market square of timbered houses ; give=outdoor,urban,mild ; not=cold,hot
+a Victorian arcade under a glass roof ; give=indoor,public
+a palm house with a wrought-iron frame ; give=indoor,nature,hot,public ; not=cold,mild
+a great hall hung with banners and antlers ; give=indoor,formal
+a crypt with a low vaulted ceiling ; give=indoor,cold ; not=hot,mild
+a medina rooftop of satellite dishes and sun ; give=outdoor,urban,hot ; not=cold,mild
+an adobe plaza ringed with arches ; give=outdoor,urban,hot ; not=cold,mild
+a stone watchtower on a windy ridge ; give=outdoor,nature,mild ; not=cold,hot
+a colonial veranda with slow ceiling fans ; give=outdoor,hot ; not=cold,mild
+a Georgian terrace beneath plane trees ; give=outdoor,urban,mild ; not=cold,hot
+a clifftop monastery terrace ; give=outdoor,nature,mild ; not=cold,hot
+a ruined aqueduct striding across a valley ; give=outdoor,nature,hot ; not=cold,mild
+a cobbled castle gatehouse ; give=outdoor,mild ; not=cold,hot
+a Moorish courtyard of tilework and orange trees ; give=outdoor,private,hot ; not=cold,mild
+a pilgrim's stone stairway worn smooth ; give=outdoor,nature,mild ; not=cold,hot
+a stately home's long gallery of portraits ; give=indoor,formal
+a gaslit alley in an old quarter ; give=outdoor,urban,night ; not=day,dawn
+a half-timbered inn yard ; give=outdoor,mild ; not=cold,hot
+a tower library with a spiral stair ; give=indoor,private,formal
+the back of a pickup on a gravel road ; give=outdoor,nature,hot ; not=cold,mild
+an open ferry deck in a fresh wind ; give=outdoor,water,mild ; not=cold,hot
+a cable-car cabin sliding over a valley ; give=indoor,nature,cold ; not=hot,mild
+a tram carriage rattling through the city ; give=indoor,urban,public
+a cargo ship's deck stacked with containers ; give=outdoor,water,mild ; not=cold,hot
+the cockpit of a small propeller plane ; give=indoor,mild ; not=cold,hot
+a hot-air balloon basket drifting at dawn ; give=outdoor,nature,dawn ; not=night,dusk
+a vintage motorhome parked beside a lake ; give=outdoor,nature,water,mild ; not=cold,hot
+a rural railway halt among the fields ; give=outdoor,nature,mild ; not=cold,hot
+a narrowboat's stern deck at a lock ; give=outdoor,water,mild ; not=cold,hot
+a ski chairlift climbing over a white slope ; give=outdoor,nature,cold ; not=hot,mild
+an aircraft hangar with the doors rolled open ; give=indoor
+a river barge pushing through brown water ; give=outdoor,water,hot ; not=cold,mild
+a night bus on an empty ring road ; give=indoor,urban,night ; not=day,dawn
+a ferry car deck among parked vans ; give=indoor,water
+a sea wall promenade at the edge of town ; give=outdoor,water,mild ; not=cold,hot
+a layby with a coffee van and a view of the hills ; give=outdoor,nature,mild ; not=cold,hot
+a desert highway under a flat white sky ; give=outdoor,nature,hot,day ; not=cold,mild,night
+a snowbound mountain road with a stalled car ; give=outdoor,nature,cold ; not=hot,mild
+a seaplane dock on a quiet lake ; give=outdoor,nature,water,mild ; not=cold,hot
+a mountain railway station with deep wooden eaves ; give=outdoor,nature,cold,public ; not=hot,mild
+a glasshouse city of domes and rail bridges ; give=indoor,nature,hot ; not=cold,mild
+a space-station observation deck with the planet turning below ; w=1.5 ; give=indoor
+a floating village of stilt houses ; give=outdoor,water,hot ; not=cold,mild
+a rooftop city of rope bridges and lanterns ; give=outdoor,urban,dusk ; not=dawn,night
+a neon alley of glowing vending machines ; give=outdoor,urban,night ; not=day,dawn
+a flooded metro platform with waist-deep water ; give=indoor,urban,water
+a derelict shopping mall reclaimed by green ; give=indoor,public,nature
+a sky bridge between two mirrored towers ; give=outdoor,urban,mild ; not=cold,hot
+a workshop of brass gears and steam pipes ; give=indoor,private
+a lantern-lit airship mooring tower ; give=outdoor,urban,night ; not=day,dawn
+an underground farm lit by purple grow-lamps ; give=indoor,nature,private
+a derelict spacecraft corridor with flickering panels ; give=indoor
+a night market on a frozen river ; give=outdoor,urban,water,cold,night ; not=dawn,day,hot,mild
+a bioluminescent shoreline at low tide ; give=outdoor,nature,water,night ; not=day,dawn
+a caravanserai courtyard at the desert's edge ; give=outdoor,hot ; not=cold,mild
+a library carved into a cliff face ; give=indoor,formal,private
+a railway carriage converted into a tea room ; give=indoor,public
+a steam-wreathed bathing village in the snow ; give=outdoor,nature,water,cold ; not=hot,mild
+a tower block whose every balcony is a garden ; give=outdoor,urban,nature,mild ; not=cold,hot
+a lighthouse converted into a home ; give=indoor,private,water
+an abandoned desert gas station half buried in sand ; give=outdoor,hot ; not=cold,mild
+a ship graveyard of rusted hulls at low tide ; give=outdoor,water,mild ; not=cold,hot
+a moss-covered locomotive sunk into a forest ; give=outdoor,nature,wet,mild ; not=cold,hot
+a monastery of wooden galleries clinging to a cliff ; give=outdoor,nature,mild ; not=cold,hot
 
 @slot time label="Time of day" box=scene order=12 chance=0.8
 at dawn ; give=dawn ; not=night,dusk
@@ -248,23 +1104,103 @@ at midnight ; give=night ; not=day,dawn
 in the small hours ; give=night ; not=day
 just after sunset ; give=dusk ; not=day,dawn,night
 on a hazy morning ; give=dawn,day ; not=night
+in the blue stillness before sunrise ; give=dawn ; not=day,dusk
+at first light ; give=dawn ; not=night,dusk
+at sunrise ; give=dawn ; not=night,dusk
+in the pale light of early morning ; give=dawn,day ; not=night,dusk
+mid-morning ; give=day ; not=night,dusk
+at high noon ; give=day ; not=night,dawn,dusk
+on a slow Sunday afternoon ; give=day ; not=night,dawn
+at three in the afternoon ; give=day ; not=night,dawn,dusk
+an hour before sunset ; give=dusk ; not=night,dawn
+in the early evening ; give=dusk ; not=dawn
+at sunset ; give=dusk ; not=dawn,night
+in the last light of the day ; give=dusk ; not=dawn,night
+at twilight ; give=dusk ; not=dawn,day
+around ten at night ; give=night ; not=day,dawn
+late at night ; give=night ; not=day,dawn
+at the stroke of midnight ; give=night ; not=day,dawn,dusk
+at three in the morning ; give=night ; not=day,dawn,dusk
+in the dead of night ; give=night ; not=day,dawn,dusk
+just before dawn ; give=dawn ; not=day,dusk
+as the night shift ends ; give=dawn ; not=day,dusk
+long after closing time ; give=night ; not=day,dawn
+during the siesta hour ; give=day ; not=night,dawn,dusk,cold
+in the flat bright light of early afternoon ; give=day ; not=night,dawn,dusk
+on a long summer evening ; give=dusk ; not=dawn,cold
+at four o'clock on a dark winter afternoon ; give=cold,dusk ; not=dawn,hot,mild
 
 @slot weather label="Weather" box=scene order=14 chance=0.55
 in light rain ; need=outdoor ; give=wet ; not=hot
 in heavy rain ; need=outdoor ; give=wet ; not=hot
-in drifting snow ; need=outdoor ; give=cold ; not=hot,wet
+in drifting snow ; need=outdoor ; give=cold ; not=hot,mild,wet
 in thick fog ; need=outdoor ; not=hot
-under a heat haze ; need=outdoor ; give=hot ; not=cold,wet
+under a heat haze ; need=outdoor ; give=hot ; not=cold,mild,wet
 under a clear sky ; need=outdoor ; not=wet
 under heavy overcast clouds ; need=outdoor ; not=night
 after a storm, with puddles everywhere ; need=outdoor ; give=wet ; not=hot
-on the first frost of the year ; need=outdoor ; give=cold ; not=hot,wet
+on the first frost of the year ; need=outdoor ; give=cold ; not=hot,mild,wet
 with a strong wind tugging at everything ; need=outdoor
-as cherry blossom drifts past ; need=outdoor ; give=mild ; not=cold,wet
-as autumn leaves swirl around ; need=outdoor ; give=mild ; not=hot,wet
+as cherry blossom drifts past ; need=outdoor ; give=mild ; not=cold,hot,wet
+as autumn leaves swirl around ; need=outdoor ; give=mild ; not=cold,hot,wet
 with a thunderstorm gathering on the horizon ; need=outdoor ; not=cold
 as sea spray hangs in the air ; need=water,outdoor ; give=wet
 under a low, bruised sunset sky ; need=outdoor ; not=night,dawn
+in a fine drizzle ; need=outdoor ; give=wet ; not=hot
+in a warm monsoon downpour ; need=outdoor ; give=wet,hot ; not=cold,mild
+under fat, slow snowflakes ; need=outdoor ; give=cold ; not=hot,mild,wet
+in a whiteout blizzard ; need=outdoor ; give=cold ; not=hot,mild,wet
+under towering white cumulus ; need=outdoor ; not=cold,wet
+in freezing rain, every branch glazed with ice ; need=outdoor ; give=cold,wet ; not=hot,mild
+in a dry, dusty wind ; need=outdoor ; give=hot ; not=cold,mild,wet
+in a low sea mist ; need=water,outdoor ; not=hot
+in stinging sleet ; need=outdoor ; give=cold,wet ; not=hot,mild
+under a high mackerel sky ; need=outdoor ; not=wet
+in a sudden hailstorm ; need=outdoor ; give=wet ; not=hot
+with dew beading every surface ; need=outdoor ; any=dawn,mild ; not=hot,wet
+in a sea fret rolling off the water ; need=water,outdoor ; not=hot
+with ground mist hugging the field ; need=nature,outdoor ; any=dawn,cold,mild ; not=hot
+as the first heavy drops begin to fall ; need=outdoor ; give=wet ; not=cold
+in a sticky, humid haze ; need=outdoor ; give=hot ; not=cold,mild
+in the heat shimmer rising off the asphalt ; need=urban,outdoor ; give=hot ; not=cold,mild,night,wet
+in a dust storm that turns the light orange ; need=outdoor ; give=hot ; not=cold,mild,night,wet
+with a cold clear sky and breath fogging the air ; need=outdoor ; give=cold ; not=hot,mild,wet
+as light snow settles on the shoulders ; need=outdoor ; give=cold ; not=hot,mild,wet
+under a sky of fast-moving clouds ; need=outdoor
+with a rainbow arching over the wet street ; need=outdoor ; any=wet ; not=night,cold
+with hail bouncing off the pavement ; need=urban,outdoor ; give=wet ; not=hot
+in the stillness before a storm ; need=outdoor ; not=cold
+as wind-driven rain slants across the frame ; need=outdoor ; give=wet ; not=hot
+under bright, hard winter sun ; need=outdoor ; give=cold ; not=hot,mild,night,wet
+in bone-dry heat ; need=outdoor ; give=hot ; not=cold,mild,wet
+as woodsmoke hangs low in the cold air ; need=outdoor ; give=cold ; not=hot,mild,wet
+with heat lightning flickering far off ; need=outdoor ; any=night,dusk ; not=cold
+under a hazy, pearl-white sky ; need=outdoor ; not=night
+in a warm summer shower ; need=outdoor ; give=wet ; not=cold
+while pollen drifts through the sunlight ; need=outdoor ; any=mild,hot ; not=night,wet,cold
+with fireflies rising from the damp grass ; need=nature,outdoor ; any=night,dusk ; not=cold
+as a soft evening breeze stirs the air ; need=outdoor ; not=dawn,cold
+in glittering diamond-dust cold ; need=outdoor ; give=cold ; not=hot,mild,wet
+in a salty sea breeze ; need=water,outdoor ; not=cold
+with the sun breaking through after rain ; need=outdoor ; any=wet ; not=night
+in raw, damp air that clings to the skin ; need=outdoor ; give=cold,wet ; not=hot,mild
+as thick snow muffles the street ; need=urban,outdoor ; give=cold ; not=hot,mild,wet
+as a gust throws leaves down the street ; need=urban,outdoor ; not=cold,hot
+in a blue, windless calm ; need=outdoor ; not=wet
+as the first rain hits hot pavement ; need=urban,outdoor ; give=wet,hot ; not=cold,mild
+with steam lifting off the wet road ; need=urban,outdoor ; any=wet,hot ; not=cold
+beneath a canopy of thunderheads ; need=outdoor ; not=cold
+in a light, unseasonal snowfall ; need=outdoor ; give=cold ; not=hot,mild,wet
+as storm clouds split into shafts of light ; need=outdoor ; not=night,cold
+with the sky bruising toward rain ; need=outdoor ; not=night,cold
+with rain drumming against the windows ; need=indoor ; give=wet ; not=hot
+with snow falling past the window ; need=indoor ; give=cold ; not=hot,mild,wet
+with a heatwave pressing against the glass ; need=indoor ; give=hot ; not=cold,mild,wet
+with a storm rattling the shutters ; need=indoor ; give=wet ; not=hot
+with frost ferning across the window ; need=indoor ; give=cold ; not=hot,mild,wet
+with a thin grey light leaking through the clouds ; need=indoor ; not=night
+as a monsoon breeze lifts the curtains ; need=indoor ; give=hot,wet ; not=cold,mild
+in a bright, windy April day ; need=outdoor ; give=mild ; not=cold,hot,night
 
 @slot lighting label="Lighting" box=scene order=16
 soft window light ; need=indoor ; not=night
@@ -286,6 +1222,101 @@ lamplight pooling on the table ; need=indoor,private
 headlight glare from passing cars ; need=urban,outdoor ; any=night,dusk
 reflections of water rippling across the walls ; need=water,indoor
 warm low sun through dusty air ; need=indoor ; any=dusk,day
+the cold blue glow of a monitor in a dark room ; need=indoor ; any=night,private
+a projector beam full of drifting dust ; need=indoor
+light through venetian blinds laying stripes across the face ; need=indoor
+stained-glass colour spilling across the floor ; need=indoor,formal ; not=night
+strings of fairy lights ; need=indoor ; any=night,dusk
+a wood stove's glow leaking from its grate ; need=indoor ; any=cold,night
+the warm glow of a paper lantern ; need=indoor
+a television's flicker on the face ; need=indoor,private ; any=night,dusk
+the pale light of an open refrigerator ; need=indoor,private ; any=night,dawn
+a desk lamp's tight cone of yellow ; need=indoor
+light bouncing off white tiled walls ; need=indoor
+a skylight throwing a hard square of sun ; need=indoor ; not=night
+morning sun stretching across the floorboards ; need=indoor ; any=dawn,day ; not=night,wet
+diffuse light from a frosted window ; need=indoor ; not=night
+overlapping pools from mismatched lamps ; need=indoor,private
+the deep red of a darkroom safelight ; need=indoor,private ; w=0.5
+pendant lights over a zinc bar ; need=indoor,public ; any=night,dusk
+emergency exit signs glowing green in the dark ; need=indoor,public ; any=night
+a vending machine's glow in an empty hall ; need=indoor,public ; any=night
+light spilling from a doorway into a dark corridor ; need=indoor
+the glow of a laptop on a tired face ; need=indoor ; any=night,private
+candelabra flames doubled in a tall mirror ; need=indoor,formal
+a chandelier's scattered sparkle ; need=indoor,formal
+a single follow-spot through stage haze ; need=indoor,formal ; any=night,public
+mirrorball flecks sliding across the walls ; need=indoor,public ; any=night,dusk
+shafts of light through rising steam ; need=indoor,water
+a hard-edged triangle of light on one cheek ; need=indoor
+the amber glow of an oven window ; need=indoor,private
+lamplight through a shade pierced with tiny holes ; need=indoor,private
+projected film light flickering over the faces ; need=indoor,public ; any=night,dusk
+ultraviolet blacklight glow ; need=indoor,public ; any=night
+a single window of afternoon sun ; need=indoor ; any=day,dusk
+workshop light slanting through grimy skylights ; need=indoor ; not=night,formal
+magenta and cyan club lights ; need=indoor,public ; any=night
+low sun glowing through gauze curtains ; need=indoor ; any=dawn,dusk
+cool north light from a tall studio window ; need=indoor ; not=night
+a lit aquarium's wavering blue ; need=indoor ; any=night,dusk
+fluorescent tubes flickering on a tired ballast ; need=indoor ; not=private
+the glow of a forge lighting everything from below ; need=indoor,hot
+twilight blue pouring through tall windows ; need=indoor ; any=dusk
+tea-coloured light through old curtains ; need=indoor ; not=night
+the aurora pouring green light over the snow ; need=outdoor,cold,night ; w=0.5
+a bioluminescent shimmer along the waterline ; need=water,outdoor,night ; w=0.5
+lightning flashes freezing the scene ; need=outdoor,wet ; any=night,dusk
+first sun striking the tops of buildings ; need=urban,outdoor,dawn
+long shadows from a low sun ; need=outdoor ; any=dawn,dusk
+harsh noon sun with hard black shadows ; need=outdoor,day ; not=wet
+sun glittering on the water behind the subject ; need=water,outdoor,day
+the glow of a distant city on low cloud ; need=outdoor ; any=night
+a faint halo around a thin crescent moon ; need=outdoor,night
+starlight and a sliver of moon ; need=outdoor,night
+lantern light along a footpath ; need=outdoor ; any=night,dusk
+headlights smearing across wet tarmac ; need=urban,outdoor,wet ; any=night,dusk
+the pink afterglow on the horizon ; need=outdoor,dusk
+sunbeams filtering through hanging mist ; need=outdoor,nature ; any=dawn,mild
+shop windows throwing warm rectangles onto the pavement ; need=urban,outdoor ; any=night,dusk
+a campfire glow on faces and trunks ; need=outdoor,nature ; any=night,dusk
+hazy backlight through dust and pollen ; need=outdoor ; any=day,dusk ; not=wet
+snow bouncing soft light up from below ; need=outdoor,cold ; not=night
+long blue shadows across the snow ; need=outdoor,cold,day
+light thrown up from wet cobbles ; need=urban,outdoor,wet
+festival lanterns glowing in rows ; need=urban,outdoor ; any=night,dusk
+warm light from a tavern doorway ; need=outdoor ; any=night,dusk
+the last sun gilding the tops of the trees ; need=nature,outdoor,dusk
+a searchlight sweeping across the clouds ; need=urban,outdoor,night ; w=0.5
+billboard glow washing the street in colour ; need=urban,outdoor ; any=night,dusk
+a pale sun like a coin behind thin cloud ; need=outdoor ; not=night
+fog-softened streetlight halos ; need=urban,outdoor ; any=night,dusk
+traffic-light colours bleeding into puddles ; need=urban,outdoor,wet ; any=night,dusk
+fireworks flashing overhead ; need=outdoor,night ; w=0.5
+floodlights burning over an empty pitch ; need=urban,outdoor,night
+festoon bulbs swinging in the wind ; need=outdoor ; any=night,dusk
+dawn light pooling in a valley ; need=nature,outdoor,dawn
+sparks and firelight from a barrel brazier ; need=urban,outdoor ; any=night,cold
+sunlight caught in a spray of water ; need=water,outdoor,day
+late sun through a tangle of power lines ; need=urban,outdoor ; any=dusk,day
+reflected light flickering from a river ; need=water,outdoor
+chiaroscuro with one hard side light ; w=1.2
+a beam from a headtorch cutting the dark ; any=night
+a flashlight held low, throwing long shadows ; any=night
+a soft glow from below like a lantern held at the waist
+split lighting, half the face in shadow
+two opposing coloured gels, warm and cool
+a low raking light that picks out every texture
+flat, even light with no shadows
+dim ambient light with one warm accent
+sun flare leaking across the frame ; need=outdoor ; not=night
+mixed tungsten and daylight ; need=indoor ; any=dusk,dawn
+the cool glow of a phone screen ; any=night,dusk
+bounce light from a pale wall
+dappled shade with bright patches ; need=outdoor ; not=night,wet
+backlit haze with lifted blacks
+overexposed highlights bleeding into the shadows
+the soft glow of a street shrine's candles ; need=urban,outdoor ; any=night,dusk
+heat-haze light flattening the distance ; need=outdoor,hot,day ; not=wet
 
 @slot prop label="Props" box=scene order=18 chance=0.6 count=1-2
 a steaming paper cup
@@ -312,6 +1343,198 @@ a pair of boots by the door ; need=indoor,private
 a thermos with steam rising ; any=cold,wet
 a worn leather satchel
 a flickering neon sign ; need=urban
+a cracked pocket mirror
+a coil of rope
+a brass key on a loop of string
+a transistor radio murmuring static
+a bottle of something green and unlabelled
+a paper bag of oranges
+a half-finished crossword
+a wind-up alarm clock ; need=indoor
+a cassette tape with a handwritten label
+a jar of pickled something ; need=indoor
+a deck of worn playing cards
+a notebook held shut with a rubber band
+a leather-bound journal
+a loaf of bread wrapped in paper
+a stack of film canisters
+a typewriter with a half-typed page ; need=indoor
+a sketchbook and a stub of pencil
+a brown envelope with no address
+a brass watering can
+a mixing bowl dusted with flour ; need=indoor
+a violin case propped open
+an accordion resting on a stool
+a pair of binoculars ; any=nature,water
+a tin of loose tobacco
+an enamel mug chipped at the rim
+a patched rucksack
+a bundle of letters tied with twine
+a dented trumpet
+a spool of copper wire
+a ukulele with a missing string
+a tin whistle
+a ship in a bottle ; need=indoor
+a plate of sliced mango ; any=hot,water
+a bowl of steaming noodles
+a pomegranate split open
+a flask of whisky ; not=hot
+a paper boat
+a brass spyglass
+a pair of roller skates
+a skateboard with scuffed wheels ; need=urban
+a fishing rod ; need=water,outdoor
+a net bag of lemons
+a stack of vinyl records ; need=indoor
+a portable cassette player with foam headphones
+a ladder leaning against a wall
+a rusted bicycle chained to a railing ; need=urban,outdoor
+a bucket of silver fish ; need=water,outdoor
+a rolled sleeping bag ; need=nature,outdoor
+a camping stove with a blackened kettle ; need=nature,outdoor
+a folded tarp weighted down with stones ; need=outdoor
+a wheelbarrow of firewood ; need=outdoor
+a dog's leash hanging from a post ; need=outdoor
+a plastic stool outside a stall ; need=urban,outdoor
+a crate of empty glass bottles ; need=urban
+a wooden handcart ; need=urban,outdoor
+a pile of wet leaves ; need=outdoor ; any=wet,mild
+a pair of snowshoes leaning on the wall ; need=cold
+ice skates slung over a shoulder ; need=cold,outdoor
+a wooden sledge ; need=cold,outdoor
+a hand-warmer pouch ; need=cold
+mittens drying on a radiator ; need=cold,indoor
+a snow shovel stuck in a drift ; need=cold,outdoor
+a folding beach chair ; any=hot,water ; not=cold
+a cooler box beaded with condensation ; need=hot,outdoor
+a paper hand fan ; need=hot
+a glass of iced tea sweating on the table ; need=hot
+a straw hat hanging from a nail ; any=hot,mild ; need=indoor
+a jug of lemonade ; need=hot
+a melting ice cream cone ; need=hot,outdoor
+a stack of beach towels ; any=hot,water ; not=cold
+a deflated pool float ; need=water,hot
+a surfboard against a fence ; need=water,outdoor
+a battered canoe paddle ; need=water,outdoor
+a coil of anchor chain ; need=water
+a lobster pot ; need=water,outdoor
+a lantern hung on a pole ; need=outdoor ; any=night,dusk
+a paraffin storm lantern ; any=night,dusk,wet
+a black umbrella streaming water ; need=wet,outdoor
+a pair of muddy rubber boots by the step ; need=wet
+a dripping raincoat on a hook ; need=wet,indoor
+a delivery moped glistening with rain ; need=urban,wet
+a stack of newspapers tied with string ; need=urban
+a skewer of grilled meat in greaseproof paper ; need=urban,outdoor
+a paper cone of roasted chestnuts ; need=cold,outdoor
+a bag of steamed buns ; need=urban
+a basket of brown eggs
+a market basket of peaches ; need=outdoor
+a sack of flour ; need=indoor
+a hay bale used as a seat ; need=outdoor,nature
+a kettle starting to whistle ; need=indoor,private
+a half-drunk glass of red wine ; need=indoor
+an uncorked bottle of wine ; need=indoor
+a stack of unwashed plates ; need=indoor,private
+an open laptop covered in stickers ; need=indoor
+a bowl of fruit gone soft ; need=indoor,private
+a lamp with a fringed shade ; need=indoor,private
+a rotary telephone ; need=indoor
+a pile of laundry on a chair ; need=indoor,private
+a half-assembled jigsaw puzzle ; need=indoor,private
+a chessboard mid-game ; need=indoor
+a bonsai on the windowsill ; need=indoor
+a spider plant trailing off a shelf ; need=indoor
+a record sleeve propped against a wall ; need=indoor
+a tray of tea things ; need=indoor
+a copper kettle on a stove ; need=indoor
+a hot-water bottle ; any=cold,wet ; need=indoor,private
+a heap of blankets ; need=indoor,private
+a gramophone horn ; need=indoor
+a candelabra with melted stubs ; need=indoor
+a velvet armchair with a worn arm ; need=indoor
+a corkboard crowded with notes ; need=indoor
+a rack of cooling bread ; need=indoor
+a mortar and pestle ; need=indoor
+a shelf of amber apothecary bottles ; need=indoor
+a stethoscope hung on a hook ; need=indoor
+an oscillating fan ; need=indoor ; any=hot
+a bowl of rice and a pair of chopsticks ; need=indoor
+a cup of tea with the bag still in ; need=indoor
+a pile of fabric swatches ; need=indoor
+a sewing machine with a half-sewn seam ; need=indoor
+a loom with a half-woven blanket ; need=indoor
+a pot of stew simmering ; need=indoor,private
+a half-written postcard ; need=indoor
+a globe with a dented pole ; need=indoor
+a model ship on a shelf ; need=indoor
+an owl under a glass dome ; need=indoor,private
+a spilled jar of buttons ; need=indoor
+a hand-crank coffee grinder ; need=indoor
+a stove-top espresso pot ; need=indoor
+a stack of takeaway cartons ; need=indoor,urban
+a toolbox open on the floor ; need=indoor
+a soldering iron trailing a thread of smoke ; need=indoor
+a bench of half-built circuit boards ; need=indoor
+a wall clock stopped at ten past ; need=indoor
+a bunch of dried herbs hanging from a beam ; need=indoor,private
+a grandfather clock ticking ; need=indoor
+a potted fern ; need=indoor
+scattered ticket stubs ; need=indoor,public
+a chalk menu board ; need=indoor,public
+a stack of plates on the counter ; need=indoor,public
+a cash drawer left open ; need=indoor,public
+a jar of boiled sweets on the counter ; need=indoor,public
+a cake under a glass dome ; need=indoor,public
+a brass bell on the counter ; need=indoor,public
+a jukebox ; need=indoor,public
+a bar towel over the shoulder ; need=indoor,public
+a silver tray of glasses ; need=indoor,formal
+a printed programme for the evening ; need=indoor,formal
+sheet music crowding a music stand ; need=indoor
+a dust sheet draped over furniture ; need=indoor,private
+a stack of trunks and hatboxes ; need=indoor
+a rolling library ladder ; need=indoor
+a stack of paint tins ; need=indoor
+brushes standing in a jar ; need=indoor
+a palette crusted with dried paint ; need=indoor
+a coil of mooring line ; need=water
+a life ring hung on a rail ; need=water
+a rowing boat tied up ; need=water,outdoor
+a pair of oars across the thwarts ; need=water,outdoor
+a crate of silver fish on ice ; need=water
+nets drying on a frame ; need=water,outdoor
+a towel left over a railing ; need=water
+a bottle washed up on the shore ; need=water,nature,outdoor
+a handful of sea glass ; need=water
+a walking stick ; need=nature,outdoor
+a field notebook full of pressed leaves ; need=nature
+a basket of foraged mushrooms ; need=nature,outdoor
+a bundle of kindling ; need=nature,outdoor
+a pile of split logs ; need=outdoor ; any=cold,nature
+a bird feeder swinging on a branch ; need=outdoor,nature
+a hammock slung between two trunks ; need=nature,outdoor ; not=cold
+a picnic blanket and basket ; need=nature,outdoor ; not=wet,cold
+a trail map pinned under a stone ; need=nature,outdoor
+a lantern hung on a branch ; need=nature,outdoor ; any=night,dusk
+a kite snagged in the branches ; need=nature,outdoor
+a sparkler burning down ; any=night
+a paper lantern floating on the water ; need=water,night
+a coil of mosquito incense ; need=hot
+a phone lying face-up and glowing ; any=night
+a taxi's lit roof sign ; need=urban,outdoor ; any=night,dusk
+a rolled-up yoga mat ; need=indoor
+a pair of dancing shoes tied together by the laces
+a guitar strap hung over a chair ; need=indoor
+a jam jar of paintbrushes ; need=indoor
+a tin of biscuits ; need=indoor
+a bag of kindling and a box of matches ; need=indoor,cold
+a bunch of grapes in a bowl ; need=indoor ; not=cold
+a pewter tankard ; need=indoor,public
+a lit cigar left in an ashtray ; need=indoor,formal ; w=0.5
+a folded newspaper on a cafe table ; need=public
+a coin-operated binocular stand ; need=outdoor,water,public
+a chalk-drawn hopscotch? ; need=urban,outdoor
 
 # ---------------------------------------------------------------- pose
 @slot expression label="Expression" box=pose order=20
@@ -335,6 +1558,70 @@ a stoic, unreadable face
 a pensive frown
 an openly delighted laugh
 a sly sideways glance
+a slow, unguarded grin
+lips pressed together to hold back a laugh
+a raised eyebrow and a half-smile
+eyes wide with quiet surprise
+a tired, honest smile
+a faraway look, as if remembering something
+brow furrowed in concentration
+a soft, closed-mouth smile
+a stern, appraising look
+a look of mock outrage
+an open, delighted laugh
+eyes narrowed against the sun ; need=outdoor ; not=night
+a calm, unreadable expression
+lost in thought, gaze unfocused
+a shy smile and a glance away
+chin lifted with quiet defiance
+cheeks puffed in a held breath
+a knowing, sideways glance
+a look of fond exasperation
+a startled blink caught mid-turn
+eyes closed in contentment
+a wistful half-smile
+the careful face of someone listening hard
+a squint of suspicion
+a bright, easy smile
+a long, level stare
+a gentle, amused look
+lips parted as if about to speak
+a flash of irritation
+head tilted, curious
+a warm, crinkle-eyed smile
+unguarded laughter with a hand over the mouth
+a steely, determined look
+an expression of weary patience
+a dreamy, unfocused smile
+a slight grimace
+a rueful shake of the head
+a proud, composed smile
+sleepy eyes and a lazy half-grin ; any=dawn,night
+a deadpan stare
+a look of rapt attention
+a mischievous grin
+a sorrowful, downcast gaze
+jaw set, eyes forward
+a relieved exhale and a smile
+wide-eyed wonder
+a polite, practised smile
+a smirk that says she knows something
+a look of calm resolve
+a cautious, sidelong look
+a quiet, private smile
+eyes lowered, a trace of a smile
+a bold, challenging grin
+a faintly bored expression
+raised brows and parted lips
+a laugh breaking through a serious face
+a tender, steady look
+an easy, open face
+the look of someone who just won an argument
+a quizzical frown
+tight-lipped and thoughtful
+a gap-toothed grin
+a soft sigh and a gentle smile
+a wary half-smile
 
 @slot pose label="Pose" box=pose order=36
 standing with weight on one hip
@@ -367,6 +1654,94 @@ adjusting a cuff, head slightly bowed
 hugging their own elbows against the cold ; any=cold,wet
 dancing alone, eyes closed
 standing very still in the middle of motion
+sitting cross-legged on the floor
+perched on a stool with one foot on the rung ; need=indoor
+leaning on a railing, looking out ; need=outdoor
+sitting on a windowsill with knees up ; need=indoor
+mid-stride, coat flapping behind ; need=outdoor
+standing with hands in pockets and shoulders loose
+reclining on a sofa with one arm over the back ; need=indoor
+walking toward the camera, hair in the wind ; need=outdoor
+crouched low, one hand touching the ground
+sitting astride a chair backwards ; need=indoor
+leaning back against a wall, one foot flat behind
+sitting on the steps, elbows on knees
+standing at a counter, weight on forearms ; need=indoor
+lounging on a blanket in the grass ; need=outdoor,nature ; not=cold,wet
+squatting by a stream to wash hands ; need=nature,outdoor
+in a deep lunge, mid-stretch ; any=athletic,outdoor
+sitting at a table, chin resting on one fist ; need=indoor
+turning on one heel, caught mid-spin
+leaning out of a window ; need=indoor
+sitting on a fence rail ; need=outdoor
+standing with arms folded and head tilted
+lying on the back looking at the sky ; need=outdoor,nature ; not=cold,wet
+kneeling to pet a dog on a pavement ; need=urban,outdoor
+standing on tiptoe to reach a high shelf ; need=indoor
+sitting sideways in an armchair with legs over the arm ; need=indoor
+walking along a narrow ledge with arms out ; need=outdoor
+leaning against a car, ankles crossed ; need=urban,outdoor
+sitting hunched on a bench ; need=outdoor
+half turned, one hand on the back of the neck
+leaning on the bar with an elbow propped ; need=indoor,public
+standing in a doorway, silhouetted ; need=indoor
+reaching up to adjust a hat
+sitting on a rock at the water's edge ; need=nature,outdoor,water
+stretched across a sunlit floor with a book ; need=indoor
+standing on a chair to fix a lamp ; need=indoor
+walking a bicycle along a path ; need=outdoor
+leaning into the wind with a hand on a hat ; need=outdoor
+seated on a suitcase, waiting
+standing at attention, weight even on both feet
+sitting on an overturned crate ; need=urban
+kneeling in the dirt, sleeves rolled ; need=outdoor,nature
+looking down from a balcony railing ; need=urban,outdoor
+leaning forward over a table, studying a map ; need=indoor
+sitting sideways on a motorbike ; need=urban,outdoor
+resting against a tree trunk with eyes closed ; need=nature,outdoor
+standing barefoot on wet sand ; need=water,outdoor ; not=cold
+sitting with legs dangling off a pier ; need=water,outdoor
+bent at the waist, hands on knees, catching breath ; any=athletic,outdoor
+lying on the floor with legs up the wall ; need=indoor
+standing at the top of a staircase, one hand on the banister ; need=indoor
+sitting on a worktop with legs swinging ; need=indoor
+leaning on a shovel handle ; need=outdoor,nature
+standing with feet wide and hands on hips
+sitting in a doorway with the door open behind ; need=indoor
+laid back on a hammock ; need=outdoor,nature ; not=cold
+crouching beside a fire, warming hands ; need=cold,outdoor
+stretched out on a rooftop ; need=urban,outdoor ; not=wet
+standing in the surf up to the knees ; need=water,outdoor ; not=cold
+sitting on the hood of a car ; need=urban,outdoor
+leaning on a stone balustrade ; need=outdoor
+facing away, looking over the shoulder at the camera
+squatting on the kerb, elbows on knees ; need=urban,outdoor
+reclining on a grassy slope ; need=outdoor,nature ; not=cold,wet
+poised at the edge of a diving board ; need=water,outdoor ; any=hot,mild
+seated on a low stool, hands folded in the lap
+standing in the rain with the head tipped up ; need=wet,outdoor
+leaning against a vending machine ; need=urban
+pausing on a bridge, one hand on the rail ; need=outdoor
+seated at a piano, torso turned toward the camera ; need=indoor
+perched on a stack of boxes ; need=indoor
+stepping off a train carriage ; need=urban,outdoor
+standing in a crowd, facing the camera while others blur past ; need=urban,public
+crossing the street mid-step ; need=urban,outdoor
+sitting on a kitchen floor with the fridge door open ; need=indoor,private
+lying along a park bench ; need=outdoor,urban ; not=cold,wet
+standing in a field up to the thighs in grass ; need=outdoor,nature ; not=cold
+slouched at a desk with head in hand ; need=indoor
+holding a pole on a moving train ; need=urban,public
+kneeling by a bed to look under it ; need=indoor,private
+standing on one leg with the other foot resting on the knee
+sitting on the floor in a pool of light ; need=indoor
+jogging in place ; any=athletic,outdoor
+leaning around a corner, peeking out
+leaning on one elbow at a table by the window ; need=indoor
+posed in a classic three-quarter turn
+standing mid-laugh, head thrown back
+walking a wooden jetty at dusk ; need=water,outdoor ; any=dusk,dawn
+sitting on a trunk at the foot of a bed ; need=indoor,private
 
 @slot action label="Action" box=pose order=37 chance=0.7
 tucking hair behind an ear
@@ -389,6 +1764,93 @@ rolling up a sleeve
 folding a map
 sipping from a thermos
 biting into a peach
+checking a phone
+folding a paper map
+sipping tea from a chipped mug
+brushing flour from the hands
+checking a pocket watch
+fixing a loose button
+lacing up boots
+peeling an orange
+winding a scarf around the neck
+carrying a stack of books
+waiting for a kettle to boil ; need=indoor
+scribbling in a notebook
+tuning a guitar ; need=indoor
+sketching on a battered pad
+sharpening a pencil with a knife
+petting a cat ; need=indoor,private
+watering plants with a dented can
+opening an umbrella ; any=wet,urban
+tossing a coin
+hanging washing on a line ; need=outdoor
+peeling the label off a bottle
+pouring coffee from a flask ; need=outdoor
+unrolling a blueprint
+untangling headphone cords
+hammering a nail into a board
+whittling a piece of wood ; need=outdoor
+carrying a crate on one shoulder
+polishing a pair of glasses
+lighting a candle ; any=night,dusk
+adjusting a camera strap
+leafing through a magazine
+chopping vegetables at a board ; need=indoor
+feeding birds from the hand ; need=outdoor
+stirring a pot on a stove ; need=indoor
+threading a needle
+shaking out a raincoat ; need=wet
+straightening a tie ; need=formal
+checking a map against the landscape ; need=outdoor,nature
+repairing a bicycle chain ; need=outdoor
+writing a postcard
+unwrapping a parcel
+cutting a flower stem with scissors
+loading film into a camera
+tapping a pen on the table ; need=indoor
+sealing a letter
+dusting off a shelf ; need=indoor
+oiling a hinge
+carrying a lantern ; need=night
+fanning the face with a hand ; need=hot
+shielding the eyes from the sun ; need=outdoor ; not=night
+blowing on cold hands ; need=cold
+warming hands around a cup ; need=cold
+stretching arms overhead
+twisting a ring on a finger
+taking off a glove
+checking a ticket ; need=urban
+counting coins into a palm
+fixing a bike basket ; need=outdoor
+ringing a bicycle bell ; need=outdoor
+wiping a window with a sleeve ; need=indoor
+tying a ribbon around a gift
+adjusting a hat brim
+kicking a stone along the road ; need=outdoor
+stacking firewood ; need=cold,outdoor
+reading a menu board ; need=urban
+dealing cards onto a table ; need=indoor
+hanging a picture frame ; need=indoor
+sorting through a box of old photographs ; need=indoor
+sweeping a doorstep ; need=outdoor
+twisting a lid on a jar
+scribbling a name on a paper cup ; need=urban
+practising a dance step ; need=indoor
+brushing snow from a coat ; need=cold,outdoor
+picking up fallen leaves ; need=outdoor,nature
+carrying a violin case ; need=urban
+bargaining at a market stall ; need=public,outdoor
+counting stitches in a half-finished scarf
+winding a clock ; need=indoor
+mixing paint on a palette
+laughing at something off camera
+whistling a tune
+eating noodles from a paper carton ; need=urban
+catching a falling leaf ; need=outdoor,nature
+smelling a bunch of herbs
+untying a boat rope ; need=water,outdoor
+spreading out a picnic blanket ; need=outdoor,nature ; not=cold,wet
+cleaning a lens with a cloth
 
 # ---------------------------------------------------------------- fashion
 @slot outfit label="Outfit" box=fashion order=30
@@ -449,6 +1911,251 @@ a cropped puffer vest over a long-sleeve base layer ; give=casual ; not=hot
 a long-sleeve henley and suspenders ; give=casual
 a wrap dress in deep green ; give=casual
 a bias-cut satin skirt and a soft knit top ; give=casual ; not=cold
+a boxy denim shirt tucked into pleated chinos ; give=casual
+a ribbed tank top and wide-leg corduroy trousers ; give=casual ; not=cold
+a boat-neck striped top and rolled raw-denim jeans ; give=casual
+an olive field jacket over a heather-grey tee and straight jeans ; give=casual ; not=hot
+a washed-out sweatshirt with frayed cuffs and drawstring joggers ; give=casual
+a mustard turtleneck under a brown corduroy pinafore ; give=casual ; not=hot ; any=f,nb
+a long cardigan over a ribbed tank and tailored shorts ; give=casual ; not=cold
+a camp-collar shirt in a faded tropical print and linen shorts ; give=casual ; not=cold ; any=m,nb
+an oversized football jersey knotted at the hip over a pleated tennis skirt ; give=casual ; not=cold ; any=f,nb
+patchwork denim overalls and a thrifted striped tee ; give=casual
+a slouchy knit vest over a collarless shirt and cuffed trousers ; give=casual ; not=hot
+a tiered cotton maxi skirt and a fitted ribbed tee ; give=casual ; not=cold ; any=f,nb
+a faded flannel shirt tied round the waist over a graphic tee and cutoffs ; give=casual ; not=cold
+a cable-knit fisherman's jumper and sailcloth trousers ; give=casual ; not=hot
+a utility shirt dress cinched with a leather belt ; give=casual ; any=f,nb
+a button-through midi dress printed with tiny wildflowers ; give=casual ; not=cold ; any=f,nb
+a loose crochet top over a cotton slip and wide jeans ; give=casual ; not=cold ; any=f,nb
+a hooded poncho sweater and thick leggings ; give=casual ; not=hot
+a band-collar shirt and baggy pleated trousers ; give=casual
+paperbag-waist shorts and a puff-sleeve blouse ; give=casual ; not=cold ; any=f,nb
+a baseball-collar jacket and straight-leg cords ; give=casual ; not=hot
+a washed black tee tucked into high-rise carpenter jeans ; give=casual
+a lumberjack-check overshirt over a thermal henley ; give=casual ; not=hot
+a knitted polo and pleated linen trousers ; give=casual ; not=cold ; any=m,nb
+a smocked sundress with wooden buttons ; give=casual ; not=cold ; any=f,nb
+a hand-knitted tank vest over a poplin shirt with a wide spread collar ; give=casual ; not=cold
+a sleeveless turtleneck and wide pinstripe trousers ; give=casual
+a varsity-style jacket over a hoodie and joggers ; give=casual ; not=hot
+a pale sweater vest and pleated flannel trousers ; give=casual ; not=hot
+denim on denim in two different blues ; give=casual ; not=hot
+a chunky oatmeal roll-neck and a long tweed skirt ; give=casual ; not=hot ; any=f,nb
+baggy parachute trousers and a cropped quilted jacket ; give=casual ; not=hot
+a halter-neck knit top and low-slung linen trousers ; give=casual ; not=cold ; any=f,nb
+cargo shorts and an unbuttoned short-sleeve shirt over a tank ; give=casual ; not=cold
+a silk bowling shirt and pleated shorts ; give=casual ; not=cold ; any=m,nb
+a long denim skirt, a thermal top and a woven belt ; give=casual ; not=hot ; any=f,nb
+a plaid wool shirt-jacket over a turtleneck and corduroy trousers ; give=casual ; not=hot
+a loose linen jumpsuit with a drawstring waist ; give=casual ; not=cold
+a polka-dot neck scarf, a white tee and high-rise cigarette trousers ; give=casual
+a cropped cable cardigan over a slip skirt ; give=casual ; not=hot ; any=f,nb
+wide cotton drawstring trousers and a handwoven poncho top ; give=casual
+a retro tracksuit top in faded teal with corduroy flares ; give=casual ; not=hot
+a pinstriped boxy blazer over a vintage tee and baggy jeans ; give=casual ; not=hot
+a gauzy cotton peasant blouse and a patchwork skirt ; give=casual ; not=cold ; any=f,nb
+a sleeveless denim vest over a plain tee and ripped jeans ; give=casual
+a seersucker shirt and sun-faded chinos rolled to the shin ; give=casual ; not=cold
+an oversized wool cardigan, a long skirt and chunky socks ; give=casual ; not=hot ; any=f,nb
+a tie-dye hoodie and wide cargo trousers ; give=casual
+a double-breasted blazer over a plain tee and straight jeans ; give=casual ; not=hot
+a dropped-shoulder knit and a pleated midi skirt ; give=casual ; not=hot ; any=f,nb
+a washed canvas chore coat over a thermal top and baggy jeans ; give=casual ; not=hot
+a cotton shirtdress in sage with the sleeves rolled ; give=casual ; any=f,nb
+a collarless linen overshirt, tank top and drawstring shorts ; give=casual ; not=cold
+a quilted waistcoat, grandad shirt and moleskin trousers ; give=casual ; not=hot ; any=m,nb
+a mesh-panelled football shirt and tapered track trousers ; give=casual
+a slouchy off-white knit dress belted with a scarf ; give=casual ; not=hot ; any=f,nb
+a vintage western shirt with pearl snaps and bootcut jeans ; give=casual ; not=hot
+a long-line shirt, leggings and a chunky belt ; give=casual
+a lightweight linen co-ord in pale pistachio ; give=casual ; not=cold
+a sleeveless button-up and tailored Bermuda shorts ; give=casual ; not=cold
+a gingham halter dress ; give=casual ; not=cold ; any=f,nb
+a cotton gauze shirt open over a ribbed tank ; give=casual ; not=cold
+an airy maxi dress in sun-bleached cotton ; give=casual ; not=cold ; any=f,nb
+a loose silk shirt and linen drawstring shorts ; give=casual ; not=cold
+a breezy wrap skirt and a cropped linen shirt ; give=casual ; not=cold ; any=f,nb
+a piqué polo and white shorts ; give=casual ; not=cold
+a sleeveless linen shirt dress with patch pockets ; give=casual ; not=cold
+a short-sleeve jumpsuit in washed khaki ; give=casual ; not=cold
+a tropical-print resort shirt and white linen trousers ; give=casual ; not=cold ; any=m,nb
+a cotton sundress with thin straps and lace trim ; give=casual ; not=cold ; any=f,nb
+an open chambray shirt over a tank dress ; give=casual ; not=cold ; any=f,nb
+an off-the-shoulder cotton blouse and a ruffled skirt ; give=casual ; not=cold ; any=f,nb
+a sleeveless knit top and wide white shorts ; give=casual ; not=cold
+a light kurta in handloom cotton and drawstring trousers ; give=casual ; not=cold
+a vest, rolled-up chinos and sun-bleached canvas shoes ; give=casual ; not=cold
+a three-piece suit in dark green wool with a silk pocket square ; give=formal ; not=hot ; any=m,nb
+a double-breasted navy suit with a plain silk tie ; give=formal ; not=hot ; any=m,nb
+a cream linen suit and an open-neck shirt ; give=formal ; not=cold
+a black tuxedo with satin lapels and a pleated white shirt ; give=formal ; any=m,nb
+a floor-length emerald silk gown with a sweeping train ; give=formal ; not=cold ; any=f,nb ; w=1.5
+a sequinned column dress in champagne gold ; give=formal ; not=cold ; any=f,nb
+a wide-legged black satin jumpsuit with a cinched waist ; give=formal
+a long-sleeved lace dress in oxblood ; give=formal ; any=f,nb
+a one-shoulder gown in cobalt crepe ; give=formal ; not=cold ; any=f,nb
+a pinstripe skirt suit with a silk tie-neck blouse ; give=formal ; not=hot ; any=f,nb
+a white dinner jacket and black trousers ; give=formal ; any=m,nb
+a burgundy velvet smoking jacket over a dark shirt ; give=formal ; not=hot
+a morning suit with a dove-grey waistcoat ; give=formal ; not=hot ; any=m,nb
+an ivory three-piece suit with a rose buttonhole ; give=formal
+a simple ivory wedding dress with a cathedral veil ; give=formal ; not=cold ; any=f,nb
+a heather-brown tweed three-piece with a watch chain ; give=formal ; not=hot ; any=m,nb
+a charcoal wool coat dress with covered buttons ; give=formal ; not=hot ; any=f,nb
+a black polo-neck under a sharp blazer and tapered trousers ; give=formal ; not=hot
+a bias-cut silk slip gown in dusty rose ; give=formal ; not=cold ; any=f,nb
+a gold brocade jacket over black evening trousers ; give=formal ; not=hot
+a halter gown in liquid silver satin ; give=formal ; not=cold ; any=f,nb
+a cape-sleeved evening dress in jewel-toned velvet ; give=formal ; not=hot ; any=f,nb
+a pearl-grey suit with a knitted tie ; give=formal ; not=hot ; any=m,nb
+a pleated tulle midi skirt and a fitted black top ; give=formal ; not=cold ; any=f,nb
+a navy blazer, white shirt and pressed grey flannels ; give=formal ; not=hot
+a taffeta ball gown with a vast skirt ; give=formal ; not=cold ; any=f,nb
+a judge's black robe over a white collar ; give=formal ; need=indoor
+an academic gown with a coloured hood ; give=formal ; need=indoor
+a tartan kilt with a tailored black jacket and sporran ; give=formal ; not=hot ; any=m,nb
+a sherwani in ivory brocade with a contrasting stole ; give=formal ; any=m,nb
+a plum velvet blazer, silk shirt and wide-leg trousers ; give=formal ; not=hot
+an orchestral tailcoat with a white bow tie ; give=formal ; any=m,nb
+a bottle-green satin shirt tucked into high-waisted tuxedo trousers ; give=formal
+a sleeveless tailored jumpsuit in ivory crepe ; give=formal ; not=cold ; any=f,nb
+a long camel wrap coat over a silk shirt and pressed trousers ; give=formal ; any=cold,wet,mild ; not=hot
+a midnight-blue dinner suit with a velvet bow tie ; give=formal ; not=hot
+a fitted running singlet and split-side shorts ; give=athletic ; not=cold
+a windbreaker and cropped running tights ; give=athletic ; any=mild,wet
+a hooded thermal running jacket and gloves ; give=athletic ; need=cold
+a cycling jersey and padded bib shorts ; give=athletic ; not=cold
+a climbing harness over a chalk-dusted tee and stretch trousers ; give=athletic
+all-white tennis kit with a pleated skirt or shorts ; give=athletic ; not=cold ; need=outdoor
+a rowing all-in-one in club colours ; give=athletic ; not=cold
+a judo gi with a frayed black belt ; give=athletic ; need=indoor
+white fencing kit with the mask under one arm ; give=athletic ; need=indoor
+a long-sleeve leotard, wrap cardigan and chunky leg warmers ; give=athletic ; need=indoor ; not=hot
+a sleeveless training vest and baggy basketball shorts ; give=athletic ; not=cold
+a trail-running vest over a sweat-darkened tee ; give=athletic ; need=outdoor
+a rain shell, merino base layer and zip-off hiking trousers ; give=athletic ; need=outdoor ; any=wet,cold,mild
+a hockey jersey over thermal layers ; give=athletic ; not=hot
+a team parka over a tracksuit with a towel round the neck ; give=athletic ; not=hot
+a baseball uniform with grass-stained knees ; give=athletic ; need=outdoor
+cricket whites with a cable-knit sweater tied at the neck ; give=athletic ; need=outdoor ; not=hot
+a winter cycling kit with a thermal base ; give=athletic ; need=cold
+a goalkeeper's padded shirt and gloves ; give=athletic ; need=outdoor
+a weightlifting singlet with chalked hands and wrist wraps ; give=athletic ; need=indoor
+a lightweight running vest with a race bib pinned on ; give=athletic ; not=cold
+a fitted tee, tapered training joggers and flat trainers ; give=athletic
+a wetsuit unzipped and peeled to the waist ; give=swimwear ; any=water
+a rash vest and long board shorts ; give=swimwear ; any=hot,water ; not=cold
+a florist's apron over a rolled-sleeve shirt, secateurs on the belt ; need=indoor
+a welder's scorched leather jacket and heavy gloves ; need=indoor
+a lab coat over a knit tie and slacks ; need=indoor
+a pilot's shirt with epaulettes and a loosened tie ; give=formal
+a flour-dusted baker's apron and a rolled bandana ; need=indoor
+turnout trousers with red suspenders over a soot-streaked tee ; need=outdoor
+a tailor's waistcoat with a tape measure around the neck ; need=indoor
+a hi-vis vest over a hoodie and work trousers ; need=outdoor ; not=hot
+a dockworker's heavy canvas jacket and steel-capped boots ; need=outdoor ; not=hot
+a cardigan, pleated skirt and a pencil tucked behind one ear ; need=indoor ; any=f,nb
+a stagehand's black tee and trousers with a multitool belt ; need=indoor
+a mountain guide's softshell with a coil of rope over one shoulder ; need=outdoor ; any=cold,mild
+a barber's striped apron and rolled sleeves ; need=indoor
+a farmer's bib overalls and a faded work shirt ; not=cold
+a reflective cycling jacket, cargo shorts and a messenger bag ; need=urban,outdoor ; not=cold
+a surgical gown with the mask pulled down and a paper cap ; need=indoor
+a fisherman's oilskin overalls and a salt-stiff jumper ; any=wet,water ; not=hot
+a lighthouse keeper's heavy wool jumper and oilskin trousers ; not=hot ; any=water,wet
+a park ranger's green shirt with a badge and cargo trousers ; need=outdoor ; not=cold
+a retro diner uniform in pale blue with a white half-apron ; need=indoor ; any=f,nb
+a hotel doorman's long coat with brass buttons ; need=urban,outdoor ; not=hot
+a bartender's waistcoat, rolled sleeves and a black apron ; need=indoor
+a paint-spattered smock over a turtleneck ; need=indoor ; not=hot
+a potter's clay-streaked apron over a linen shirt ; need=indoor
+a carpenter's canvas apron full of pencils over a thermal top ; need=indoor
+cabin-crew style uniform with a neck scarf and a tidy skirt suit ; any=f,nb
+a white beekeeping suit with the veil pushed back ; need=outdoor ; not=cold
+a railway guard's navy waistcoat, watch chain and rolled shirtsleeves ; need=public
+a sound engineer's black hoodie and a headset round the neck ; need=indoor
+a gardener's canvas apron over a sunbleached shirt ; need=outdoor ; not=cold
+a courier's windproof jacket and padded cycling shorts ; need=urban,outdoor ; not=hot
+a librarian's knitted vest and silk blouse ; need=indoor ; any=f,nb
+a market trader's cap-sleeve tee, change apron and fingerless gloves ; need=outdoor,urban
+a field-researcher's vest with a dozen pockets over a long-sleeve shirt ; need=outdoor
+a yukata in indigo with a pale obi ; give=casual ; not=cold
+a long silk ao dai over satin trousers ; give=formal ; not=cold
+a cheongsam-inspired dress in jade brocade ; give=formal ; any=f,nb
+a lehenga with mirrorwork and a sheer dupatta ; give=formal ; any=f,nb
+a kente-inspired wrap dress in gold and green ; give=formal
+a boubou in indigo-dyed cotton with an embroidered neckline ; give=casual ; not=cold
+a sheer embroidered barong over a dark undershirt ; give=formal ; not=cold ; any=m,nb
+a guayabera and pressed linen trousers ; give=casual ; not=cold ; any=m,nb
+a huipil blouse embroidered with bright flowers and a long skirt ; give=casual
+a dirndl with a white blouse and a laced bodice ; give=casual ; any=f,nb ; not=cold
+lederhosen with suspenders and a checked shirt ; give=casual ; any=m,nb ; not=cold
+bombachas, a leather belt and a woven poncho ; give=casual ; not=hot
+a quilted deel in deep blue with a wide silk sash ; give=casual ; not=hot
+an embroidered linen blouse with red cross-stitch at the collar ; give=casual ; not=cold
+a flamenco dress with tiered ruffles in red polka dots ; give=formal ; any=f,nb ; not=cold
+a hakama over a white kimono top ; give=formal ; not=hot
+a sequin jacket over a plain white tee and flared trousers ; give=casual
+a fringed suede vest, flared jeans and layered beads ; give=casual ; not=hot
+a tie-dyed maxi dress and a crochet vest ; give=casual ; not=cold ; any=f,nb
+patchwork harem trousers and a loose tank ; give=casual ; not=cold
+a feathered carnival costume in turquoise and gold with a beaded collar ; need=outdoor ; not=cold
+a medieval-fair tunic with laced sleeves and a wide leather belt ; give=casual ; not=hot
+a Victorian-inspired high-collar blouse, bustle skirt and cameo brooch ; give=formal ; any=f,nb ; not=hot
+a steampunk waistcoat with brass buttons, a watch chain and goggles on the forehead ; w=0.6
+a Regency-style tailcoat over a ruffled shirt and buff breeches ; give=formal ; any=m,nb ; w=0.6
+a 1920s drop-waist beaded dress with a long pearl strand ; give=formal ; any=f,nb ; not=cold
+a 1940s skirt suit with padded shoulders and a nipped waist ; give=formal ; not=hot ; any=f,nb
+a 1970s wide-collar shirt and flared corduroys ; give=casual ; not=hot
+a 1980s oversized blazer with rolled sleeves over a neon tee ; give=casual ; not=hot
+a 1990s slip dress over a white tee and chunky boots ; give=casual ; not=cold ; any=f,nb
+a mod shift dress with a bold geometric print ; give=casual ; any=f,nb ; not=cold
+a rockabilly outfit of rolled high-waist denim and a bowling shirt ; give=casual ; not=cold
+a patched, studded denim vest over a ripped band tee ; give=casual
+layers of black lace, velvet and tarnished silver ; give=casual ; not=hot
+a prairie dress with puff sleeves and a pinafore apron ; give=casual ; any=f,nb ; not=cold
+a space-age silver jumpsuit with a high collar ; w=0.5
+a monastic-style hooded robe in undyed wool ; not=hot ; w=0.5
+a rain-ready techwear shell with strapped cargo trousers ; give=casual ; any=urban,wet
+an oversized patchwork kimono jacket over wide trousers ; give=casual ; not=hot
+a duffle coat with wooden toggles over a chunky roll-neck ; give=winter ; need=cold
+a down-filled long coat zipped to the chin ; give=winter ; need=cold
+a Nordic-pattern knit jumper, wool trousers and thick socks ; give=winter ; need=cold
+an insulated ski jacket and salopettes ; give=winter ; need=cold
+a navy peacoat with the collar turned up over a cable-knit sweater ; give=winter ; need=cold
+a fur-lined leather aviator jacket and corduroy trousers ; give=winter ; need=cold
+layers of mismatched knitwear under a quilted gilet ; give=winter ; need=cold
+a long camel coat over a cashmere roll-neck and wool slacks ; give=winter ; need=cold
+a hooded fleece, thermal leggings and a waterproof shell ; give=winter ; any=cold,wet
+a shawl-collar cardigan, a wool skirt and fleece tights ; give=winter ; need=cold ; any=f,nb
+an insulated work jacket and flannel-lined jeans ; give=winter ; need=cold
+a floor-length wool cloak fastened with a brass clasp over a knit dress ; give=winter ; need=cold
+a tweed overcoat, waistcoat and pocket watch ; give=winter ; need=cold ; any=m,nb
+a thick knitted poncho over a wool dress and tights ; give=winter ; need=cold ; any=f,nb
+a snow-dusted shell jacket over a merino base layer ; give=winter ; need=cold
+a bright orange puffer coat over a grey tracksuit ; give=winter ; need=cold
+a heavy corduroy chore coat with a fleece collar over a thermal tee ; give=winter ; any=cold,wet
+an alpaca-wool sweater and heavy twill trousers ; give=winter ; need=cold
+a boiled-wool jacket, thick tights and a knitted dress ; give=winter ; need=cold ; any=f,nb
+a hooded parka with a drawcord waist over a thermal hoodie ; give=winter ; need=cold
+a faded old tour tee and soft pyjama bottoms ; give=sleepwear ; need=indoor,private
+a long cotton nightdress with lace at the cuffs ; give=sleepwear ; need=indoor,private ; any=f,nb
+striped brushed-cotton pyjamas buttoned one hole off ; give=sleepwear ; need=indoor,private
+a satin sleep shirt and mismatched wool socks ; give=sleepwear ; need=indoor,private
+a waffle-knit lounge set in oatmeal ; give=sleepwear ; need=indoor,private
+a knitted cardigan over a long nightshirt, sleeves tugged over the hands ; give=sleepwear ; need=indoor,private ; not=hot
+a silk dressing gown over striped pyjamas ; give=sleepwear ; need=indoor,private ; any=m,nb
+a flannel nightgown and thick knitted socks ; give=sleepwear ; need=indoor,private ; any=f,nb ; not=hot
+a velour lounge set in dusty blue ; give=sleepwear ; need=indoor,private
+a retro swimsuit with a sarong tied at the hip ; give=swimwear ; any=hot,water ; not=cold
+a long-sleeve sun-protective swim top and fitted swim shorts ; give=swimwear ; any=hot,water ; not=cold
+a scoop-back swimsuit under an open linen shirt ; give=swimwear ; any=hot,water ; not=cold
+swim shorts and a salt-damp tee ; give=swimwear ; any=hot,water ; not=cold
+a polka-dot high-waist swimsuit ; give=swimwear ; any=hot,water ; not=cold
+a racerback training swimsuit with goggles pushed up on a swim cap ; give=swimwear ; need=water ; not=cold
+a crocheted beach dress over a swimsuit ; give=swimwear ; any=hot,water ; not=cold
+a halter swimsuit in faded stripes with a towel over one shoulder ; give=swimwear ; any=hot,water ; not=cold
 
 @slot outerwear label="Outerwear" box=fashion order=31 chance=0.4
 a long wool overcoat ; need=cold
@@ -459,6 +2166,51 @@ a cape-like poncho ; any=wet,mild,cold ; not=hot
 a long cardigan hanging open ; not=hot,swimwear
 a leather duster ; any=mild,cold ; not=hot,swimwear
 a bomber jacket slung over one shoulder ; any=mild,hot ; not=swimwear
+a chunky cable-knit cardigan ; any=cold,mild ; not=hot,swimwear
+a shearling-lined aviator jacket ; need=cold ; not=swimwear
+a puffer jacket with a high collar ; need=cold ; not=swimwear,hot
+a belted camel coat ; any=cold,mild ; not=hot,swimwear
+a cropped denim jacket ; any=mild,hot ; not=swimwear,formal
+an oversized bomber jacket ; any=mild,cold ; not=hot,swimwear
+a trench coat with the collar turned up ; any=wet,mild,cold ; not=hot,swimwear
+a lightweight windbreaker in faded teal ; any=mild,wet ; not=hot,swimwear
+a heavy fisherman's jumper ; need=cold ; not=swimwear
+a hooded parka trimmed with faux fur ; need=cold ; not=swimwear,hot
+a quilted barn jacket ; any=mild,cold ; not=hot,swimwear
+a tailored blazer thrown over the shoulders ; not=swimwear,athletic ; give=formal
+a leather biker jacket scuffed at the elbows ; any=mild,cold ; not=hot,swimwear
+a long duster coat in oiled canvas ; any=mild,wet ; not=hot,swimwear
+a duffle coat with toggle buttons ; need=cold ; not=swimwear
+a lightweight linen overshirt worn open ; any=hot,mild ; not=swimwear
+a hand-knitted shawl pulled tight ; any=cold,mild ; not=hot,swimwear
+a sleeveless padded vest ; any=cold,mild ; not=hot,swimwear
+a cropped shrug in soft mohair ; any=mild,cold ; not=hot,swimwear
+a varsity jacket with striped cuffs ; any=mild,cold ; not=hot,swimwear,formal
+a hooded zip sweatshirt ; any=mild,cold ; not=hot,swimwear,formal
+a silk kimono-style jacket ; any=mild,hot ; not=swimwear
+a heavy wool cape ; need=cold ; not=swimwear
+a transparent rain poncho ; need=wet ; not=swimwear
+a field jacket with patch pockets ; any=mild,cold ; not=hot,swimwear
+a sheepskin gilet ; need=cold ; not=swimwear
+an old fur-collared greatcoat ; need=cold ; not=swimwear,hot
+a utility vest bristling with pockets ; not=swimwear,formal
+a soft suede jacket with fringe ; any=mild,cold ; not=hot,swimwear
+a floor-length opera coat in velvet ; give=formal ; any=cold,mild ; not=hot,swimwear
+a ribbed poncho in earth tones ; any=cold,mild ; not=hot,swimwear
+a surplus army greatcoat ; need=cold ; not=swimwear
+a denim chore coat, faded to pale blue ; any=mild,cold ; not=hot,swimwear
+a thick fleece pullover ; need=cold ; not=swimwear
+a nylon anorak in bright orange ; any=wet,cold ; not=hot,swimwear
+a hooded cloak in rough wool ; any=cold,wet ; not=hot,swimwear
+a pea coat buttoned to the neck ; need=cold ; not=swimwear
+a pashmina draped over the arms ; any=mild,cold ; not=swimwear,athletic
+a lightweight kimono robe worn as a jacket ; any=mild,hot ; not=swimwear,cold
+a lab coat left unbuttoned ; not=swimwear,hot
+an apron-front work jacket in heavy twill ; not=swimwear,hot
+a cropped faux-leather jacket ; any=mild,cold ; not=hot,swimwear
+a down-filled long coat ; need=cold ; not=swimwear,hot
+a wrap coat in grey flannel ; any=cold,mild ; not=hot,swimwear
+a rain-darkened canvas jacket ; need=wet ; not=swimwear
 
 @slot accessory label="Accessories" box=fashion order=32 chance=0.8 count=1-2
 round wire-frame glasses
@@ -486,6 +2238,67 @@ a pocket watch on a chain ; not=swimwear
 a canvas tote bag ; not=formal
 a thin leather cord with a small pendant
 a lanyard with a laminated pass ; not=formal,swimwear
+a pair of aviator sunglasses pushed into the hair ; not=night
+a vintage wristwatch with a cracked strap
+a hammered-silver cuff bracelet
+a long tassel earring on one side
+a braided leather bracelet
+a simple gold signet ring
+a chunky turquoise ring
+a pair of tiny pearl studs
+a woven friendship bracelet worn thin
+a leather watch with a worn face
+a collection of thin stacking rings
+a carved wooden bangle
+a pendant on a long cord
+a string of amber beads
+a brooch pinned to the lapel ; any=formal,casual
+a bandana knotted at the neck ; not=swimwear
+a cord bracelet with a single bead
+a thin ear cuff running up the ear
+a layered set of delicate gold necklaces
+a pair of oversized sunglasses ; any=day,hot ; not=night
+a woven straw tote ; any=hot,mild ; not=cold,formal
+a leather satchel worn across the body
+a canvas messenger bag slung low
+a small beaded clutch ; any=formal,night
+a battered camera strap around the neck
+a pair of headphones around the neck
+a lanyard with a laminated badge ; not=swimwear
+a silk pocket square ; need=formal
+a pair of silver cufflinks ; need=formal
+a thin leather belt with a brass buckle ; not=swimwear
+a suede belt pouch ; not=swimwear
+a nose stud
+a septum ring
+a pair of cat-eye glasses
+a pair of thick tortoiseshell glasses
+rimless reading glasses on a chain
+a sports watch with a rubber band ; any=athletic,casual
+a sweatband on the wrist ; need=athletic
+a woven hair tie around the wrist
+a vintage locket
+a small compass on a cord
+a leather-wrapped bracelet with a metal clasp
+a set of bangles that chime when she moves ; need=f
+a beaded anklet ; any=hot,water ; not=cold
+a wide leather wristband
+a hammered copper ring
+a silver torque necklace
+a pair of drop earrings in colored glass
+a tiny gold hoop in the nostril
+a thin chain draped across the forehead
+a slim umbrella tucked under one arm ; any=wet,urban
+a rolled-up newspaper under the arm ; need=urban
+a pair of gloves tucked in a back pocket
+a cloth tote printed with faded lettering
+a hand-stitched leather wallet on a chain
+a gemstone ring on the thumb
+a signet ring worn on the little finger
+a pair of cufflinks in mother-of-pearl ; need=formal
+a retro pair of round tinted glasses
+a patterned silk scarf tied to a handbag handle
+a long cotton scarf wrapped loosely ; not=hot,swimwear
 
 @slot footwear label="Footwear" box=fashion order=33 chance=0.5
 scuffed combat boots ; not=swimwear,hot
@@ -500,6 +2313,49 @@ fluffy slippers ; need=indoor,private
 ballet flats ; not=swimwear,athletic
 worn-in work boots ; not=swimwear,formal
 chunky platform trainers ; not=formal
+worn leather work boots ; not=swimwear,hot
+sleek black ankle boots ; not=swimwear,hot
+chunky platform sneakers ; not=formal,swimwear
+low-top canvas shoes ; not=formal
+suede desert boots ; not=swimwear,hot
+patent leather loafers ; give=formal ; not=swimwear
+high-top basketball sneakers ; not=formal,swimwear
+espadrilles with rope soles ; any=hot,mild ; not=cold,wet
+beaten leather sandals ; any=hot,mild ; not=cold,wet
+stiletto pumps ; give=formal ; not=swimwear,wet
+block-heeled mules ; not=swimwear,cold
+trail-worn hiking boots ; any=outdoor,nature ; not=swimwear,formal
+lace-up brogues in two-tone leather ; give=formal ; not=swimwear
+knitted slippers ; need=indoor,private
+plain white trainers ; not=formal
+red leather ballet flats ; not=swimwear,wet
+wellington boots caked in mud ; any=wet,nature ; not=swimwear
+snow boots with fleece lining ; need=cold ; not=swimwear
+square-toed western boots ; not=swimwear,hot
+black rubber flip-flops ; any=hot,water ; not=cold,formal
+a pair of thick wool socks and clogs ; any=cold,mild ; not=swimwear,hot
+satin heels with ankle straps ; give=formal ; not=swimwear,wet
+retro running shoes with a stripe ; any=athletic,casual ; not=formal
+slip-on canvas deck shoes ; any=hot,water ; not=cold,formal
+tall riding boots ; any=nature,outdoor ; not=swimwear,hot
+cracked leather moccasins ; not=swimwear,wet
+platform boots with chunky buckles ; not=swimwear,hot
+sturdy sandals over thick socks ; not=swimwear,formal
+hand-stitched leather slippers ; need=indoor
+ballet-style trainers in grey mesh ; any=athletic,casual
+split-toe tabi socks and wooden clogs ; not=swimwear
+cowboy boots with decorative stitching ; not=swimwear,hot
+thin-soled dance shoes ; need=indoor ; not=swimwear
+heavy steel-toed boots ; not=swimwear,hot
+canvas plimsolls, grubby at the toe ; not=formal
+leather sandals with wide straps ; any=hot,mild ; not=cold
+kitten heels in soft suede ; give=formal ; not=swimwear,wet
+pointed ankle boots with a Cuban heel ; not=swimwear,hot
+beaded leather moccasin boots ; any=cold,mild ; not=swimwear,hot
+bare feet with sand to the ankles ; any=hot,water ; need=outdoor ; not=cold
+barefoot on the cool floor ; need=indoor ; not=cold
+a pair of battered high-top boots ; not=swimwear,hot
+rope-soled sandals ; any=hot,water ; not=cold
 
 @slot makeup label="Makeup" box=fashion order=34 chance=0.5
 smudged eyeliner
@@ -517,6 +2373,52 @@ heavy kohl rimming the eyes
 a tiny rhinestone at the corner of one eye
 berry-stained lips
 a clean red lip and nothing else
+a sweep of peach blush across the cheeks
+glossy clear lip balm and brushed-up brows
+dark smoky eyes and a pale lip
+a thin line of gold liner along the lid
+matte terracotta lips
+dewy skin with a faint highlight
+bold graphic liner in cobalt blue
+a berry-stained lip
+freckles left bare with just mascara
+a soft brown wash of eyeshadow
+heavy, wing-tipped liner and false lashes
+deep burgundy lipstick
+a bare face with lightly tinted lip balm
+metallic copper on the lids
+a smudge of kohl along the lower lash line
+a dab of rouge high on the cheekbones
+a pale pink satin lip
+sharp contouring and a glossy mouth
+glitter pressed into the inner corners of the eyes
+bleached brows and a clear gloss
+a rust-orange lid and a bare lip
+a line of white liner on the waterline
+dark chocolate lip liner and a lighter centre
+a flush of colour across the nose and cheeks
+a bold coral lip against fresh skin
+plum eyeshadow smudged to the temple
+a gold-flecked highlight on the cheeks and brow bone
+frosted lilac on the lids
+a thick fan of lashes with no other makeup
+retro cat-eye liner and red lips
+a neutral lip and strong, feathered brows
+cheeks warmed with a cream bronzer
+dusty rose lips and soft winged liner
+a smoked-out liner and lip stain
+a sheer wash of green on the eyelids
+pearl highlighter across the cheekbones
+a deep wine lip blotted soft
+a thin line of black liner and a clear gloss
+sun-kissed skin with a sprinkle of faux freckles
+a lip stain bitten into the lips
+pale lids and a bold brow
+a copper-bronze glow over the eyes and cheeks
+oxblood lips and clean skin
+soft sparkle at the inner corner of each eye
+a clean no-makeup look with groomed brows
+stage-dark eyes and a sheer lip
 
 # ---------------------------------------------------------------- style
 @slot shot label="Shot" box=style order=40
@@ -534,6 +2436,58 @@ shot through a rain-streaked window ; any=wet,urban,indoor
 framed through a doorway
 reflected in a mirror ; need=indoor
 silhouette against the light
+tight crop on the eyes and brow
+medium close-up from the chest up ; w=1.5
+medium shot at conversation distance
+knee-up framing with air around the figure
+long shot showing the whole figure and the ground around them
+extreme wide establishing shot with a barely visible figure ; w=0.7
+hip-length portrait with the hands partly in frame
+close detail of the hands and whatever they hold ; w=0.6
+insert shot of hands at work, face out of frame ; w=0.5
+portrait cropped tightly at chin and hairline
+shoulders-up portrait with the face placed off-centre
+loose three-quarter-length portrait
+half-turned shot with the face lost in shadow
+reflected in a shop window ; need=urban
+reflected in a rain puddle at ground level ; need=outdoor,wet
+shot from inside a parked car through the windscreen ; need=urban,outdoor
+peering between leaves in the foreground ; need=nature
+shot through frosted glass, soft shapes only ; w=0.6
+framed between two stone columns
+seen through a beaded curtain ; need=indoor
+foreground blur of a shoulder with the subject sharp behind
+caught in a rear-view mirror ; need=urban
+through a chain-link fence ; need=urban,outdoor
+through a half-open door ; need=indoor
+glimpsed between passing strangers on a crowded street ; need=urban
+shot through a train window with passing lights ; need=urban ; any=night,dusk
+silhouette in a lit window seen from the street ; need=night,urban
+split-frame diptych of two moments ; w=0.5
+vertical triptych of three consecutive frames ; w=0.4
+contact-sheet sequence of four frames ; w=0.4
+arm's-length selfie with a touch of wide-angle stretch ; w=0.6
+casual snapshot taken from the hip
+long-lens snapshot from across the street ; need=urban,outdoor
+high corner security-camera view ; w=0.4
+behind-the-scenes snapshot between takes ; w=0.7
+full-length standing portrait, centred and symmetrical
+following shot from behind, caught mid-stride
+side-on tracking shot at walking pace
+establishing shot with the subject low in the frame under a big sky ; need=outdoor
+profile close-up edged with rim light
+seated portrait framed to the lap
+three-quarter-length environmental portrait with the workplace around them
+lone figure standing still among blurred passers-by ; need=urban
+long-lens candid from across the room ; need=indoor
+glimpsed through a lit window across a courtyard ; need=urban
+cinematic widescreen frame with letterbox bars ; w=1.5
+square-format portrait
+tall vertical full-length frame
+panoramic strip frame, long and narrow ; w=0.5
+close crop on the jaw, neck and collar ; w=0.6
+back-view portrait with the head turned a quarter toward the camera
+mid shot with an out-of-focus object blurring the lower frame
 
 @slot angle label="Angle" box=style order=41 chance=0.7
 eye-level
@@ -544,6 +2498,55 @@ from behind
 a slight dutch tilt
 bird's-eye view
 worm's-eye view
+low angle looking up past the chin
+steep high angle looking down on the subject
+overhead flat view, straight down ; w=0.6
+ground-level view with the camera almost on the floor ; w=0.7
+knee-height camera, tilted slightly up
+hip-height camera, gently looking up
+chest-height camera at a natural stance
+eye-level with a slight upward tilt
+over-the-shoulder angle from behind and a little above
+rear three-quarter view
+front-on, dead centre, facing the lens
+strict side-on profile view
+side-on view with the face turned away from the camera
+forty-five degree front angle
+steep dutch angle with the horizon tilted thirty degrees ; w=0.6
+canted horizon rising to the right
+canted horizon falling to the left
+looking up a stairwell from the bottom ; need=indoor
+looking down a stairwell from above ; need=indoor
+from a balcony above, looking down
+from the street looking up at a window ; need=urban
+from across the street at a long distance ; need=urban,outdoor
+from a rooftop looking down on the street ; need=urban,outdoor
+from inside a doorway looking out ; need=indoor
+from the far end of a corridor ; need=indoor
+from behind a column, partly hidden
+camera low on the pavement, tilted up ; need=urban,outdoor
+looking up through tree branches ; need=nature
+looking down from a bridge ; any=water,urban
+high drone view at a steep downward angle ; need=outdoor ; w=0.7
+satellite-straight top-down view of a tiny figure ; need=outdoor ; w=0.4
+from the side at waist height
+heroic low angle with the sky behind the head ; need=outdoor
+looking down at the face from above the forehead
+from beneath a glass table ; need=indoor ; w=0.4
+from below the water surface looking up ; need=water ; w=0.4
+skimming low along the water's edge ; need=water
+point of view of someone sitting opposite at a table ; need=indoor
+reverse angle from behind the viewer's shoulder
+wide-angle low and close, with a gently distorted foreground
+long flat angle along the ground to the horizon ; need=outdoor
+high oblique angle from a second-floor window ; need=urban
+straight-on symmetrical elevation
+slightly above eye line with the chin tipped down
+from a moving vehicle running alongside the subject ; need=urban,outdoor ; w=0.6
+extreme close angle just under the jaw ; w=0.5
+camera at desk height looking across a surface ; need=indoor
+from a high shelf looking down across the room ; need=indoor ; w=0.6
+tilted diagonal looking up past a raised arm
 
 @slot lens label="Lens" box=style order=42 chance=0.65
 85mm f/1.4 portrait lens
@@ -558,6 +2561,57 @@ deep focus, everything sharp
 soft-focus filter
 tilt-shift miniature effect
 halation around the highlights
+28mm f/2 documentary lens
+20mm ultra-wide lens up close
+14mm ultra-wide with stretched corners ; w=0.6
+circular fisheye with a curved horizon ; w=0.4
+40mm pancake lens with a natural field of view
+50mm f/1.2 wide open
+50mm f/2.8 stopped down for crisp edges
+58mm vintage lens with swirling bokeh ; w=0.7
+75mm short telephoto
+85mm f/1.8 for gentle subject separation
+100mm macro at close focus
+105mm f/2 portrait lens with smooth falloff
+135mm f/2 with strong subject separation
+200mm f/2.8 telephoto, flattened perspective
+300mm long lens with a heavily compressed background
+400mm super-telephoto from far away ; w=0.5
+70-200mm zoom at the long end
+24-70mm zoom at 35mm
+18mm wide angle, stretched foreground
+f/0.95 ultra-fast lens with a paper-thin focus plane ; w=0.5
+f/1.4 wide open with razor-thin focus
+f/2 with a soft falloff behind the subject
+f/2.8 with moderate depth
+f/4 with a little more room in focus
+f/5.6 sharp across the frame
+f/8 with crisp landscape sharpness
+f/11 deep focus with fine detail everywhere
+f/16 with starburst highlights
+toy-camera plastic lens with heavy vignetting ; w=0.4
+selective-focus lens with a sharp centre and smeared edges
+uncoated vintage glass with low contrast and a glowing bloom
+soft-glow lens with bloomed highlights
+wide cinema prime with oval-shaped bokeh
+split-diopter lens keeping foreground and background both sharp ; w=0.5
+telephoto from across the road with stacked layers of depth ; need=urban
+fast prime wide open in low light ; any=night,dusk
+wide open with vignetted corners
+12mm super-wide with strong barrel distortion ; w=0.5
+14mm wide with converging verticals ; need=urban
+mirror telephoto with ring-shaped bokeh ; w=0.5
+medium-format standard lens with smooth tonal roll-off
+large-format view-camera lens with razor edges
+rangefinder-style 35mm with gentle vignetting
+28mm f/1.8 held at arm's length
+24mm f/1.4 with pinpoint stars in the sky ; need=outdoor ; any=night,dusk
+edge-to-edge optical clarity with minimal distortion
+polarising filter with deep skies and cut glare ; need=outdoor ; not=night
+35mm f/1.4 wide open with softly glowing highlights
+50mm at f/4 for natural perspective
+20mm f/1.8 close to the subject with the environment wrapping around them
+24mm at close range with gentle distortion
 
 @slot medium label="Medium" box=style order=43
 35mm film still
@@ -584,6 +2638,120 @@ tintype photograph
 chalk pastel on black paper
 magazine cover photograph
 documentary photograph
+large-format sheet-film portrait with razor-fine detail
+square medium-format negative scan with the film rebate showing
+slide-film transparency glowing on a lightbox
+silver gelatin darkroom print with burned-in edges
+clean full-frame digital photograph ; w=1.5
+smartphone snapshot with punchy computational sharpening
+on-camera flash point-and-shoot photograph ; w=1.2
+disposable-camera snapshot with flash falloff
+peel-apart instant print with chemical edges
+daguerreotype plate, mirror-bright and silvery ; w=0.5
+ambrotype on black glass with swirled collodion edges ; w=0.5
+cyanotype print in deep Prussian blue ; w=0.6
+platinum-palladium print with a long, soft tonal range ; w=0.6
+albumen print faded to gold-brown ; w=0.5
+gum bichromate print with painterly layers ; w=0.5
+photogravure with velvety ink blacks ; w=0.5
+pinhole camera exposure, soft and endlessly deep ; w=0.5
+infrared photograph with glowing white foliage ; need=nature ; w=0.6
+contact sheet with grease-pencil crop marks ; w=0.5
+four-frame photo-booth strip with a slight colour cast ; w=0.5
+coarse newspaper halftone photograph
+low-resolution CCTV still ; w=0.4
+analogue camcorder frame with tracking lines
+8mm home-movie frame with soft gate weave
+CRT television still with scanlines ; w=0.7
+low-resolution webcam capture ; w=0.4
+early digital-camera photo with small-sensor noise
+high-altitude drone photograph ; need=outdoor
+glossy fashion lookbook photograph
+black-and-white street photograph ; w=1.5
+photojournalism frame caught in the moment
+black-and-white film noir still with hard shadows
+silent-era film frame with flickering exposure ; w=0.6
+saturated dye-transfer movie still from a lavish studio picture ; w=0.6
+large-format cinema still with a vast sense of scale
+double-exposure photograph blending portrait and landscape
+photogram of silhouettes on light-sensitive paper ; w=0.4
+cabinet-card portrait on gilt-edged card ; w=0.5
+oil on canvas with thick impasto ; w=1.5
+alla prima oil sketch, wet into wet
+glazed oil painting with luminous layers
+egg tempera on a gessoed panel ; w=0.5
+fresco on lime plaster, faded and cracked ; w=0.5
+encaustic wax painting with layered texture ; w=0.5
+acrylic on canvas with bold flat shapes
+wet-on-wet watercolour with soft bleeds
+loose plein-air watercolour sketch
+sumi-e ink wash on rice paper
+hanging-scroll painting in ink and mineral pigment ; w=0.6
+illuminated manuscript miniature with gold leaf ; w=0.5
+impressionist oil painting with broken colour
+expressionist painting with slashing brushwork
+pointillist painting built from tiny dots ; w=0.6
+faceted cubist-style portrait ; w=0.5
+baroque oil painting with deep chiaroscuro ; w=1.2
+renaissance panel portrait with sfumato softness ; w=0.7
+palette-knife oil painting with ridged paint
+spray-paint stencil mural on brick
+airbrushed illustration with silky gradients
+digital painting with soft textured brushes ; w=1.5
+flat vector illustration with clean geometric shapes
+low-poly 3D render with faceted shading ; w=0.6
+16-bit pixel art scene with a limited palette ; w=0.7
+voxel-art diorama ; w=0.4
+glitch art with pixel-sorted streaks ; w=0.5
+vaporwave collage of gradients, grids and marble busts ; w=0.6
+layered paper-cut shadow box ; w=0.6
+torn-edge photo collage on kraft paper
+mixed-media collage with paint and newsprint
+embroidered textile portrait with visible stitches ; w=0.4
+leaded stained-glass window ; w=0.5
+mosaic of small glass tiles ; w=0.4
+woven wool tapestry ; w=0.4
+carved marble sculpture with fine polish ; w=0.4
+bronze sculpture with green patina ; w=0.4
+hand-sculpted clay maquette with thumbprints ; w=0.4
+pen-and-ink crosshatching
+technical-pen stippling
+brush-pen ink sketch with confident strokes
+bold linocut with carved lines
+woodcut with gouged grain
+copperplate etching with fine hatching
+aquatint with soft tonal pools ; w=0.6
+mezzotint with velvety darkness ; w=0.5
+stone lithograph with crayon grain
+layered screenprint in flat spot colours
+deep-impression letterpress print ; w=0.6
+fine-line steel engraving ; w=0.5
+blueprint-style cyan line drawing ; w=0.5
+vintage pulp-magazine cover painting
+mid-century travel poster with flat gradients
+photocopied zine collage with toner grain
+manga-style ink panel with screentone
+clear-line comic illustration with flat colour
+storybook illustration in soft watercolour and pencil
+hand-coloured botanical engraving ; w=0.5
+tarot-style illustration with an ornate border ; w=0.6
+traditional tattoo flash linework ; w=0.6
+art deco poster with gilded geometry
+constructivist-style poster with diagonal blocks ; w=0.6
+oil pastel drawing with waxy layers
+coloured-pencil drawing with layered hatching
+alcohol-marker rendering with soft blends
+silverpoint drawing on prepared paper ; w=0.4
+red chalk drawing on cream paper ; w=0.6
+scratchboard drawing with white lines cut from black ; w=0.5
+ballpoint-pen drawing with dense scribbled shading ; w=0.6
+monotype print with ghosted ink ; w=0.5
+path-traced 3D render with global illumination ; w=1.2
+matte clay 3D render with soft ambient occlusion
+stylised 3D animation still with soft bounce light
+hand-drawn 2D animation frame with painted backgrounds
+isometric illustration packed with tiny details
+real-time game-engine render with volumetric lighting ; w=0.7
 
 @slot grade label="Grade" box=style order=44 chance=0.6
 warm Kodak-style grain
@@ -598,6 +2766,67 @@ cross-processed colours
 muted, desaturated tones
 rich saturated colour with deep blacks
 sepia tone
+golden-amber grade with lifted shadows ; w=1.2
+cool steel-blue grade with crushed blacks
+green-tinted shadows and warm skin tones
+magenta-shifted shadows and cyan highlights ; w=0.7
+split-toned teal shadows and peach highlights ; w=1.2
+violet shadows and golden highlights
+desaturated greens against warm skin
+lifted blacks with a milky haze
+crushed blacks and clipped highlights ; w=0.6
+low-contrast matte film look
+high-key bright grade with airy whites ; not=night
+low-key grade, deep shadow with a few bright accents ; w=1.2
+single-hue blue monochrome grade ; w=0.5
+red and black duotone grade ; w=0.5
+navy and cream duotone grade ; w=0.5
+warm monochrome in brown and cream ; w=0.7
+low-contrast silvery black and white
+infrared false-colour grade with pink foliage ; need=nature ; w=0.4
+faded colour-print look with yellowed edges
+sun-bleached postcard colours ; not=night
+punchy slide-film saturation
+golden retro tones with an orange cast
+tungsten-balanced blue cast against warm practical lights ; any=night,indoor
+cool fluorescent green cast ; need=indoor
+sodium-orange night grade with deep shadow blue ; need=urban ; any=night
+moonlit blue grade with warm window lights ; any=night,dusk
+cold winter grade with pale blue shadows ; need=cold
+hot dry grade with bleached highlights and burnt orange ; need=hot
+humid green-gold tropical grade ; need=hot
+misty desaturated blue-grey grade ; any=wet,cold
+overcast neutral grade in soft greys ; not=night
+neon-saturated night grade with inky blacks ; need=urban ; any=night
+pastel dusk grade with pink and apricot skies ; any=dusk
+dawn-lavender cool grade ; any=dawn
+vivid fashion-magazine colour with clean skin tones
+clean neutral colour, true to life
+muted earthy grade of olive and brown
+rust-toned autumn grade
+candy-bright saturated grade
+vaporwave pink-teal gradient grade ; w=0.5
+bronze shadows and ice-blue highlights
+sage-tinted shadows and creamy highlights
+creamy highlights with rolled-off blacks ; w=1.2
+underexposed moody grade with detail held in the shadows ; w=1.2
+pushed colour with extra contrast and punch
+selective colour with one hue kept vivid and the rest drained ; w=0.5
+tone-mapped grade with crunchy local contrast ; w=0.5
+film-print emulation with a soft shoulder roll-off
+1970s colour-negative look with warm shadows
+1990s flash-snapshot colour with slightly green midtones
+cinematic neutral grade with a gentle contrast curve
+day-for-night blue grade ; need=outdoor ; w=0.5
+sunset gradient grade running from orange to violet ; any=dusk
+deep emerald shadows with warm gold highlights
+blue-black shadows with a subtle sepia wash in the midtones
+chocolate-brown shadows with peach highlights
+ice-teal highlights over warm black
+olive-drab and ochre faded wartime grade ; w=0.6
+ocean-blue grade with sun-gold skin tones ; any=water,hot
+saturated primary colours with a lavish studio-picture finish ; w=0.6
+greyscale with a faint blue tint
 
 # ---------------------------------------------------------------- aesthetic
 @slot palette label="Palette" box=aesthetic order=50
@@ -617,6 +2846,88 @@ bone white and bruised plum
 sunburnt orange and dusty teal
 forest green and brass
 smoke grey and candle-flame orange
+saffron, indigo and bone white
+celadon green with soft vanilla
+burnt sienna and ultramarine
+ochre, terracotta and olive drab
+ice blue, white and pewter ; any=cold,day
+lilac, butter yellow and mint
+coral, turquoise and sand ; any=hot,water,day
+black and white with a single gold accent ; w=1.2
+wine red, tobacco brown and cream
+petrol blue and rose gold
+lemon yellow and sky blue ; any=day,hot
+moss green, bark brown and mushroom grey ; need=nature
+cherry red and cream with navy trim
+electric blue and hot orange
+sepia browns with a hint of rose
+emerald, ink black and antique gold ; w=1.2
+blush pink and oxblood
+slate grey and marigold
+sea-foam, driftwood and white ; need=water
+rust orange, teal and cream ; w=1.2
+aubergine, copper and smoke
+periwinkle and peach
+pine green, snow white and a flash of red ; need=cold
+ash, bone and dried-blood red
+citrus orange and deep cobalt
+dusty mauve, taupe and warm grey
+gold, black and bottle green
+khaki, olive and sand
+lava red and obsidian black
+milk white, pearl and pale gold
+toxic green and violet shadows ; any=night,urban ; w=0.7
+denim blue, faded red and cream
+tangerine and navy
+deep teal, brass and walnut ; w=1.2
+bubblegum pink and electric blue ; w=0.7
+charcoal and neon yellow
+terracotta pink and olive green
+sun-faded coral, sand and sky ; any=hot,day
+ink black, parchment and vermilion
+persimmon, plum and gold leaf
+cool mint, silver and white
+ruby and champagne ; w=0.8
+smoked-glass grey and amber ; any=night,dusk
+cornflower blue and straw yellow ; any=day,mild
+rosewood, cream and verdigris
+tonal whites and creams with soft grey shadows ; w=0.8
+burgundy, forest green and mustard ; w=1.2
+cyan, black and pale yellow
+chalk blue, bone and tan
+deep violet and acid lime ; w=0.6
+iron grey, rust and a spark of orange
+peacock blue and bronze
+lavender grey and champagne
+a sunset gradient of apricot, magenta and indigo ; any=dusk
+matcha green, cream and brown
+copper, patina green and soot
+glacier turquoise and slate ; need=cold
+pistachio and blush
+mulberry and ash
+golden yellow and cool grey-blue
+vermilion, jade and ivory
+antique white, ochre and faded blue-green
+soft grey-blue with warm tan accents
+powder blue, cream and a hint of brass
+monochrome blue-black with silver glints ; any=night
+mossy greens with a pop of fuchsia ; need=nature
+cinnamon, cream and dusty blue
+hot pink, orange and red in a clash ; w=0.6
+wheat, sage and sky ; need=outdoor ; any=day,mild
+black cherry and smoke
+jungle green and orange blossom ; need=hot ; w=0.8
+dawn pink, pale gold and slate ; any=dawn
+steel grey and electric violet
+earthy ochre, umber and bone
+rain-washed greys and wet black ; need=wet
+sun-bleached tan and washed denim ; need=hot
+frost white and pale lilac ; need=cold
+{peach|apricot}, cream and soft olive
+warm brick, charcoal and linen white
+fern green, honey and cream ; any=nature,mild
+ink blue, chalk white and a stripe of red
+streetlamp amber and tar black with a sliver of cold cyan ; need=urban ; any=night,dusk
 
 @slot mood label="Mood" box=aesthetic order=51
 quiet and melancholic
@@ -634,6 +2945,90 @@ tender and unhurried
 lonely but at peace
 sly and conspiratorial
 raw and unguarded
+quiet defiance
+feverish and restless
+serene and spacious
+cosy and sheltered ; need=indoor
+wistful and sunlit ; not=night
+ominous and still
+cinematic tension ; w=1.2
+playful and mischievous
+glamorous and cool
+gritty and street-worn ; need=urban
+ethereal and weightless
+haunted and hollow
+triumphant and radiant
+rebellious and carefree
+solitary and contemplative ; w=1.2
+exuberant and loud
+nostalgic and sun-faded
+mysterious and watchful
+hopeful and fresh ; any=dawn,day
+stoic resolve
+solemn and ceremonial ; w=0.7
+smouldering and slow
+magnetic and self-possessed ; w=1.2
+wistful tenderness of rain on the window ; need=wet
+cold and clinical
+uneasy and off-kilter
+dreamlike and surreal ; w=1.2
+bold and theatrical
+gentle and drowsy
+windswept and free ; need=outdoor
+melancholy elegance ; w=1.2
+lived-in warmth
+weary but unbroken
+gentle awe
+brooding and magnetic
+cheerful chaos
+the calm before the storm
+midnight confessional ; any=night
+feral and untamed ; need=nature
+thrilling and dangerous
+wide-open freedom ; need=outdoor
+coiled and watchful
+disarmingly warm
+numb, after-the-party quiet ; any=night,dawn
+hazy summer languor ; need=hot
+crisp and clear-headed ; need=cold
+serenity after hard work
+ritual calm
+bright and breezy ; not=night
+adventurous and curious
+elegiac and slow
+cool, detached glamour
+deadpan and dry
+fragile and luminous
+grounded and earthy
+smoky and conspiratorial ; any=night,indoor
+stubborn optimism
+slow-burning dread
+Sunday-morning stillness ; any=dawn,day
+late-night honesty ; any=night
+pre-dawn hush ; any=dawn
+road-weary freedom ; any=outdoor,urban
+festival euphoria ; need=outdoor
+cathedral stillness ; need=indoor
+frosty clarity ; need=cold
+sleepless, feverish energy ; any=night
+bruised romance
+peaceful solitude by the water ; need=water
+quiet pride
+{hushed|breathless} expectancy
+gently surreal calm
+loose, unselfconscious joy
+dusty, sunburnt patience ; need=hot
+sharp, watchful composure
+wide-eyed wonder
+wry resignation
+giddy and light-headed
+reverent curiosity
+unhurried confidence
+tender and wounded
+sly triumph
+stark and austere
+washed-clean calm after rain ; need=wet
+unforced elegance
 
 @slot era label="Era" box=aesthetic order=52 chance=0.4
 1950s
@@ -648,3 +3043,922 @@ timeless
 Belle Epoque
 mid-century modern
 post-war
+1920s Jazz Age
+1930s
+1940s wartime
+1960s swinging style
+late 1960s psychedelia
+disco-era 1970s
+punk-era late 1970s
+early 1980s new wave
+mid-1980s
+grunge-era early 1990s
+late 1990s
+Y2K
+mid-2000s
+2010s
+Victorian
+Regency
+Art Deco heyday
+Prohibition-era
+Depression-era
+space-age 1960s ; w=0.8
+atomic-age 1950s
+Cold War
+silent-film era ; w=0.6
+golden age of Hollywood
+Gilded Age
+Edo-period Japan ; w=0.6
+Meiji-era Japan ; w=0.5
+Heian court ; w=0.4
+medieval ; w=0.7
+Renaissance ; w=0.7
+baroque ; w=0.6
+rococo ; w=0.5
+Georgian ; w=0.5
+Wild West frontier ; w=0.8
+Gold Rush ; w=0.5
+Raj-era India ; w=0.5
+1930s Shanghai ; w=0.7
+1960s Havana ; w=0.7
+1970s New York
+1980s Tokyo ; w=0.8
+1950s Paris
+Soviet-era 1970s ; w=0.6
+post-apocalyptic ; w=0.8
+far future ; w=0.8
+solarpunk near-future ; w=0.7
+dieselpunk ; w=0.6
+steampunk ; w=0.8
+retro-futurist ; w=0.8
+Tang-dynasty court ; w=0.4
+ancient Roman ; w=0.4
+Ottoman-era Istanbul ; w=0.4
+1990s Hong Kong ; w=0.7
+
+# ---------------------------------------------------------------- more slots (subject)
+@slot hairstyle label="Hairstyle" box=subject order=3 chance=0.7
+braided into a loose fishtail ; w=1.5
+woven into a tight crown braid
+pulled back into a high ponytail ; w=1.5
+gathered in a low, messy bun ; w=1.5
+twisted up with a pencil through it
+pinned into a neat chignon
+swept over one shoulder
+half-up in a small knot
+tied back with a faded bandana
+windswept and tousled ; w=0.7
+slicked straight back with water
+parted down the middle
+in a deep side part
+braided into neat cornrows
+in two French braids
+knotted on top of the head
+twisted into bantu knots
+in a sleek low ponytail at the nape
+in a ballerina bun
+wrapped in a silk headscarf ; w=0.6
+held back by a wide headband
+under a slouchy wool beanie ; w=0.6
+tucked behind both ears
+falling across one eye
+in a thick single braid down the back
+in a loose side braid threaded with ribbon
+twisted into a rope braid
+in a messy half-up bun
+braided through with beads and thread
+in a defined twist-out
+in chunky two-strand twists
+held up with a carved hair stick
+loosely knotted at the nape
+in a low chignon with loose tendrils
+set in glossy finger waves
+teased into volume at the crown
+combed back wet-look
+in a damp, towel-dried tangle ; w=0.6
+fastened up with a claw clip ; w=1.2
+with a silk ribbon woven through
+wrapped in a bright head wrap
+brushed forward and carelessly ruffled
+in an unfussy braid down one side
+with a few loose strands curling at the temple
+worn down and brushed to a shine
+dried natural and untamed
+plaited into a long rope over the chest
+gelled into spiky texture ; w=0.6
+combed over to one side with a neat part
+pushed back with one hand, still falling forward
+in a low ponytail tied with a leather cord
+in tight, glossy Dutch braids
+in a bouffant swept up high ; w=0.6
+in a sleek, polished blowout
+in loose beachy waves
+with the fringe pinned back with a clip
+hanging in heavy, undone waves
+in a long twisted updo held with pins
+scraped back into a tight, no-nonsense bun
+in a casual high bun with a scarf tied round it
+sleep-rumpled bedhead ; w=0.7
+in a retro curled flip at the ends ; w=0.6
+in victory rolls pinned high ; w=0.4
+with locs gathered in a loose bundle at the back
+gathered into a high, round puff
+in a low side ponytail draped over one shoulder
+in small, neat plaits all over
+in a braided ponytail swinging behind
+brushed up into a soft quiff
+knotted with a {red|indigo|mustard|forest-green} cord
+
+@slot hands label="Hands & nails" box=subject order=7 chance=0.35
+short, bitten-down nails
+long almond nails painted deep red
+chipped black nail polish
+clean, square-cut nails
+oil-stained fingertips
+flour-dusted hands
+knuckles thick and scarred from years in the ring
+paint-flecked knuckles
+rough palms hardened by rope work
+long, slender fingers made for the piano
+hands wrapped in athletic tape
+a ring on each thumb
+henna patterns tracing the backs of the hands
+glitter-dusted nails
+a pale pink manicure, freshly done
+a plaster wrapped round one thumb
+a thin gold band on the ring finger
+freckled hands with prominent veins
+large, weathered hands
+small, precise hands
+a pale scar across the back of one hand
+fingertips taped for climbing
+mismatched nail colours on every finger
+chalk-white hands
+soil under the nails
+arthritic, knotted knuckles
+a pale band of skin where a watch usually sits
+ragged, picked cuticles
+nails painted {oxblood|pale blue|bottle green|mustard}
+short, glossy nails in clear polish
+stacked silver rings on the index and middle fingers
+fingers stained yellow with turmeric
+square, spade-like hands with thick fingers
+cracked, dry hands from too much washing
+fingers wrapped in cloth tape and a few plasters
+neat, short, unpainted nails
+nails with tiny flecks of gold foil
+pale, almost translucent hands with blue veins
+hands dusted with sawdust
+hands smeared with wet clay
+hands scrubbed pink and raw
+nails filed to points and painted gunmetal grey ; w=0.6
+a bandage wrapped across one palm
+tiny symbols tattooed on each finger ; w=0.6
+strong, broad hands with short fingers
+a scatter of tiny healed burns across the fingers
+long, elegant hands with tapering fingers
+nails stained deep blue from indigo dye
+
+@slot demeanor label="Demeanor" box=subject order=7 chance=0.6
+an air of quiet authority
+easy, unforced poise
+restless, always half-turned toward the exit
+a loose-limbed, unhurried slouch
+a soldier's straight-backed ease
+a lazy, self-assured confidence
+nervous energy in every small movement
+a graceful economy of movement
+shy, with a slight hunch and a lowered chin
+a slow, rolling gait
+a regal, upright bearing
+a coiled stillness, as if ready to move
+bouncing lightly on the balls of the feet
+a faint swagger
+an easy warmth that draws people in
+guarded and watchful
+tired dignity
+playful mischief barely contained
+a gentle, apologetic shyness
+a heavy, world-weary slump
+a brisk, no-nonsense air
+serene as still water
+an absent-minded, bookish air
+braced against the world
+a ballroom dancer's posture
+quietly radiating competence
+breezy and unbothered
+an unhurried, deliberate calm
+brimming with contained energy
+looking slightly out of place and perfectly aware of it
+a deadpan composure
+a steady, big-hearted presence
+a haughty tilt of the chin
+an open, curious stance toward everything
+gently awkward, all elbows and apologies
+the swagger of someone who always wins the room
+a sleepy, half-awake drift
+clipped, precise movements
+a relaxed command of the room
+a humble, soft-spoken presence
+a held-breath tension
+a seasoned, unflappable calm
+quiet defiance in the set of the jaw
+a theatrical flourish in every gesture
+a loping, long-legged ease
+stoic patience, unmoved by the noise
+a scholar's distracted stoop
+poised on the edge of laughter
+cool, detached elegance
+a cheerful, rumpled disarray
+the careful stillness of someone used to being watched
+a rebellious slouch
+grounded and steady, rooted to the spot
+a daydreamer's drift
+careworn but gracious
+a restless, pacing energy
+a faintly amused detachment
+precise, composed and slightly formal
+a fussing, caretaking warmth
+a lone-wolf reserve
+buoyant and quick on the feet
+a measured, thoughtful pace
+gruff gentleness beneath a stern front
+cheeky charm
+a wary, cat-like grace
+the proud carriage of someone twice as tall
+effortless, careless elegance
+an old soul's weariness
+clumsy tenderness
+an energetic, bright-eyed readiness
+
+# ---------------------------------------------------------------- more slots (scene)
+@slot season label="Season" box=scene order=9 chance=0.5
+deep midwinter ; w=1.5 ; give=cold ; not=hot,mild
+the first snowfall of the year ; give=cold ; not=hot,mild
+a bitter January ; give=cold ; not=hot,mild
+the dead of a long northern winter ; give=cold ; not=hot,mild
+a snowed-in weekend ; give=cold ; not=hot,mild
+the week before the winter solstice ; give=cold ; not=hot,mild
+the festive season, with lights strung across every street ; give=cold ; not=hot,mild
+late winter, with the thaw turning snow to slush ; give=cold,wet ; not=hot,mild
+high summer ; w=1.5 ; give=hot ; not=cold,mild
+a scorching August ; give=hot ; not=cold,mild
+the height of a sticky heatwave ; give=hot ; not=cold,mild
+the dry season ; give=hot ; not=cold,mild,wet
+monsoon season ; give=hot,wet ; not=cold,mild
+the long light evenings of midsummer ; give=mild ; not=cold,hot
+late summer, the grass gone gold ; give=mild ; not=cold,hot
+an unseasonably warm autumn ; give=mild ; not=cold,hot
+early spring ; give=mild ; not=cold,hot
+cherry blossom season ; give=mild ; not=hot,cold
+a wet, blustery spring ; give=mild,wet ; not=hot,cold
+the green rush of late spring ; give=mild ; not=hot,cold
+the peak of autumn colour ; w=1.5 ; give=mild ; not=hot,cold
+the last days of autumn, the trees nearly bare ; give=mild ; not=cold,hot
+a grey, drizzly November ; give=mild,wet ; not=hot,cold
+harvest season ; give=mild ; not=cold,hot
+a crisp, bright autumn ; give=mild ; not=cold,hot
+the shoulder season, with the tourists gone ; give=mild ; not=cold,hot
+
+@slot backdrop label="Backdrop details" box=scene order=11 chance=0.7 count=1-2
+a distant rail bridge ; need=outdoor,urban
+laundry lines strung overhead ; need=outdoor,urban
+a row of identical balconies bristling with satellite dishes ; need=outdoor,urban
+scaffolding wrapped in green netting ; need=outdoor,urban
+a water tank on a roof across the street ; need=outdoor,urban
+a billboard peeling at the corners ; need=outdoor,urban
+a tram line vanishing into the distance ; need=outdoor,urban
+shuttered shopfronts with faded signs ; need=outdoor,urban
+a crane silhouette above half-built towers ; need=outdoor,urban
+a dense knot of power lines ; need=outdoor,urban
+a mural half covering a brick gable wall ; need=outdoor,urban
+a forest of chimney pots against the sky ; need=outdoor,urban
+a church spire rising above the rooftops ; need=outdoor,urban
+a minaret among the rooftops ; need=outdoor,urban
+a pagoda roof between office blocks ; need=outdoor,urban
+an elevated highway curving past ; need=outdoor,urban
+a ferris wheel turning slowly in the distance ; need=outdoor,urban
+a cooling tower venting white steam ; need=outdoor,urban
+a line of parked scooters ; need=outdoor,urban
+a hill of stacked houses with lit windows ; need=outdoor,urban
+a food truck with a hand-painted menu ; need=outdoor,urban
+a corner shop with crates of fruit outside ; need=outdoor,urban
+bunting zigzagging between buildings ; need=outdoor,urban
+paper lanterns strung across the street ; need=outdoor,urban
+a metal shutter covered in stickers and tags ; need=outdoor,urban
+a flock of pigeons lifting from a ledge ; need=outdoor,urban
+a stack of bins beside a fire hydrant ; need=outdoor,urban
+a gap between buildings showing a strip of sea ; need=outdoor,urban
+a green dome gleaming above the roofs ; need=outdoor,urban
+a column of steam rising from a street vent ; need=outdoor,urban
+a faded hand-painted advertisement on a gable wall ; need=outdoor,urban
+a tower block with a single lit window ; need=outdoor,urban
+a graffitied freight wagon on a siding ; need=outdoor,urban
+a floodlit stadium rim beyond the rooftops ; need=outdoor,urban,night
+window boxes spilling red geraniums ; need=outdoor,urban ; not=cold
+a roof forest of television aerials ; need=outdoor,urban
+light trails on a distant overpass ; need=outdoor,urban,night
+snow-capped rooftops ; need=outdoor,urban,cold
+icicles hanging from every gutter ; need=outdoor,urban,cold
+a skyline of glass towers catching the light ; need=outdoor,urban
+an old trolleybus idling at its stop ; need=outdoor,urban
+a wall of air-conditioning units dripping onto the pavement ; need=outdoor,urban,hot
+a vertical hotel sign in buzzing neon ; need=outdoor,urban,night
+slow ceiling fans in an open-fronted shop ; need=outdoor,urban,hot
+a line of street vendors under bright umbrellas ; need=outdoor,urban,hot
+a ridge line fading into layers of blue haze ; need=outdoor,nature
+a lone tree on a far hill ; need=outdoor,nature
+a stand of silver birches ; need=outdoor,nature
+a river glinting through the trees ; need=outdoor,nature
+a row of poplars lining a distant road ; need=outdoor,nature
+a waterfall threading down a cliff ; need=outdoor,nature
+a drystone wall climbing a hillside ; need=outdoor,nature
+cloud shadows sliding across a valley ; need=outdoor,nature
+sheep scattered across a far slope ; need=outdoor,nature
+a collapsing barn among the weeds ; need=outdoor,nature
+a line of wind turbines on the ridge ; need=outdoor,nature
+jagged peaks dusted with fresh snow ; need=outdoor,nature
+a flock of birds crossing the sky ; need=outdoor
+a smoking volcano cone on the horizon ; need=outdoor,nature,hot ; w=0.6
+terraced fields stepping down a slope ; need=outdoor,nature
+a valley filled with mist ; need=outdoor,nature
+a crooked fence line running into the distance ; need=outdoor,nature
+an old stone bridge half hidden by trees ; need=outdoor,nature
+a solitary farmhouse with one lit window ; need=outdoor,nature,night
+dark pines marching up a slope ; need=outdoor,nature
+a pylon line striding across the plain ; need=outdoor,nature
+a red-roofed village in the far valley ; need=outdoor,nature
+a windmill on the skyline ; need=outdoor,nature
+a column of smoke rising from a far chimney ; need=outdoor,nature
+a forest edge dissolving into fog ; need=outdoor,nature
+a snow line creeping down the mountain ; need=outdoor,nature,cold
+a silver river braiding across the plain ; need=outdoor,nature
+a narrow-gauge railway cutting through the trees ; need=outdoor,nature
+ancient standing stones on the skyline ; need=outdoor,nature
+red cliffs glowing in the distance ; need=outdoor,nature,hot
+a plume of dust behind a far truck ; need=outdoor,nature,hot
+palms leaning along the shore ; need=outdoor,water,hot
+a pair of cranes wading in the shallows ; need=outdoor,water,nature
+a rocky island offshore ; need=outdoor,water
+a lighthouse on a distant headland ; need=outdoor,water
+sails dotting the bay ; need=outdoor,water
+container ships stacked along the horizon ; need=outdoor,water
+a long pier running out into the mist ; need=outdoor,water
+a ferry crossing slowly in the distance ; need=outdoor,water
+fishing boats hauled up on the shingle ; need=outdoor,water
+a bridge reflected in still water ; need=outdoor,water,urban
+a chain of lit windows reflected in the river ; need=outdoor,water,urban,night
+houseboats rocking at their moorings ; need=outdoor,water,urban
+wooden jetties and mooring posts ; need=outdoor,water
+steam lifting off the water ; need=outdoor,water,cold
+ice floes drifting past ; need=outdoor,water,cold
+lobster pots stacked on the quay ; need=outdoor,water
+shelves crammed floor to ceiling with books ; need=indoor ; not=nature,water
+a wall of mismatched framed photographs ; need=indoor,private
+a window streaked with rain ; need=indoor,wet
+a window onto a snowy courtyard ; need=indoor,cold
+a window onto a sunlit garden ; need=indoor,private ; not=cold,night
+a half-drawn curtain ; need=indoor
+a chalkboard menu behind the counter ; need=indoor,public
+rows of bottles glinting behind the bar ; need=indoor,public
+copper pots hanging from a rail ; need=indoor
+a wall of old maps pinned in layers ; need=indoor
+a tall clock with a slow pendulum ; need=indoor
+a crowded coat rack by the door ; need=indoor
+a bulletin board layered with flyers ; need=indoor,public
+hanging plants in macrame holders ; need=indoor,private
+a cluttered mantelpiece ; need=indoor,private
+an unmade bed in the background ; need=indoor,private
+a stack of boxes in a corner ; need=indoor ; not=formal
+a tiled wall with a patina of age ; need=indoor
+a mezzanine railing above ; need=indoor
+a spiral staircase curling upward ; need=indoor
+a bare brick wall ; need=indoor ; not=formal
+an iron radiator under a sash window ; need=indoor ; any=cold,wet
+an open doorway into a lit kitchen ; need=indoor,private
+a beaded curtain over a back room ; need=indoor
+rows of folded fabric on shelves ; need=indoor
+tools hung on a pegboard wall ; need=indoor
+shelves of jars and tins ; need=indoor,private
+a bicycle hung from ceiling hooks ; need=indoor
+a big arched window at the end of the hall ; need=indoor,formal
+columns receding into shadow ; need=indoor,formal
+a velvet curtain with a gold tassel ; need=indoor,formal
+a chandelier hanging above ; need=indoor,formal
+a row of tall arched windows ; need=indoor,formal
+an aquarium glowing in a corner ; need=indoor,private
+a vending machine humming against a wall ; need=indoor,public
+a bank of battered lockers ; need=indoor,public
+a row of washing machines turning ; need=indoor,public
+rows of empty seats ; need=indoor,public
+a staircase of worn marble ; need=indoor,formal
+tiled walls fogged with steam ; need=indoor,water
+a view over the harbour through a big window ; need=indoor,water
+glass panes beaded with condensation ; need=indoor,nature
+a wood stove with a kettle on top ; need=indoor,cold
+a stack of split logs beside the hearth ; need=indoor,cold
+
+@slot foreground label="Foreground" box=scene order=19 chance=0.45
+out-of-focus wildflowers framing the lower edge ; need=outdoor,nature ; not=cold
+blurred leaves in one corner of the frame ; need=outdoor,nature
+rain-beaded glass in the foreground ; any=wet
+a fogged window with a finger-drawn line ; need=indoor ; any=cold,wet
+the soft blur of a steaming cup ; need=indoor
+a blurred lamp post cutting across the frame ; need=urban,outdoor
+the edge of a doorframe cutting into the picture ; need=indoor
+a curtain edge brushing the lens ; need=indoor
+the out-of-focus rim of a wine glass ; need=indoor
+a chain-link fence blurred in front ; need=urban,outdoor
+iron railings crossing the foreground ; need=urban,outdoor
+drifting snowflakes catching the light ; need=cold,outdoor
+floating dust motes in a beam of light ; need=indoor
+pollen drifting through the light ; need=outdoor ; any=mild,hot ; not=wet,cold,night
+falling blossom petals, soft and blurred ; need=outdoor,mild ; not=cold
+sea spray blurring the lower frame ; need=water,outdoor
+tall grass swaying in the foreground ; need=nature,outdoor
+reeds blurred in the foreground ; need=water,nature,outdoor
+a leafy branch crossing the top corner ; need=nature,outdoor
+wisps of steam crossing the lens ; any=cold,water
+drifting smoke softening the foreground ; any=night,cold
+blurred lights streaking across the lower frame ; need=urban ; any=night,dusk
+a smear of rain on the lens ; need=wet,outdoor
+a lens flare creeping in from one corner ; need=outdoor ; not=night
+a shallow drift of snow in sharp relief ; need=cold,outdoor
+bokeh of distant lights in the foreground ; need=urban ; any=night,dusk
+a passer-by's shoulder cutting across the edge of the frame ; need=urban,outdoor
+a half-open door in the foreground ; need=indoor
+a stack of books in the lower corner ; need=indoor
+the cluttered edge of a desk ; need=indoor,private
+the lip of a stone wall in sharp focus ; need=outdoor
+a mossy log in the foreground ; need=nature,outdoor
+ripples spreading across the foreground ; need=water,outdoor
+the arm of an armchair, blurred ; need=indoor,private
+a plant frond overlapping the frame ; need=indoor
+a puddle mirroring the scene at the bottom of the frame ; need=wet,outdoor
+tyre ruts leading toward the subject ; need=outdoor,nature
+footprints in fresh snow leading in ; need=cold,outdoor
+a trail of fallen leaves ; need=outdoor,mild
+a window frame forming a second frame ; need=indoor
+a line of washing in the foreground ; need=urban,outdoor
+a row of coat hooks ; need=indoor
+glass bottles lined up on the counter ; need=indoor,public
+steam from a street-food cart ; need=urban,outdoor
+reflections layered across a shop window ; need=urban,outdoor
+the dark edge of a doorway vignetting the frame ; need=indoor
+a blurred staircase rail ; need=indoor
+a moth fluttering past the lens ; any=night,dusk
+fireflies drifting slowly ; need=nature,outdoor ; any=night,dusk ; not=cold
+the blurred ear of a cat in one corner ; need=indoor,private
+frost ferns on the glass ; need=indoor,cold
+a thin veil of mist ; need=outdoor ; any=dawn,wet
+cobweb strands catching the light ; need=outdoor ; not=wet
+fallen wet leaves ; need=wet,outdoor
+a branch of blossom hanging into the frame ; need=outdoor,nature,mild
+sand blowing low across the ground ; need=outdoor,hot ; not=wet
+a rusted chain across the lower edge ; need=water
+heat-haze ripples above the ground ; need=outdoor,hot,day ; not=wet
+
+# ---------------------------------------------------------------- more slots (fashion_pose)
+@slot headwear label="Headwear" box=fashion order=35 chance=0.4
+a slouchy wool beanie ; need=cold
+a wide-brimmed straw hat ; any=hot,mild ; not=cold,night
+a flat cap in herringbone tweed ; any=cold,mild
+a bucket hat in faded canvas ; any=hot,mild ; not=formal
+a fedora with a worn brim ; not=swimwear
+a baseball cap pulled low ; not=formal
+a silk headscarf knotted under the chin ; not=swimwear
+a knitted headband over the ears ; need=cold
+a hooded scarf wound twice around the head ; need=cold
+a felt cloche hat ; any=mild,cold ; not=hot
+a battered cowboy hat ; any=hot,mild,outdoor
+a beret tilted to one side ; not=swimwear
+a cycling cap with a short peak ; any=athletic,outdoor
+a wool newsboy cap ; any=cold,mild
+a sun visor ; any=hot,athletic ; not=night,cold
+a fur-lined trapper hat ; need=cold
+a floral crown of wild flowers ; need=nature ; not=cold
+a leather aviator cap with goggles pushed up
+a plain white bandana tied over the hair
+a turban-style wrap in rust-coloured cotton
+a pillbox hat with a short veil ; give=formal ; not=swimwear
+a pair of ear warmers ; need=cold
+a woven fisherman's cap ; any=water,mild,cold
+a straw boater with a ribbon band ; any=hot,mild ; not=cold,night
+a headlamp strapped over a knit hat ; any=night,nature
+a rain hat with a floppy brim ; need=wet
+a paper crown from a party ; not=formal
+a knitted cap with a small pompom ; need=cold
+a black wool watch cap ; need=cold
+a safety helmet, scuffed and dusty ; any=urban,outdoor ; not=formal
+a bicycle helmet in matte grey ; any=athletic,urban,outdoor
+a sailor's cap with a faded band ; any=water,hot,mild
+a mesh-backed trucker cap ; any=hot,mild ; not=formal
+an embroidered skullcap ; not=swimwear
+a hooded cape pulled up over the head ; any=wet,cold
+a lace mantilla draped over the hair ; give=formal ; not=swimwear
+a top hat with a dented crown ; give=formal
+a ribbon tied in a bow on the crown of the head
+a leather driving cap ; any=mild,cold
+a scarf wrapped around the head like a headband ; any=hot,mild
+a helmet liner of quilted cotton ; need=cold
+a peaked military-style cap ; not=swimwear
+a wide sun hat tied under the chin with a ribbon ; any=hot,water ; not=cold,night
+a felt hat with a feather in the band ; any=mild,cold
+a bandeau knotted at the front of the head ; any=hot,mild
+a straw sunhat dyed deep green ; any=hot,mild ; not=cold,night
+a knit balaclava rolled up above the brow ; need=cold
+a monk-style cowl in rough wool ; need=cold
+a tin-foil crown, comically crinkled ; not=formal
+a pair of goggles pushed up on the forehead
+
+@slot fabric label="Fabric & pattern" box=fashion order=29 chance=0.5
+washed indigo linen
+houndstooth wool ; need=cold
+faded striped cotton
+fine-gauge ribbed knit ; any=cold,mild
+heavy waxed canvas ; any=wet,mild,cold
+lightweight chambray ; any=hot,mild
+soft brushed flannel ; any=cold,mild
+sheer cotton voile ; any=hot,mild
+crisp poplin shirting
+slubby raw silk
+heavy corduroy ; any=cold,mild
+smooth satin ; any=formal,mild
+worn buttery leather ; any=cold,mild
+tartan wool in deep greens and reds ; any=cold,mild
+printed batik cotton ; any=hot,mild
+slate-grey herringbone tweed ; any=cold,mild
+quilted cotton ; any=cold,mild
+bright floral print ; any=hot,mild
+vintage polka dots ; any=mild,hot
+soft jersey knit
+stonewashed denim
+rough hand-woven hemp
+pinstripe suiting ; any=formal,urban
+glossy patent finish
+gauzy crinkled cotton ; any=hot,mild
+velvet in a deep jewel tone ; any=cold,mild
+traditional woven ikat ; any=hot,mild
+faded block-printed fabric
+sun-bleached cotton drill ; any=hot,mild
+chunky Aran knit ; need=cold
+fine merino jersey ; any=cold,mild
+crushed velvet ; any=cold,mild
+breathable technical mesh ; need=athletic
+matte neoprene ; any=water,athletic
+paisley print in rich colours
+muted gingham
+loud Hawaiian-style print ; any=hot,water
+raw selvedge denim
+thin, translucent organza ; any=formal,mild
+distressed leather with visible scuffs
+heavy cable-knit wool ; need=cold
+tie-dyed cotton ; any=hot,mild
+soft terrycloth ; any=hot,water
+glittering sequin fabric ; any=formal,night
+matte black stretch fabric ; need=athletic
+ripstop nylon ; any=outdoor,athletic
+patchwork of mismatched fabrics
+
+@slot gesture label="Hands & gesture" box=pose order=39 chance=0.6
+one hand shielding the eyes ; need=outdoor ; not=night
+hands clasped behind the back
+fingers laced loosely in the lap
+one hand resting on the collarbone
+twirling a strand of hair around a finger
+hands tucked into opposite sleeves
+a hand raised in a small wave
+arms wrapped around the knees
+one hand on the hip, the other holding a bag
+thumbs hooked in the pockets
+fingers drumming on a table ; need=indoor
+hands cupped around a warm mug ; need=cold
+one hand resting on the neck
+both hands raised to adjust the hair
+arms crossed with fingers tucked under the elbows
+hands buried in coat pockets ; any=cold,mild
+one hand extended as if to catch a raindrop ; need=wet,outdoor
+finger pressed thoughtfully to the lips
+hands braced on the knees
+a hand brushing a stray hair from the face
+arms spread wide, palms open
+one hand trailing along a railing ; need=outdoor
+both hands wrapped around the back of the head
+holding the opposite elbow
+a hand gently rubbing the back of the neck
+a hand holding a hat on against the wind ; need=outdoor
+hands in a prayer-like pose under the chin
+arms folded on top of a wall ; need=outdoor
+fingers pushed through the hair
+wrists crossed in front
+one hand raised to shade a smile
+adjusting the cuff of a sleeve
+pinching the bridge of the nose
+tapping the temple, deep in thought
+gripping a railing with both hands ; need=outdoor
+a hand resting lightly on a friend's shoulder ; need=public
+hands pressed flat on a table ; need=indoor
+rubbing the palms together against the cold ; need=cold
+pointing off to the side with an open hand
+one hand in a half-fist at the chin
+pushing sleeves up to the elbows
+hands thrust deep in the back pockets
+a hand lifted in a toast
+a hand held out, palm up, as if testing for rain ; need=wet,outdoor
+adjusting a necklace with two fingers
+holding the lapels of a coat ; any=cold,mild
+cradling the chin in one hand
+one palm flat against a window ; need=indoor
+a hand pressed to the chest in surprise
+stretching both arms over the head with fingers laced
+hands in a casual shrug
+smoothing the front of a jacket
+fingers curled around the strap of a bag
+
+# ---------------------------------------------------------------- more slots (style)
+@slot composition label="Composition" box=style order=45 chance=0.6
+rule of thirds with the subject on the left line
+subject on the right third, looking into the frame
+centred symmetrical composition ; w=1.2
+leading lines drawing the eye to the subject ; w=1.5
+converging lines toward a distant vanishing point
+generous negative space above the subject ; w=1.5
+wide negative space on one side of the frame
+minimal composition with mostly empty frame ; w=1.2
+frame within a frame ; w=1.2
+foreground framing with out-of-focus elements
+layered foreground, midground and background ; w=1.2
+bold diagonal composition
+S-curve running through the frame
+golden-ratio spiral guiding the eye ; w=0.7
+golden-triangle layout
+asymmetric balance with a small bright counterweight
+rule of odds with three focal elements ; w=0.6
+horizon on the lower third with a big sky ; need=outdoor
+high horizon with an expansive foreground ; need=outdoor
+subject small at the bottom of the frame
+subject dwarfed by the architecture around them ; need=urban
+tight, claustrophobic framing
+headroom trimmed tight
+subject cropped deliberately at the edge of the frame
+off-centre subject with open space ahead
+symmetry broken by a single detail
+mirrored reflection symmetry ; need=water
+repeating pattern interrupted by one break
+silhouette placed on a lower-third line
+hard shadows forming strong graphic shapes ; any=day,dusk
+echoing geometric shapes across the frame
+triangular composition anchored by the pose
+circular composition curling around the subject
+strong vertical lines of pillars or trees
+horizontal bands of colour stacked across the frame
+split composition, half in light and half in shadow
+colour blocking with large flat areas
+Z-pattern reading path across the frame ; w=0.5
+subject emerging from the edge of the frame
+visual weight balanced by a distant light ; any=night,dusk
+road lines running straight into depth ; need=urban,outdoor
+rail tracks converging behind the subject ; need=urban,outdoor
+a winding path leading into depth ; need=nature
+repeating arches receding behind the subject ; need=urban
+spiral staircase forming a swirl around the subject ; need=indoor
+window frames dividing the scene into panels ; need=indoor
+subject centred in a tunnel of light
+strong foreground object anchoring the depth
+clean, uncluttered backdrop isolating the subject ; w=1.2
+busy, layered frame with the subject still the focus ; need=urban
+quiet corner placement with a pool of empty space
+subject and shadow forming a pair of shapes
+curved lines guiding the eye through the scene
+low-key composition with the subject emerging from darkness ; any=night,indoor
+tonal separation, light subject against a dark ground
+dark subject against a bright backdrop ; not=night
+open frame with a lone figure and a distant landmark ; need=outdoor
+
+@slot effects label="Camera effects" box=style order=46 chance=0.45
+fine film grain
+coarse pushed grain ; w=0.8
+soft bokeh balls in the background ; w=1.5
+hexagonal bokeh highlights
+swirling bokeh around the edges ; w=0.7
+anamorphic streak flare across the lens
+sun flare spilling across the frame ; need=outdoor ; not=night
+subtle lens flare in one corner
+veiling glare from strong backlight
+red halation glow around bright lights ; any=night,dusk ; w=1.2
+bloom on the highlights
+dreamy diffusion glow
+chromatic aberration at the frame edges
+warm orange light leaks along the edge ; w=0.8
+natural vignette with darker corners
+dust and fine scratches from old film
+film burn at the frame edge ; w=0.5
+visible sprocket edges ; w=0.4
+long-exposure light trails ; need=urban,outdoor ; any=night,dusk
+panning blur with the subject sharp and the background streaking ; need=urban
+slow-shutter ghosting on moving hands ; w=0.7
+slight handheld camera shake
+zoom burst radiating from the subject ; w=0.5
+radial blur spinning toward the edges ; w=0.4
+smooth focus falloff from sharp to soft
+focus-stacked detail from front to back ; w=0.5
+rolling-shutter skew on fast movement ; w=0.3
+analogue tracking noise at the edges ; w=0.4
+faint scanlines ; w=0.5
+digital noise crawling in the shadows
+heavy compression artefacts like a copy of a copy ; w=0.3
+smudged lens with a soft glow
+water droplets on the lens ; need=wet
+condensation fogging the glass ; any=wet,cold
+breath fog on the window ; need=cold
+frost creeping in at the corners of the frame ; need=cold ; w=0.6
+sun-star rays from a tiny aperture ; need=outdoor ; not=night
+rainbow prism refraction streaks
+ghost reflections from internal lens elements
+starburst highlights on every streetlight ; need=urban ; any=night,dusk
+glittering specular sparkle on wet surfaces ; need=wet
+mild barrel distortion at the edges
+light-painting streaks drawn in the dark ; any=night ; w=0.4
+multiple-exposure ghost of the same figure
+subtle film flicker ; w=0.4
+fine dust specks floating across the frame
+gentle gate weave and frame jitter ; w=0.4
+blown highlights bleeding into the shadows ; w=0.6
+foreground blur like a soft curtain of leaves ; need=nature
+out-of-focus fairy lights glittering in the background ; any=night,dusk,indoor
+glittering city lights dissolved into bokeh ; need=urban ; any=night,dusk
+split-focus softness across half the frame ; w=0.5
+tilted focus plane with a soft top and bottom ; w=0.5
+oil-slick colour fringes around the highlights ; w=0.4
+
+@slot texture label="Texture & finish" box=misc order=60 chance=0.4
+visible paper grain
+cracked paint craquelure ; w=0.7
+canvas weave showing through the paint
+ink bleeding at the edges
+deckled paper edge ; w=0.6
+fine halftone dot pattern
+glossy varnished finish
+matte chalky finish
+brushed metal sheen
+soft velvet nap
+creased and folded print lines ; w=0.7
+torn paper edges
+coffee-stained paper ; w=0.5
+wrinkled foil shine ; w=0.5
+pearlescent sheen
+worn leather patina
+rough plaster surfaces ; need=indoor
+visible stitching along the seams
+woven linen texture
+wood grain showing through ; need=indoor
+fine lace detail
+fabric pilling and soft wear
+peeling paint in layers ; need=urban
+a bloom of rust on old metal ; need=urban
+frosted glass surface
+beads of condensation on cold glass ; any=wet,cold
+oil-slick iridescence ; w=0.6
+hammered metal ; w=0.6
+embossed foil highlights ; w=0.5
+chrome mirror finish
+satin sheen
+peeling wallpaper layers ; need=indoor
+chalk dust on every surface ; w=0.6
+wet-look gloss ; need=wet
+frost crystals on every surface ; need=cold
+salt-crusted surfaces ; need=water ; w=0.7
+sandy grit blown into every crevice ; need=hot
+moss creeping over stone ; need=nature
+dew-beaded surfaces ; need=nature
+polished concrete ; need=urban
+deep velvet pile
+chunky knit ribbing
+liquid silk drape
+denim twill with whisker fading
+rough hewn stone ; need=outdoor
+glazed ceramic crackle ; w=0.6
+sun-bleached timber ; need=outdoor ; w=0.7
+smooth river-worn pebbles ; need=water ; w=0.5
+tarnished brass ; w=0.7
+worn velvet rubbed shiny at the edges
+hand-thrown pottery ridges ; w=0.6
+soft suede nap
+unglazed clay roughness ; w=0.6
+bleached driftwood grain ; need=water ; w=0.7
+fine mesh netting
+
+@slot atmosphere label="Atmosphere" box=misc order=61 chance=0.55
+a thin veil of haze
+dust motes drifting in a shaft of light ; need=indoor ; not=night ; w=1.5
+drifting petals ; need=outdoor ; not=wet ; w=1.2
+wet reflections on the pavement ; need=urban,wet ; w=1.5
+mist curling at ground level ; need=outdoor ; not=hot
+steam rising from a street grate ; need=urban,outdoor ; not=hot
+cigarette-smoke haze hanging in the air ; need=indoor ; any=night,public
+fireflies blinking in the dark ; need=nature,outdoor ; any=night,dusk ; not=cold
+falling snow catching the light ; need=cold,outdoor
+embers drifting upward ; need=outdoor ; any=night,cold
+sea mist rolling in ; need=water,outdoor ; not=hot
+pollen glowing in the sunlight ; need=nature,outdoor ; not=night,wet
+swirling leaves ; need=outdoor ; not=hot
+rain streaks catching the light ; need=wet,outdoor
+wet asphalt shining under the lights ; need=wet,urban
+heat shimmer rising off the ground ; need=hot,outdoor
+dust kicked up in the golden light ; need=hot,outdoor ; not=wet
+sand whipping across the ground ; need=hot,outdoor ; not=wet
+neon puddle reflections ; need=wet,urban ; any=night,dusk ; w=1.2
+floating dandelion seeds ; need=nature,outdoor ; not=wet,cold
+frost on the glass ; need=indoor,cold
+fog rolling over the water ; need=water,outdoor ; not=hot
+low cloud filling the valley ; need=nature,outdoor
+incense smoke curling upward ; need=indoor
+glittering dust suspended in the air
+sunbeams cutting through window blinds ; need=indoor ; not=night
+smoke drifting from a distant fire ; need=outdoor ; not=wet
+chimney smoke rising straight up ; need=outdoor,cold
+visible breath in the cold air ; need=cold
+a flock of birds crossing the sky ; need=outdoor ; any=dawn,dusk,day
+gulls circling overhead ; need=water,outdoor
+slatted shadows from half-closed blinds ; need=indoor
+stage-fog haze catching the beams ; need=indoor ; any=night,public
+confetti hanging in the air
+thin ground fog among the trees ; need=nature,outdoor
+salt spray on the wind ; need=water,outdoor
+gnats glowing in the light ; need=nature,outdoor ; not=cold,wet,night
+rain ringing the surface of the puddles ; need=wet,outdoor
+a warm glow spilling from windows ; need=urban,outdoor ; any=night,dusk
+the hush of fresh snow ; need=cold,outdoor
+heavy humid air ; need=hot ; not=cold
+a cool breeze moving the curtains ; need=indoor ; not=cold
+wood smoke hanging low ; need=outdoor,cold
+lantern light drifting through haze ; need=outdoor ; any=night,dusk
+warm steam clouding the room ; need=indoor,water
+a distant storm flickering on the horizon ; need=outdoor ; any=night,dusk ; not=cold
+an ocean breeze lifting loose hair ; need=water,outdoor
+cool blue shadows pooling in corners ; need=indoor ; any=dawn,dusk
+bright morning air, crisp and clear ; need=outdoor ; any=dawn,day ; not=wet
+twilight hush settling over everything ; need=outdoor ; any=dusk
+the golden dust of late afternoon ; any=day,dusk ; not=wet
+a drift of cherry blossom on the breeze ; need=outdoor,mild ; not=cold,wet ; w=0.8
+fine drizzle hanging like gauze ; need=outdoor,wet
+sparks and ash rising from a bonfire ; need=outdoor ; any=night,dusk,cold
+a hazy shaft of light from a high window ; need=indoor ; not=night
+silver mist over a still lake ; need=water,nature ; any=dawn,cold
+dry wind carrying sand and grit ; need=hot,outdoor
+steam lifting off sun-warmed stone after a shower ; need=outdoor,wet ; not=cold
+damp earthy air beading on the leaves ; need=wet,nature
+cool, dim air inside an old stone building with pale light ; need=indoor,formal
+warm breath and body heat hazing a crowded room ; need=indoor,public
+oppressive heatwave air with everything slightly overexposed ; need=hot,outdoor ; w=0.6
+
+@slot boost label="Quality boosters" box=misc order=90 chance=0.6 count=1-3
+sharp focus ; w=2
+intricate detail ; w=1.5
+natural skin texture ; w=2
+award-winning composition
+highly detailed
+crisp edges
+professional lighting
+balanced exposure
+high dynamic range
+true-to-life colour
+fine textures
+photorealistic detail
+visible pores and fine hair
+lifelike eyes with catchlights ; w=1.5
+cinematic quality
+masterful lighting
+high resolution
+sharp eyes
+realistic proportions
+accurate anatomy and well-formed hands
+coherent perspective
+consistent light direction
+natural shadows
+gallery-quality finish
+editorial polish
+studio-grade clarity
+rich micro-contrast
+smooth tonal gradation
+volumetric depth
+film-like tonal depth
+authentic textures
+believable fabric folds
+natural hair strands with fine flyaways
+subtle skin imperfections
+depth and dimension
+painstaking craftsmanship
+cohesive visual storytelling
+strong focal point
+balanced visual weight
+clear subject separation
+retouching kept natural
+8k resolution
+nuanced colour harmony
+refined highlights and shadows
+convincing material rendering
+natural-looking skin tones
+well-exposed highlights without clipping
+photographic realism
+pleasing tonal balance across the frame
