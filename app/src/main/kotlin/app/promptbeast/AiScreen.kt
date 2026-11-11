@@ -9,6 +9,18 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -51,6 +63,55 @@ fun AiScreen(vm: PbViewModel) {
         if (vm.aiKind == "manual") ManualCard(vm)
         ResultCard(vm)
     }
+    if (vm.aiModelPickerOpen) ModelPicker(vm)
+}
+
+/** The endpoint's own model list: search (try ":free" on OpenRouter), tap one to use it. */
+@Composable
+private fun ModelPicker(vm: PbViewModel) {
+    var query by remember { mutableStateOf("") }
+    var freeOnly by remember { mutableStateOf(false) }
+    val hasFree = remember(vm.aiModels) { vm.aiModels.any { it.endsWith(":free") } }
+    val shown = remember(vm.aiModels, query, freeOnly) {
+        val q = query.trim()
+        vm.aiModels.filter { (!freeOnly || it.endsWith(":free")) && (q.isEmpty() || it.contains(q, ignoreCase = true)) }
+            .sortedBy { it.lowercase() }
+    }
+    Dialog(onDismissRequest = { vm.aiModelPickerOpen = false }, properties = DialogProperties(usePlatformDefaultWidth = false)) {
+        Surface(
+            shape = MaterialTheme.shapes.large, tonalElevation = 6.dp,
+            modifier = Modifier.fillMaxWidth(0.94f).heightIn(max = 580.dp).testTag("model_picker"),
+        ) {
+            Column(Modifier.padding(16.dp)) {
+                Text("Models", style = MaterialTheme.typography.titleMedium)
+                Dim("${vm.aiModels.size} from the endpoint" + (if (shown.size != vm.aiModels.size) ", ${shown.size} shown" else "") + ". Tap one to use it.")
+                Gap(8)
+                OutlinedTextField(value = query, onValueChange = { query = it }, singleLine = true, label = { Text("Search") },
+                    modifier = Modifier.fillMaxWidth().testTag("model_search"))
+                if (hasFree) {
+                    Gap(4)
+                    FilterChip(selected = freeOnly, onClick = { freeOnly = !freeOnly }, label = { Text("Free only (:free)") }, modifier = Modifier.testTag("model_free"))
+                }
+                Gap(4)
+                LazyColumn(Modifier.weight(1f, fill = false)) {
+                    items(shown) { id ->
+                        Column(Modifier.fillMaxWidth().clickable { vm.aiPickModel(id) }.testTag("model_opt:$id")) {
+                            Text(
+                                (if (id == vm.aiModel) "\u2713 " else "") + id, style = MaterialTheme.typography.bodyMedium,
+                                color = if (id == vm.aiModel) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(vertical = 10.dp),
+                            )
+                            HorizontalDivider()
+                        }
+                    }
+                    if (shown.isEmpty()) item(key = "none") { Dim("Nothing matches.", Modifier.padding(vertical = 10.dp)) }
+                }
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = { vm.aiModelPickerOpen = false }, modifier = Modifier.testTag("model_close")) { Text("Close") }
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -72,6 +133,13 @@ private fun ProviderCard(vm: PbViewModel) {
             Gap(4)
             OutlinedTextField(value = vm.aiModel, onValueChange = { vm.onAiModel(it) }, label = { Text("Model") },
                 placeholder = { Text("model id from your provider") }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("ai_model"))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                OutlinedButton(onClick = { vm.aiLoadModels() }, enabled = !vm.aiBusy && !vm.aiModelsBusy, modifier = Modifier.testTag("ai_models")) {
+                    Text("Pick from the endpoint's models")
+                }
+                if (vm.aiModelsBusy) CircularProgressIndicator(Modifier.padding(start = 12.dp).size(20.dp), strokeWidth = 2.dp)
+            }
+            Dim("Uses the key and base URL above. Free providers often list dozens; search narrows them.")
             Gap(4)
             OutlinedTextField(value = vm.aiKeyDraft, onValueChange = { vm.onAiKeyDraft(it) }, label = { Text("API key") },
                 placeholder = { Text(if (vm.aiKeySaved) "saved (hidden)" else "paste your key") }, singleLine = true,
@@ -142,6 +210,7 @@ private fun TaskCard(vm: PbViewModel, onPickImage: () -> Unit) {
                 Text(if (vm.aiKind == "manual") "Build instruction" else "Run")
             }
             if (vm.aiBusy) {
+                OutlinedButton(onClick = { vm.aiStop() }, modifier = Modifier.padding(start = 8.dp).testTag("ai_stop")) { Text("Stop") }
                 CircularProgressIndicator(Modifier.padding(start = 16.dp).size(22.dp), strokeWidth = 2.dp)
                 Dim(vm.aiStatus, Modifier.padding(start = 12.dp))
             }
@@ -184,8 +253,13 @@ private fun ResultCard(vm: PbViewModel) {
             Text("● " + vm.aiProblem, color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("ai_problem"))
             Gap(4)
         }
+        if (vm.aiBusy && vm.aiLive.isNotEmpty()) {
+            Dim("Writing...")
+            Text(vm.aiLive, style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace), modifier = Modifier.fillMaxWidth().testTag("ai_live"))
+            Gap(4)
+        }
         if (res == null) {
-            Dim("Run a task to see the result here.")
+            if (!(vm.aiBusy && vm.aiLive.isNotEmpty())) Dim("Run a task to see the result here.")
             return@PbCard
         }
         if (res.texts.size > 1) {

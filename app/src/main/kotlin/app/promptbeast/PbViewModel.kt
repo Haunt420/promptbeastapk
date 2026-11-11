@@ -38,6 +38,7 @@ import promptbeast.AiResult
 import promptbeast.AiTasks
 import promptbeast.Assembled
 import promptbeast.Boxes
+import promptbeast.Cancelled
 import promptbeast.Composer
 import promptbeast.Entry
 import promptbeast.EntryStore
@@ -749,6 +750,13 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     var aiImageLabel by mutableStateOf("")
 
     var aiBusy by mutableStateOf(false)
+    /** The reply as it streams in (empty when nothing is streaming). */
+    var aiLive by mutableStateOf("")
+    /** Bumped by every run and by Stop: a worker whose number is stale stops quietly and its results are ignored. */
+    @Volatile private var aiGen = 0
+    var aiModels by mutableStateOf<List<String>>(emptyList())
+    var aiModelsBusy by mutableStateOf(false)
+    var aiModelPickerOpen by mutableStateOf(false)
     var aiStatus by mutableStateOf("")
     private var aiRequest: AiRequest? = null
     var aiInstruction by mutableStateOf("")
@@ -868,21 +876,73 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         }
         if (req.needsVision && !cfg.vision) { aiFail("This provider is not marked as vision-capable (tick 'Model can see images')."); return }
         val key = aiKey()
+        val gen = ++aiGen
+        aiModelsBusy = false                 // a model-list request in flight is now stale
         aiBusy = true
+        aiLive = ""
         aiStatus = "Waiting for the model..."
         Thread {
             var res: AiResult? = null
             var err: String? = null
-            try { res = AiTasks.parse(req, AiProvider.complete(cfg, key, req.messages)) }
+            val sb = StringBuilder()
+            try {
+                val text = AiProvider.complete(cfg, key, req.messages,
+                    onDelta = { piece ->
+                        sb.append(piece)
+                        val snap = sb.toString()
+                        handler.post { if (gen == aiGen) { aiLive = snap; aiStatus = "Writing..." } }
+                    },
+                    cancelled = { gen != aiGen })
+                res = AiTasks.parse(req, text)
+            }
+            catch (e: Cancelled) { return@Thread }          // Stop already released the screen
             catch (e: ProviderError) { err = e.message }
             catch (e: Rejected) { err = e.message }
             catch (e: Exception) { err = "Unexpected error: ${e.javaClass.simpleName}: ${e.message}" }
             handler.post {
+                if (gen != aiGen) return@post
                 aiBusy = false
+                aiLive = ""
                 val r = res                      // (a var captured by the worker lambda can't be smart-cast)
                 if (r != null) aiShow(r) else aiFail(err ?: "Failed")
             }
         }.start()
+    }
+
+    /** Stop a running task: the screen is released at once, the worker notices at its next piece and quits. */
+    fun aiStop() {
+        if (!aiBusy) return
+        aiGen++
+        aiBusy = false
+        aiModelsBusy = false
+        aiStatus = "Stopped"
+    }
+
+    /** Fetch the endpoint's model list and open the picker. */
+    fun aiLoadModels() {
+        if (aiBusy || aiModelsBusy) return
+        val cfg = aiConfig()
+        if (cfg.kind == "manual") return
+        val key = aiKey()
+        val gen = ++aiGen
+        aiModelsBusy = true
+        aiStatus = "Asking the endpoint for its models..."
+        Thread {
+            var list: List<String>? = null
+            var err: String? = null
+            try { list = AiProvider.listModels(cfg, key) } catch (e: ProviderError) { err = e.message } catch (e: Exception) { err = "Unexpected error: ${e.javaClass.simpleName}: ${e.message}" }
+            handler.post {
+                if (gen != aiGen) return@post
+                aiModelsBusy = false
+                val l = list
+                if (l != null) { aiModels = l; aiModelPickerOpen = true; aiStatus = "${l.size} models" } else aiFail(err ?: "Failed")
+            }
+        }.start()
+    }
+
+    fun aiPickModel(id: String) {
+        aiModel = id
+        aiModelPickerOpen = false
     }
 
     fun aiReadReply() {

@@ -317,6 +317,57 @@ class AppTest {
         }
     }
 
+    // ---- AI Tools: model picker, streamed reply, Stop ---------------------------------------------------------------------
+
+    @Test
+    fun aiModelPickerStreamingAndStop() {
+        fun sse(vararg pieces: String) = pieces.map { ("data: {\"choices\":[{\"delta\":{\"content\":\"" + it + "\"}}]}\n\n").toByteArray() }
+        val stream = mapOf("Content-Type" to "text/event-stream")
+        var slow = false
+        FakeHttp { req ->
+            when {
+                req.path.endsWith("/models") -> FakeHttp.Resp(body = """{"data":[{"id":"m1"},{"id":"vendor/m2:free"},{"id":"zeta-large"}]}""".toByteArray())
+                slow -> FakeHttp.Resp(headers = stream, chunks = sse("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"), chunkDelayMs = 400)
+                else -> FakeHttp.Resp(headers = stream, chunks = sse("a {red|", "blue} wool coat ", "on [WHO]") + "data: [DONE]\n\n".toByteArray())
+            }
+        }.use { srv ->
+            rule.runOnUiThread {
+                vm.newProject()
+                vm.onBox("main", "a {red|blue} coat on [WHO]")
+                vm.onScratchpad("WHO = a sailor")
+                vm.onAiKind("openai"); vm.onAiBaseUrl("http://127.0.0.1:${srv.port}/v1"); vm.onAiModel("")
+                vm.onAiTask("enhance"); vm.onAiBox("main")
+            }
+            tap("nav_ai", scroll = false)
+
+            // the model picker: fetch, search, choose
+            tap("ai_models")
+            await("picker open") { vm.aiModelPickerOpen && rule.onAllNodesWithTag("model_picker").fetchSemanticsNodes().isNotEmpty() }
+            assertEquals(listOf("m1", "vendor/m2:free", "zeta-large"), vm.aiModels)
+            rule.onNodeWithTag("model_search").performTextInput("m2")
+            tap("model_opt:vendor/m2:free", scroll = false)
+            await("model chosen") { vm.aiModel == "vendor/m2:free" && !vm.aiModelPickerOpen }
+
+            // a streamed reply arrives, becomes the parsed result, and the request asked for a stream
+            tap("ai_run")
+            await("streamed result", 20_000) { vm.aiResult != null }
+            assertTrue(vm.aiOut, vm.aiOut.contains("wool coat"))
+            assertTrue(!vm.aiBusy && vm.aiLive.isEmpty())
+            assertTrue(srv.seen.any { it.method == "POST" && String(it.body, Charsets.US_ASCII).endsWith("\"stream\": true}") })
+
+            // Stop releases the screen at once and a late reply never lands
+            rule.runOnUiThread { vm.aiResult = null; slow = true }
+            tap("ai_run")
+            await("live text", 15_000) { vm.aiLive.isNotEmpty() }
+            tap("ai_stop")
+            await("released") { !vm.aiBusy }
+            assertEquals("Stopped", vm.aiStatus)
+            Thread.sleep(1_500)
+            rule.waitForIdle()
+            assertTrue(vm.aiResult == null && !vm.aiBusy)
+        }
+    }
+
     // ---- AI Tools: a real round trip to a loopback endpoint, apply to Compose, and the manual paste-back path -------------
 
     @Test
