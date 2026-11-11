@@ -329,7 +329,6 @@ class AppTest {
             await("slot inserted") { vm.packEditText.contains("@slot new_slot") }
             rule.runOnUiThread { vm.onPackEditText(vm.packEditText + "a teen beanie\n") }
             rule.waitForIdle()
-            shot("10_pack_editor")
             tap("pack_edit_save", scroll = false)
             await("saved") { !vm.packEditOpen && File(packs, "hat-rack.pbpack").exists() }
             await("in the library") { vm.forgeLib.slots.containsKey("charm") && vm.forgeLib.slots.containsKey("new_slot") }
