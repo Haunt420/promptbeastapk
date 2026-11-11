@@ -657,5 +657,58 @@ object GoldenSuite {
         return rep
     }
 
-    fun all(): List<Report> = listOf(rng(), charclass(), dsl(), weights(), articles(), profiles(), compose(), lint(), export(), forge(), library(), mackbridge(), ai())
+    /** The model list and streaming pieces of the AI provider: /models URL + parsing, the SSE parser (under several chunkings). */
+    fun aistream(): Report {
+        val rep = Report("aistream")
+        val o = load("aistream")
+        for ((i, c) in o["models_url"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val inp = nullable(co["in"])
+            val got = try { "ok" to AiProvider.modelsUrl(inp) } catch (e: ProviderError) { "err" to e.message!! }
+            val want = if (co.containsKey("err")) "err" to co["err"]!!.jsonPrimitive.content else "ok" to co["url"]!!.jsonPrimitive.content
+            rep.check(got == want) { "models_url#$i in=${ascii(inp ?: "null")} got=${ascii(got.second)} want=${ascii(want.second)}" }
+        }
+        for ((i, c) in o["models"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val out = co["out"]!!.jsonObject
+            val raw = b64(co["raw"]!!.jsonPrimitive.content)
+            val key = co["key"]!!.jsonPrimitive.content
+            try {
+                val got = AiProvider.parseModels(raw, key)
+                if (out.containsKey("ok")) {
+                    val want = out["ok"]!!.jsonArray.map { it.jsonPrimitive.content }
+                    rep.check(got == want) { "models#$i got=${got.take(5).map { ascii(it) }} (${got.size}) want=${want.take(5).map { ascii(it) }} (${want.size})" }
+                } else rep.check(false) { "models#$i accepted, want error '${ascii(out["err"]!!.jsonPrimitive.content.take(60))}'" }
+            } catch (e: ProviderError) {
+                if (out.containsKey("err")) rep.check(e.message == out["err"]!!.jsonPrimitive.content) { "models#$i error got='${ascii(e.message!!.take(60))}' want='${ascii(out["err"]!!.jsonPrimitive.content.take(60))}'" }
+                else rep.check(false) { "models#$i rejected: ${ascii(e.message!!.take(60))}" }
+            }
+        }
+        for ((i, c) in o["sse"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val raw = b64(co["raw"]!!.jsonPrimitive.content)
+            val key = co["key"]!!.jsonPrimitive.content
+            val want = co["deltas"]!!.jsonArray
+            val wantDone = co["done"]!!.jsonPrimitive.boolean
+            val wantErr = co["error"]!!.jsonPrimitive.content
+            for (step in intArrayOf(raw.size.coerceAtLeast(1), 1, 3, 7, 64)) {
+                val p = SseParser(key)
+                val got = ArrayList<String>()
+                var off = 0
+                while (off < raw.size) { val n = minOf(step, raw.size - off); got += p.feed(raw, off, n); off += n }
+                got += p.finish()
+                rep.check(got.size == want.size && got.indices.all { encMatches(got[it], want[it].jsonObject) } && p.done == wantDone && p.error == wantErr) {
+                    "sse#$i step=$step got=${got.map { ascii(it.take(20)) }} done=${p.done} err='${ascii(p.error)}' want=${want.size} pieces done=$wantDone err='${ascii(wantErr)}'"
+                }
+            }
+        }
+        for ((i, c) in o["body_stream"]!!.jsonArray.withIndex()) {
+            val co = c.jsonObject
+            val body = AiProvider.requestBody(configFrom(co["cfg"]!!.jsonObject), StrictJson.parse(co["messages"]!!.jsonPrimitive.content, 64)!!.jsonArray, stream = true)
+            rep.check(encMatches(body, co["out"]!!.jsonObject)) { "body_stream#$i got=${ascii(body.take(160))}" }
+        }
+        return rep
+    }
+
+    fun all(): List<Report> = listOf(rng(), charclass(), dsl(), weights(), articles(), profiles(), compose(), lint(), export(), forge(), library(), mackbridge(), ai(), aistream())
 }

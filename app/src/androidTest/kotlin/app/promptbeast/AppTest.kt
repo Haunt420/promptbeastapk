@@ -94,7 +94,7 @@ class AppTest {
     fun parityOnDevice() {
         rule.onNodeWithTag("nav_settings").performClick()
         rule.onNodeWithTag("selftest_run").performClick()
-        rule.waitUntil(300_000) { !vm.selfTestRunning && vm.selfTest.size == 13 }
+        rule.waitUntil(300_000) { !vm.selfTestRunning && vm.selfTest.size == 14 }
         shot("5_selftest")
         val bad = vm.selfTest.filter { it.startsWith("FAIL") }
         val assets = listOf("", "golden", "packs").joinToString(" | ") { d -> "assets/$d: " + rule.activity.assets.list(d)?.joinToString(",") }

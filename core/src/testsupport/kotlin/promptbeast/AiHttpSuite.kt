@@ -14,7 +14,9 @@ import kotlin.concurrent.thread
 /** A tiny HTTP/1.1 server on a loopback socket (plain java.net: runs the same on a JVM and on a device). */
 class FakeHttp(private val handler: (Req) -> Resp) : AutoCloseable {
     class Req(val method: String, val path: String, val headers: Map<String, String>, val body: ByteArray)
-    class Resp(val status: Int = 200, val headers: Map<String, String> = emptyMap(), val body: ByteArray = ByteArray(0), val delayMs: Long = 0)
+    /** [chunks], when given, are written one by one with [chunkDelayMs] between them (no Content-Length: the body ends when the socket closes). */
+    class Resp(val status: Int = 200, val headers: Map<String, String> = emptyMap(), val body: ByteArray = ByteArray(0), val delayMs: Long = 0,
+               val chunks: List<ByteArray>? = null, val chunkDelayMs: Long = 0)
 
     private val server = ServerSocket(0, 50, InetAddress.getByName("127.0.0.1"))
     val port: Int get() = server.localPort
@@ -58,11 +60,22 @@ class FakeHttp(private val handler: (Req) -> Resp) : AutoCloseable {
         val resp = handler(req)
         if (resp.delayMs > 0) Thread.sleep(resp.delayMs)
         val out = s.getOutputStream()
-        val head = StringBuilder("HTTP/1.1 ${resp.status} X\r\nContent-Length: ${resp.body.size}\r\nConnection: close\r\n")
+        val head = StringBuilder("HTTP/1.1 ${resp.status} X\r\n")
+        if (resp.chunks == null) head.append("Content-Length: ${resp.body.size}\r\n")
+        head.append("Connection: close\r\n")
         for ((k, v) in resp.headers) head.append("$k: $v\r\n")
         out.write(head.append("\r\n").toString().toByteArray(Charsets.ISO_8859_1))
-        out.write(resp.body)
-        out.flush()
+        if (resp.chunks == null) {
+            out.write(resp.body)
+            out.flush()
+        } else {
+            out.flush()
+            for (c in resp.chunks) {
+                out.write(c)
+                out.flush()
+                if (resp.chunkDelayMs > 0) Thread.sleep(resp.chunkDelayMs)
+            }
+        }
     }
 
     override fun close() { try { server.close() } catch (e: Exception) {} }
@@ -152,6 +165,57 @@ object AiHttpSuite {
             val sent = String(srv.seen.single().body, Charsets.US_ASCII)
             rep.check(sent.contains("rainy") && sent.contains("[WHO]")) { "task: prompt didn't reach the endpoint" }
         }
+
+        // ---- the model list
+        FakeHttp { FakeHttp.Resp(body = """{"data":[{"id":"m1"},{"id":"vendor/m2:free"},{"id":"m1"}]}""".toByteArray()) }.use { srv ->
+            val got = AiProvider.listModels(cfg(srv.port), " sk-SECRET123 ")
+            rep.check(got == listOf("m1", "vendor/m2:free")) { "models: $got" }
+            val r = srv.seen.single()
+            rep.check(r.method == "GET" && r.path == "/v1/models" && r.headers["authorization"] == "Bearer sk-SECRET123" && r.body.isEmpty()) { "models: request ${r.method} ${r.path}" }
+        }
+        FakeHttp { FakeHttp.Resp(401, body = """{"error":{"message":"bad key sk-SECRET123"}}""".toByteArray()) }.use { srv ->
+            val m = fail { AiProvider.listModels(cfg(srv.port), "sk-SECRET123") }
+            rep.check(m != null && m.startsWith("HTTP 401") && !m.contains("sk-SECRET123")) { "models 401: $m" }
+        }
+        FakeHttp { FakeHttp.Resp(body = """{"data":[]}""".toByteArray()) }.use { srv ->
+            rep.check(fail { AiProvider.listModels(cfg(srv.port), "") } == "The endpoint listed no models") { "models: empty list" }
+        }
+
+        // ---- streaming
+        fun sse(vararg pieces: String): List<ByteArray> = pieces.map { """data: {"choices":[{"delta":{"content":"$it"}}]}""" + "\n\n" }.map { it.toByteArray() }
+        val eventStream = mapOf("Content-Type" to "text/event-stream")
+        val done = "data: [DONE]\n\n".toByteArray()
+        FakeHttp { FakeHttp.Resp(headers = eventStream, chunks = sse("a {red|", "blue} ", "coat") + done) }.use { srv ->
+            val got = ArrayList<String>()
+            val text = AiProvider.complete(cfg(srv.port), "sk-SECRET123", msgs("hi"), onDelta = { got += it })
+            rep.check(text == "a {red|blue} coat" && got == listOf("a {red|", "blue} ", "coat")) { "stream: $text $got" }
+            val r = srv.seen.single()
+            rep.check(r.headers["accept"] == "text/event-stream" && String(r.body, Charsets.US_ASCII) == AiProvider.requestBody(cfg(srv.port), msgs("hi"), stream = true)) { "stream: request ${String(r.body, Charsets.US_ASCII).take(120)}" }
+            rep.check(String(r.body, Charsets.US_ASCII).endsWith("\"stream\": true}")) { "stream: flag" }
+        }
+        FakeHttp { FakeHttp.Resp(headers = eventStream, chunks = sse("partial ") + """data: {"error": {"message": "model overloaded sk-SECRET123"}}""".toByteArray() + "\n\n".toByteArray()) }.use { srv ->
+            val got = ArrayList<String>()
+            val m = fail { AiProvider.complete(cfg(srv.port), "sk-SECRET123", msgs("x"), onDelta = { got += it }) }
+            rep.check(m == "model overloaded ***" && got == listOf("partial ")) { "stream error: $m $got" }
+        }
+        FakeHttp { FakeHttp.Resp(headers = eventStream, chunks = listOf(done)) }.use { srv ->
+            rep.check(fail { AiProvider.complete(cfg(srv.port), "", msgs("x"), onDelta = {}) } == "The model returned an empty reply") { "stream: empty" }
+        }
+        FakeHttp { FakeHttp.Resp(body = """{"choices":[{"message":{"content":[{"text":"ab"},{"text":"cd"}]}}]}""".toByteArray()) }.use { srv ->
+            val got = ArrayList<String>()      // the server ignored stream=true and sent one JSON reply
+            rep.check(AiProvider.complete(cfg(srv.port), "", msgs("x"), onDelta = { got += it }) == "abcd" && got == listOf("abcd")) { "stream: json fallback $got" }
+        }
+        FakeHttp { FakeHttp.Resp(body = "<html>".toByteArray()) }.use { srv ->
+            rep.check(fail { AiProvider.complete(cfg(srv.port), "", msgs("x"), onDelta = {}) } == AiProvider.NOT_JSON) { "stream: html" }
+        }
+        FakeHttp { FakeHttp.Resp(headers = eventStream, chunks = sse("a", "b", "c", "d", "e", "f", "g", "h"), chunkDelayMs = 150) }.use { srv ->
+            val got = ArrayList<String>()
+            val t0 = System.currentTimeMillis()
+            val stopped = try { AiProvider.complete(cfg(srv.port), "", msgs("x"), onDelta = { got += it }, cancelled = { got.size >= 2 }); null } catch (e: Cancelled) { e.message }
+            rep.check(stopped == "Stopped" && got.size in 2..4) { "stop: $stopped $got" }
+            rep.check(System.currentTimeMillis() - t0 < 1100) { "stop: took ${System.currentTimeMillis() - t0} ms" }
+        }
+
         return rep
     }
 }

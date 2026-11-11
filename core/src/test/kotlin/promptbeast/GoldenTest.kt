@@ -24,6 +24,7 @@ class GoldenTest {
     @Test fun library() = run(GoldenSuite.library())
     @Test fun mackbridge() = run(GoldenSuite.mackbridge())
     @Test fun ai() = run(GoldenSuite.ai())
+    @Test fun aistream() = run(GoldenSuite.aistream())
     @Test fun aiHttp() = run(AiHttpSuite.run())
     @Test fun userPacks() = run(UserPacksSuite.run())
 }

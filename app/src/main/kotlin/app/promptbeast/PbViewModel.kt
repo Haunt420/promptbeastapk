@@ -966,7 +966,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
                 "weights" to { GoldenSuite.weights() }, "articles" to { GoldenSuite.articles() },
                 "profiles" to { GoldenSuite.profiles() }, "compose" to { GoldenSuite.compose() }, "lint" to { GoldenSuite.lint() },
                 "export" to { GoldenSuite.export() }, "forge" to { GoldenSuite.forge() }, "library" to { GoldenSuite.library() },
-                "mackbridge" to { GoldenSuite.mackbridge() }, "ai" to { GoldenSuite.ai() },
+                "mackbridge" to { GoldenSuite.mackbridge() }, "ai" to { GoldenSuite.ai() }, "aistream" to { GoldenSuite.aistream() },
             )
             for ((n, run) in suites) {
                 val line = try {
