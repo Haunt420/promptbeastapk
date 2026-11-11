@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
@@ -11,6 +12,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextInput
 import androidx.lifecycle.ViewModelProvider
@@ -238,6 +240,80 @@ class AppTest {
             assertTrue(!File(rule.activity.filesDir, "packs/hats-such.pbpack").exists())
         } finally {
             File(rule.activity.filesDir, "packs").listFiles()?.forEach { it.delete() }
+        }
+    }
+
+    /** Forge drop-downs: pick a tag (locks), type your own, minor-coded text is refused, Random unlocks, a multi slot toggles + Done. */
+    @Test
+    fun forgeDropdownsPickLockAndRandom() {
+        try {
+            rule.runOnUiThread { vm.onForgeAdults(true); vm.onForgeTier(4) }
+            val acts = vm.forgeLib.slots["acts"]
+            assertTrue("NSFW Acts slot with explicit tags", acts != null && acts.tags.any { it.tier == 4 })
+            tap("nav_forge", scroll = false)
+            await("forge ready") { vm.forgeResult != null }
+
+            fun openPicker(slotId: String) {
+                rule.onNodeWithTag("forge_list").performScrollToNode(hasTestTag("slot_pick_$slotId"))
+                tap("slot_pick_$slotId", scroll = false)
+                await("picker open for $slotId") { rule.onAllNodesWithTag("slot_picker").fetchSemanticsNodes().isNotEmpty() }
+            }
+            fun closed() = await("picker closed") { rule.onAllNodesWithTag("slot_picker").fetchSemanticsNodes().isEmpty() }
+
+            // 1) pick a library tag from the special NSFW slot: it locks and shows up in the roll
+            val tag = acts!!.tags.filter { it.tier == 4 }.minByOrNull { it.text.length }!!.text
+            openPicker("acts")
+            rule.onNodeWithTag("pick_search").performTextInput(tag)
+            tap("opt:$tag", scroll = false)
+            closed()
+            await("acts locked") { vm.forgeLocks["acts"] == listOf(tag) }
+            assertEquals(listOf(tag), vm.forgeResult!!.picks["acts"]?.texts)
+            shot("9_picker_locked")
+
+            // 2) your own wording
+            openPicker("age")
+            rule.onNodeWithTag("pick_search").performTextInput("a lighthouse keeper")
+            tap("pick_custom", scroll = false)
+            closed()
+            await("custom locked") { vm.forgeLocks["age"] == listOf("a lighthouse keeper") }
+            assertEquals(listOf("a lighthouse keeper"), vm.forgeResult!!.picks["age"]?.texts)
+
+            // 3) minor-coded wording never gets in: no "use" row, and the VM refuses it too
+            openPicker("age")
+            rule.onNodeWithTag("pick_search").performTextInput("a teen")
+            rule.waitForIdle()
+            assertTrue(rule.onAllNodesWithTag("pick_custom").fetchSemanticsNodes().isEmpty())
+            var ok = true
+            rule.runOnUiThread { ok = vm.forgeSetLock("age", listOf("a teen")) }
+            assertTrue(!ok && vm.forgeLocks["age"] == listOf("a lighthouse keeper"))
+            tap("pick_cancel", scroll = false)
+            closed()
+
+            // 4) Random hands the slot back to the dice
+            openPicker("age")
+            tap("pick_random", scroll = false)
+            closed()
+            await("age unlocked") { !vm.forgeLocks.containsKey("age") }
+
+            // 5) a slot that rolls several tags: toggle two, Done locks both
+            val multi = vm.forgeLib.slots["accessory"]!!
+            assertTrue(multi.hi > 1)
+            val two = multi.tags.filter { it.tier == 0 }.map { it.text }.sorted().take(2)
+            openPicker("accessory")
+            for (t in two) {
+                rule.onNodeWithTag("pick_list").performScrollToNode(hasTestTag("opt:$t"))
+                tap("opt:$t", scroll = false)
+            }
+            tap("pick_done", scroll = false)
+            closed()
+            await("accessory locked") { vm.forgeLocks["accessory"] == two }
+
+            // 6) turning "how far" down releases a lock that sits above the new limit
+            rule.runOnUiThread { vm.onForgeTier(1) }
+            await("explicit lock released") { !vm.forgeLocks.containsKey("acts") }
+            assertTrue(vm.forgeLocks.containsKey("accessory"))
+        } finally {
+            rule.runOnUiThread { vm.onForgeAdults(false) }
         }
     }
 

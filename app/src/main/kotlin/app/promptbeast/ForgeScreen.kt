@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
@@ -48,10 +50,16 @@ fun ForgeScreen(vm: PbViewModel, onSent: () -> Unit) {
     val res = vm.forgeResult
     val slots = remember(lib) { lib.ordered() }
     val boxLabel = remember { Boxes.ALL.associate { it.id to it.label } }
+    // slots grouped under the Compose box they feed (in the box order), each group in roll order; strays land last
+    val groups = remember(lib) {
+        val byBox = slots.groupBy { it.box }
+        val known = Boxes.ALL.map { it.id }
+        (known + byBox.keys.filter { it !in known }).mapNotNull { id -> byBox[id]?.let { id to it } }
+    }
 
     Column(Modifier.fillMaxSize()) {
         LazyColumn(
-            Modifier.weight(1f).fillMaxWidth(),
+            Modifier.weight(1f).fillMaxWidth().testTag("forge_list"),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -106,8 +114,16 @@ fun ForgeScreen(vm: PbViewModel, onSent: () -> Unit) {
                 }
             }
             item(key = "packs") { PacksCard(vm) }
-            items(slots, key = { "slot:" + it.id }) { slot ->      // a user pack may name a slot "notes" or "head"
-                SlotRow(vm, slot, res?.picks?.get(slot.id), boxLabel[slot.box] ?: slot.box)
+            for ((boxId, group) in groups) {
+                item(key = "box:$boxId") {
+                    Column {
+                        Label(boxLabel[boxId] ?: boxId)
+                        Dim("${group.size} slot" + (if (group.size == 1) "" else "s") + " feeding this box")
+                    }
+                }
+                items(group, key = { "slot:" + it.id }) { slot ->      // a user pack may name a slot "notes" or "head"
+                    SlotRow(vm, slot, res?.picks?.get(slot.id), boxLabel[slot.box] ?: slot.box)
+                }
             }
             item(key = "notes") {
                 PbCard {
@@ -152,11 +168,13 @@ fun ForgeScreen(vm: PbViewModel, onSent: () -> Unit) {
 private fun SlotRow(vm: PbViewModel, slot: Slot, pick: SlotResult?, boxName: String) {
     val off = slot.id in vm.forgeOff
     val locked = slot.id in vm.forgeLocks
+    var open by remember { mutableStateOf(false) }
+    val adultOnly = remember(slot) { slot.tags.isNotEmpty() && slot.tags.all { it.tier > 0 } }
     PbCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(slot.label, style = MaterialTheme.typography.titleSmall)
-                Dim("-> $boxName")
+                Dim("-> $boxName" + (if (adultOnly) "  \u00B7  18+" else ""))
             }
             Switch(checked = !off, onCheckedChange = { vm.forgeToggleOff(slot.id) })
         }
@@ -166,10 +184,12 @@ private fun SlotRow(vm: PbViewModel, slot: Slot, pick: SlotResult?, boxName: Str
             pick == null || pick.texts.isEmpty() -> "-"
             else -> pick.texts.joinToString(slot.sep)
         }
-        Text(
-            text, style = MaterialTheme.typography.bodyLarge,
-            color = if (off || pick == null) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
-        )
+        OutlinedButton(
+            onClick = { open = true }, enabled = !off, modifier = Modifier.fillMaxWidth().testTag("slot_pick_" + slot.id),
+        ) {
+            Text(text, Modifier.weight(1f), textAlign = TextAlign.Start, maxLines = 3, overflow = TextOverflow.Ellipsis)
+            Text("  \u25BE")
+        }
         if (!off) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                 FilterChip(selected = locked, onClick = { vm.forgeToggleLock(slot.id) }, label = { Text(if (locked) "Locked" else "Lock") })
@@ -177,6 +197,7 @@ private fun SlotRow(vm: PbViewModel, slot: Slot, pick: SlotResult?, boxName: Str
             }
         }
     }
+    if (open) SlotPicker(vm, slot, pick?.texts ?: emptyList()) { open = false }
 }
 
 

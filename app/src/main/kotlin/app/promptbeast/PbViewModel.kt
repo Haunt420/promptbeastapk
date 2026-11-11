@@ -55,6 +55,7 @@ import promptbeast.MackParts
 import promptbeast.MackReply
 import promptbeast.MemoryStore
 import promptbeast.Pack
+import promptbeast.PackParser
 import promptbeast.Profiles
 import promptbeast.Project
 import promptbeast.PyJson
@@ -388,7 +389,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     fun runForge() {
         val st = ForgeState(
             seed = forgeSeed, salts = HashMap(forgeSalts), locks = HashMap(forgeLocks), disabled = HashSet(forgeOff),
-            maxTier = if (forgeAdults) forgeTier else 0, heat = forgeHeat.toDouble(), strict = forgeStrict,
+            maxTier = forgeLimitTier, heat = forgeHeat.toDouble(), strict = forgeStrict,
         )
         forgeResult = Forge.forge(forgeLib, st)
         forgeSeedText = forgeSeed.toString()
@@ -416,6 +417,32 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         runForge()
     }
 
+    /** The highest adult tier in play: 0 unless the adult packs are on. The slot pickers only list tags up to here. */
+    val forgeLimitTier: Int get() = if (forgeAdults) forgeTier else 0
+
+    /**
+     * Pin a slot to the texts picked in its drop-down (library tags or the user's own words). Anything minor-coded is
+     * refused here too, so typed text can't get past the age guard that every pack goes through.
+     */
+    fun forgeSetLock(id: String, texts: List<String>): Boolean {
+        val slot = forgeLib.slots[id] ?: return false
+        val clean = texts.map { it.trim() }.filter { it.isNotEmpty() }.distinct().take(maxOf(1, slot.hi))
+        if (clean.any { PackParser.ageGuardHit(it) }) { say("Minor-coded wording isn't allowed"); return false }
+        forgeLocks = if (clean.isEmpty()) forgeLocks - id else forgeLocks + (id to clean)
+        if (clean.isNotEmpty()) forgeOff = forgeOff - id
+        runForge()
+        return true
+    }
+
+    /** Locks pinned to a tag above the new tier limit would break "how far", so they are released. */
+    private fun dropLocksAboveTier() {
+        val limit = forgeLimitTier
+        forgeLocks = forgeLocks.filter { (sid, texts) ->
+            val idx = forgeLib.slots[sid]?.tags?.associateBy { it.text } ?: emptyMap()
+            texts.all { (idx[it]?.tier ?: 0) <= limit }
+        }
+    }
+
     fun forgeToggleOff(id: String) {
         forgeOff = if (id in forgeOff) forgeOff - id else forgeOff + id
         runForge()
@@ -428,7 +455,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         if (n != null) { forgeSeed = n; runForge(); forgeSeedText = clean }
     }
 
-    fun onForgeTier(t: Int) { forgeTier = t; runForge() }
+    fun onForgeTier(t: Int) { forgeTier = t; dropLocksAboveTier(); runForge() }
     fun onForgeHeat(h: Float) { forgeHeat = h; runForge() }
     fun onForgeStrict(on: Boolean) { forgeStrict = on; runForge() }
     fun onForgeMode(m: String) { forgeMode = m }
