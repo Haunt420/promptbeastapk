@@ -1,6 +1,11 @@
 package app.promptbeast
 
 import android.view.ViewGroup
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -41,6 +46,17 @@ fun MackScreen(vm: PbViewModel) {
         onDispose { vm.mackPause(true) }
     }
 
+    // the page's file inputs: the view-model holds the request, this launches the system picker and reports back
+    val picker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { r -> vm.mackFileResult(r.resultCode, r.data) }
+    val req = vm.mackFileRequest
+    LaunchedEffect(req) {
+        if (req != null) {
+            vm.mackFileLaunched()
+            try { picker.launch(req) } catch (e: Exception) { vm.mackFileDeliver(null) }      // no file manager: the page hears "nothing chosen"
+        }
+    }
+    if (vm.signInOpen) SignInDialog(vm)
+
     val failed = vm.mackState == "failed"
     val live = vm.mackState == "live"
 
@@ -61,6 +77,7 @@ fun MackScreen(vm: PbViewModel) {
                     modifier = Modifier.scale(0.75f).testTag("mack_pad"))
                 Text("Scratchpad", style = MaterialTheme.typography.bodySmall)
                 Spacer(Modifier.weight(1f))
+                TextButton(onClick = { vm.signInShow() }, contentPadding = pad, modifier = Modifier.testTag("mack_signin")) { Text("Sign-in") }
                 TextButton(onClick = { vm.mackReload() }, contentPadding = pad, modifier = Modifier.testTag("mack_reload")) { Text("Reload") }
                 TextButton(onClick = { vm.mackOpenInBrowser() }, contentPadding = pad, modifier = Modifier.testTag("mack_browser")) { Text("Browser") }
             }
@@ -114,4 +131,37 @@ private fun MackFallback(vm: PbViewModel) {
         }
         Dim("In your own browser: open Mack's McGenerator, then paste the Mack key into its import box.")
     }
+}
+
+/** One saved Perchance account, kept encrypted on this device and typed into the page's sign-in form on demand. */
+@Composable
+private fun SignInDialog(vm: PbViewModel) {
+    AlertDialog(
+        onDismissRequest = { vm.signInOpen = false },
+        title = { Text("Perchance sign-in") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(if (vm.signInSaved) "Saved on this device, encrypted. Open Perchance's sign-in in the pane, then press Fill."
+                     else "Save your account once; it is encrypted with a key that stays in this device's secure storage.",
+                    style = MaterialTheme.typography.bodySmall)
+                OutlinedTextField(value = vm.signInUser, onValueChange = { vm.signInUser = it }, singleLine = true,
+                    label = { Text("Account name or email") }, modifier = Modifier.fillMaxWidth().testTag("signin_user"))
+                OutlinedTextField(value = vm.signInPass, onValueChange = { vm.signInPass = it }, singleLine = true,
+                    label = { Text(if (vm.signInSaved) "New password (blank keeps the saved one)" else "Password") },
+                    visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth().testTag("signin_pass"))
+            }
+        },
+        confirmButton = {
+            Row {
+                if (vm.signInSaved) TextButton(onClick = { vm.signInOpen = false; vm.mackSignIn() }, modifier = Modifier.testTag("signin_fill")) { Text("Fill") }
+                TextButton(onClick = { vm.signInSave() }, modifier = Modifier.testTag("signin_save")) { Text("Save") }
+            }
+        },
+        dismissButton = {
+            Row {
+                if (vm.signInSaved) TextButton(onClick = { vm.signInForget() }, modifier = Modifier.testTag("signin_forget")) { Text("Forget") }
+                TextButton(onClick = { vm.signInOpen = false }) { Text("Close") }
+            }
+        },
+    )
 }

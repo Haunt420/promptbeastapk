@@ -11,6 +11,8 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.view.View
+import android.webkit.ValueCallback
 import android.webkit.ConsoleMessage
 import android.webkit.CookieManager
 import android.webkit.WebChromeClient
@@ -591,10 +593,13 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         v.settings.allowFileAccess = false
         v.settings.allowContentAccess = false
         v.settings.setSupportMultipleWindows(false)
+        v.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES
         CookieManager.getInstance().setAcceptThirdPartyCookies(v, true)
         // Perchance generators live in nested, possibly cross-origin frames: the filler must be in every one of them.
         if (WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
-            WebViewCompat.addDocumentStartJavaScript(v, MackBridge.FILLER_JS, setOf("https://perchance.org", "https://*.perchance.org"))
+            val hosts = setOf("https://perchance.org", "https://*.perchance.org")
+            WebViewCompat.addDocumentStartJavaScript(v, MackBridge.FILLER_JS, hosts)
+            WebViewCompat.addDocumentStartJavaScript(v, MackLogin.JS, hosts)
         }
         v.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
@@ -609,6 +614,8 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 view?.evaluateJavascript(MackBridge.FILLER_JS, null)      // main frame too, in case the start script isn't supported
+                val u = url?.let { Uri.parse(it) }
+                if (u != null && MackLogin.originOk("${u.scheme}://${u.host}")) view?.evaluateJavascript(MackLogin.JS, null)
                 if (mackState != "failed") mackState = "live"
             }
 
@@ -638,6 +645,10 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
             }
 
             override fun onProgressChanged(view: WebView?, newProgress: Int) { mackProgress = newProgress }
+
+            // <input type=file> (reference images, gallery uploads): without this the page's Upload buttons do nothing at all
+            override fun onShowFileChooser(view: WebView?, cb: ValueCallback<Array<Uri>>?, params: FileChooserParams?): Boolean =
+                if (cb == null) false else mackFileChooser(cb, params)
         }
         return v
     }
@@ -658,7 +669,89 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
+
+    // ---- the page's file inputs ---------------------------------------------------------------------------------------
+    /** Set while the page waits for a file: the screen launches it and calls [mackFileLaunched]; the answer comes to [mackFileResult]. */
+    var mackFileRequest by mutableStateOf<Intent?>(null)
+        private set
+    private var mackFileCb: ValueCallback<Array<Uri>>? = null
+
+    fun mackFileChooser(cb: ValueCallback<Array<Uri>>, params: WebChromeClient.FileChooserParams?): Boolean {
+        mackFileCancel()
+        val intent = try { params?.createIntent() } catch (e: Exception) { null }
+        if (intent == null) { cb.onReceiveValue(null); return true }       // handled: the page just gets "nothing chosen"
+        mackFileCb = cb
+        mackFileRequest = intent
+        return true
+    }
+
+    fun mackFileLaunched() { mackFileRequest = null }
+
+    /** The picker answered (or was dismissed: parseResult gives null, which tells the page nothing was chosen). */
+    fun mackFileResult(code: Int, data: Intent?) = mackFileDeliver(WebChromeClient.FileChooserParams.parseResult(code, data))
+
+    fun mackFileDeliver(uris: Array<Uri>?) {
+        val cb = mackFileCb ?: return
+        mackFileCb = null
+        mackFileRequest = null
+        cb.onReceiveValue(uris)
+    }
+
+    /** A WebView that never hears back keeps its file input dead, so every way out of a request answers it. */
+    private fun mackFileCancel() {
+        mackFileRequest = null
+        val cb = mackFileCb ?: return
+        mackFileCb = null
+        cb.onReceiveValue(null)
+    }
+
+    // ---- saved sign-in ------------------------------------------------------------------------------------------------
+    private val signIn = SignInStore(File(app.noBackupFilesDir, "signin.bin"))
+    var signInOpen by mutableStateOf(false)
+    var signInSaved by mutableStateOf(signIn.saved)
+        private set
+    var signInUser by mutableStateOf("")
+    var signInPass by mutableStateOf("")
+
+    fun signInShow() {
+        signInUser = signIn.load()?.user ?: ""
+        signInPass = ""
+        signInOpen = true
+    }
+
+    fun signInSave() {
+        val u = signInUser.trim()
+        val pass = signInPass.ifEmpty { signIn.load()?.pass ?: "" }       // blank while one is saved: keep that password
+        if (u.isEmpty() || pass.isEmpty()) { say("Enter both the account name and the password"); return }
+        if (signIn.save(u, pass)) { signInSaved = true; signInPass = ""; say("Sign-in saved on this device (encrypted)") }
+        else say("Couldn't save: this device's secure storage refused")
+    }
+
+    fun signInForget() {
+        signIn.forget()
+        signInSaved = false; signInUser = ""; signInPass = ""
+        say("Saved sign-in removed")
+    }
+
+    /** Types the saved account into the sign-in form on the page: a probe finds the frame, then only that origin gets the password. */
+    fun mackSignIn() {
+        val cred = signIn.load()
+        if (cred == null) { say("No saved sign-in. Save one first."); return }
+        mackSend({ MackLogin.probeJs(it) }) { replies ->
+            val origins = replies.filter { it.event == "login" }.mapNotNull { it.values["origin"] }.filter { MackLogin.originOk(it) }.distinct()
+            if (origins.isEmpty()) {
+                say("No sign-in form on the page. Open Perchance's sign-in first.")
+                return@mackSend
+            }
+            mackSend({ MackLogin.fillJs(it, origins, cred.user, cred.pass) }) { r2 ->
+                val got = r2.filter { it.event == "login" }.flatMap { it.filled }.toSet()
+                say(if ("password" in got) "Sign-in filled" + (if ("user" in got) "" else " (password only: no account field found)") else "Couldn't fill the form")
+            }
+        }
+    }
+
     fun mackReload() {
+        mackFileCancel()
         val v = mackView
         if (v == null) { mackEnsure(); return }
         mackState = "loading"
@@ -691,6 +784,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     override fun onCleared() {
+        mackFileCancel()
         handler.removeCallbacks(mackFinish)
         mackDetach()
         try { mackView?.destroy() } catch (e: Exception) { /* already gone */ }

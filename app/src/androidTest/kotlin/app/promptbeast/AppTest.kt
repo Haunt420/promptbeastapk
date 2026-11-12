@@ -1,6 +1,10 @@
 package app.promptbeast
 
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.captureToImage
@@ -452,5 +456,55 @@ class AppTest {
     fun aiHttpOnDevice() {
         val rep = AiHttpSuite.run()
         assertTrue(rep.toString() + " | " + rep.failures.joinToString(" | ").replace("\n", " "), rep.failures.isEmpty())
+    }
+
+    /** The page's file inputs: a request reaches the screen, the picked file reaches the page, and every way out answers the page. */
+    @Test
+    fun mackFileChooserAnswersThePage() {
+        class Params : WebChromeClient.FileChooserParams() {
+            override fun getMode() = WebChromeClient.FileChooserParams.MODE_OPEN
+            override fun getAcceptTypes() = arrayOf("image/*")
+            override fun isCaptureEnabled() = false
+            override fun getTitle(): CharSequence? = null
+            override fun getFilenameHint(): String? = null
+            override fun createIntent(): Intent = Intent(Intent.ACTION_GET_CONTENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*")
+        }
+        val got = ArrayList<String>()
+        fun cb(tag: String) = ValueCallback<Array<Uri>> { got += tag + ":" + (it?.joinToString(",") ?: "null") }
+        val pic = Uri.parse("content://media/external/images/media/1")
+        rule.runOnUiThread {
+            assertTrue(vm.mackFileChooser(cb("a"), Params()))
+            assertTrue("request handed to the screen", vm.mackFileRequest != null)
+            vm.mackFileDeliver(arrayOf(pic))                       // picked
+            assertTrue(vm.mackFileRequest == null)
+            assertTrue(vm.mackFileChooser(cb("b"), Params()))
+            assertTrue(vm.mackFileChooser(cb("c"), Params()))      // a second request answers the first with "nothing"
+            vm.mackFileDeliver(null)                               // picker dismissed
+            vm.mackFileDeliver(arrayOf(pic))                       // a late duplicate answer is ignored
+            assertTrue(vm.mackFileChooser(cb("d"), Params()))
+            vm.mackReload()                                        // leaving the page answers too
+        }
+        assertEquals(listOf("a:$pic", "b:null", "c:null", "d:null"), got)
+    }
+
+    /** Saved sign-in: stored encrypted, typed only into a visible password form, never into hidden ones; Forget wipes it. */
+    @Test
+    fun mackSignInFillsTheVisibleForm() {
+        val page = """<!doctype html><html><body>
+            <input type="text" id="u"><input type="password" id="p">
+            <input type="password" id="hid" style="display:none">
+            <iframe id="f" srcdoc="&lt;input type='email' id='fu'&gt;&lt;input type='password' id='fp'&gt;"></iframe>
+            </body></html>"""
+        rule.runOnUiThread { vm.signInUser = "killa"; vm.signInPass = "hunter2"; vm.signInSave(); vm.mackLoadHtml(page) }
+        assertTrue("saved", vm.signInSaved)
+        val raw = java.io.File(rule.activity.noBackupFilesDir, "signin.bin").readBytes()
+        assertTrue("file is not plaintext", !String(raw, Charsets.ISO_8859_1).contains("hunter2") && !String(raw, Charsets.ISO_8859_1).contains("killa"))
+        rule.waitUntil(20_000) { vm.mackState == "live" }
+        rule.runOnUiThread { vm.mackSignIn() }
+        waitForPage("document.getElementById('u').value + '/' + document.getElementById('p').value", "\"killa/hunter2\"")
+        waitForPage("document.getElementById('hid').value", "\"\"")
+        waitForPage("(function(){var d=document.getElementById('f').contentDocument;return d.getElementById('fu').value+'/'+d.getElementById('fp').value})()", "\"killa/hunter2\"")
+        rule.runOnUiThread { vm.signInForget() }
+        assertTrue(!vm.signInSaved && !java.io.File(rule.activity.noBackupFilesDir, "signin.bin").exists())
     }
 }
