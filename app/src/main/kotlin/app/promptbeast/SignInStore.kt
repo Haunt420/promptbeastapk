@@ -44,15 +44,17 @@ class SignInStore(private val file: File) {
         true
     } catch (e: Exception) { false }
 
-    fun load(): Cred? = try {
-        if (!file.exists()) null else {
+    fun load(): Cred? {
+        if (!file.exists()) return null
+        return try {
             val raw = file.readBytes()
+            val k = key(false) ?: return null
             val c = Cipher.getInstance("AES/GCM/NoPadding")
-            c.init(Cipher.DECRYPT_MODE, key(false) ?: return null, GCMParameterSpec(128, raw, 0, IV_LEN))
+            c.init(Cipher.DECRYPT_MODE, k, GCMParameterSpec(128, raw, 0, IV_LEN))
             val j = JSONObject(String(c.doFinal(raw, IV_LEN, raw.size - IV_LEN), Charsets.UTF_8))
             Cred(j.getString("u"), j.getString("p"))
-        }
-    } catch (e: Exception) { null }
+        } catch (e: Exception) { null }
+    }
 
     fun forget() {
         file.delete()
