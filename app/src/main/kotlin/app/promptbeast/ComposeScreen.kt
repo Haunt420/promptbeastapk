@@ -176,12 +176,13 @@ private fun RollBar(vm: PbViewModel, onRolled: () -> Unit) {
         ) {
             OutlinedTextField(
                 value = vm.seedText, onValueChange = { vm.seedText = it.filter { c -> c.isDigit() }.take(18) },
-                label = { Text("Seed (blank = random)") }, singleLine = true,
+                label = { Text("Seed") }, placeholder = { Text("random") }, singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.weight(1f),
             )
-            OutlinedButton(onClick = { vm.composeSurprise() }, modifier = Modifier.testTag("compose_surprise")) { Text("Surprise") }
-            OutlinedButton(onClick = { vm.cycleRollCount() }) { Text("x${vm.rollCount}") }
+            val tight = PaddingValues(horizontal = 10.dp, vertical = 6.dp)
+            OutlinedButton(onClick = { vm.composeSurprise() }, contentPadding = tight, modifier = Modifier.testTag("compose_surprise")) { Text("Surprise", maxLines = 1) }
+            OutlinedButton(onClick = { vm.cycleRollCount() }, contentPadding = tight) { Text("x${vm.rollCount}", maxLines = 1) }
             Button(onClick = { if (vm.roll()) onRolled() }, modifier = Modifier.testTag("roll")) { Text("Roll") }
         }
     }
