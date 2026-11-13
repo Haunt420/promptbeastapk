@@ -451,19 +451,71 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         runForge()
     }
 
+    // ---- Surprise me ----------------------------------------------------------------------------------------------
+    /** "any", "spicy" or "nsfw" (see [Surprise]); spicy and nsfw need adult packs on. */
+    var surpriseFlavour by mutableStateOf(prefs.getString("surprise_flavour", "any") ?: "any")
+    private class SurpriseUndo(val seed: Long, val salts: Map<String, Long>, val locks: Map<String, List<String>>, val off: Set<String>, val heat: Float)
+    private var surpriseUndo: SurpriseUndo? = null
+    var surpriseCanUndo by mutableStateOf(false)
+        private set
+
+    fun onSurpriseFlavour(f: String) { surpriseFlavour = f; prefs.edit().putString("surprise_flavour", f).apply() }
+
+    fun forgeSurpriseUndo(): Boolean {
+        val u = surpriseUndo
+        if (u == null) { say("Nothing to undo"); return false }
+        surpriseUndo = null; surpriseCanUndo = false
+        forgeSeed = u.seed; forgeSalts = u.salts; forgeLocks = u.locks; forgeOff = u.off; forgeHeat = u.heat
+        runForge()
+        say("Surprise undone")
+        return true
+    }
+
+    private fun forgePinMany(picks: Map<String, List<String>>): Map<String, List<String>> {
+        val done = LinkedHashMap<String, List<String>>()
+        for ((sid, texts) in picks) {
+            val slot = forgeLib.slots[sid] ?: continue
+            val clean = texts.map { it.trim() }.filter { it.isNotEmpty() && !PackParser.ageGuardHit(it) }.distinct().take(maxOf(1, slot.hi))
+            if (clean.isNotEmpty()) done[sid] = clean
+        }
+        if (done.isNotEmpty()) { forgeLocks = forgeLocks + done; forgeOff = forgeOff - done.keys }
+        return done
+    }
+
     /**
-     * Surprise me: "wild" (heat by chance in adult mode), "odd" (one slot pinned to a random option from its whole list),
-     * "dare" (three slots), "send" (wild, then straight into Compose). Locks and switched-off slots stay as they are.
-     * Returns true when the roll was sent to Compose.
+     * Surprise me. Kinds: wild (heat by chance in adult mode), odd (1 slot pinned to a random option from its whole list), dare (3),
+     * rare (2 rarest options), chaos (every free slot), lucky (freeze 3 of the rolled picks), remix (new roll for about half of the
+     * free slots, same seed), heat (+25%), send (wild, then straight into Compose). The flavour decides the pool. Locks and
+     * switched-off slots are respected. Returns true when the roll was sent to Compose.
      */
-    fun forgeSurprise(kind: String, rng: kotlin.random.Random = kotlin.random.Random.Default): Boolean {
-        if ((kind == "wild" || kind == "send") && forgeAdults) forgeHeat = Surprise.wildHeat(rng) / 100f
-        forgeRerollAll()
-        if (kind == "odd" || kind == "dare") {
-            val st = ForgeState(locks = HashMap(forgeLocks), disabled = HashSet(forgeOff), maxTier = forgeLimitTier)
-            val picks = Surprise.oddballs(forgeLib, st, rng, if (kind == "odd") Surprise.ODD_COUNT else Surprise.DARE_COUNT)
-            for ((sid, texts) in picks) forgeSetLock(sid, texts)
-            if (picks.isNotEmpty()) say("Pinned: " + picks.entries.joinToString(", ") { (sid, t) -> "${forgeLib.slots[sid]?.label ?: sid}: ${t[0]}" })
+    fun forgeSurprise(kind: String, rng: kotlin.random.Random = kotlin.random.Random.Default, flavour: String = surpriseFlavour): Boolean {
+        if (flavour != "any" && forgeLimitTier < 1) { say("Spicy and NSFW surprises need adult packs: turn them on first"); return false }
+        if (kind == "heat" && !forgeAdults) { say("Heat up needs adult packs: turn them on first"); return false }
+        surpriseUndo = SurpriseUndo(forgeSeed, forgeSalts, forgeLocks, forgeOff, forgeHeat)
+        surpriseCanUndo = true
+        if ((kind == "wild" || kind == "send") && forgeAdults) forgeHeat = Surprise.wildHeat(rng, flavour) / 100f
+        if (kind == "heat") forgeHeat = minOf(1f, forgeHeat + Surprise.HEAT_STEP / 100f)
+        if (flavour != "any" && forgeAdults) forgeHeat = maxOf(forgeHeat, Surprise.heatFloor(flavour) / 100f)
+        val state = { ForgeState(locks = HashMap(forgeLocks), disabled = HashSet(forgeOff), maxTier = forgeLimitTier) }
+        if (kind == "remix") {
+            val bump = HashMap(forgeSalts)
+            for (sid in Surprise.remixSlots(forgeLib, state(), rng)) bump[sid] = (bump[sid] ?: 0L) + 1L
+            forgeSalts = bump
+            runForge()
+        } else forgeRerollAll()
+        val pins = LinkedHashMap<String, List<String>>()
+        when (kind) {
+            "odd" -> pins += forgePinMany(Surprise.oddballs(forgeLib, state(), rng, Surprise.ODD_COUNT, flavour))
+            "dare" -> pins += forgePinMany(Surprise.oddballs(forgeLib, state(), rng, Surprise.DARE_COUNT, flavour))
+            "chaos" -> pins += forgePinMany(Surprise.oddballs(forgeLib, state(), rng, 10_000, flavour))
+            "rare" -> pins += forgePinMany(Surprise.rare(forgeLib, state(), rng, Surprise.RARE_COUNT, flavour))
+            "lucky" -> pins += forgePinMany(Surprise.luckyLocks(forgeResult?.picks?.mapValues { it.value.texts } ?: emptyMap(), state(), rng))
+        }
+        if (flavour == "nsfw") pins += forgePinMany(Surprise.spice(forgeLib, state(), rng))
+        if (pins.isNotEmpty()) {
+            runForge()
+            val shown = pins.entries.take(4).joinToString(", ") { (sid, t) -> "${forgeLib.slots[sid]?.label ?: sid}: ${t[0]}" }
+            say("Pinned: $shown" + if (pins.size > 4) " (+${pins.size - 4} more)" else "")
         }
         return kind == "send" && forgeSend()
     }

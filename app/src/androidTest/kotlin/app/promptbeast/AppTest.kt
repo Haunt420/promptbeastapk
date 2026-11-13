@@ -514,7 +514,7 @@ class AppTest {
     /** Surprise me: odd/dare pin free slots inside the tier limit, wild moves the heat but keeps locks, send lands in Compose. */
     @Test
     fun forgeSurpriseButtons() {
-        rule.runOnUiThread { vm.onForgeAdults(true); vm.onForgeTier(2); vm.onForgeHeat(0.05f) }
+        rule.runOnUiThread { vm.onSurpriseFlavour("any"); vm.onForgeAdults(true); vm.onForgeTier(2); vm.onForgeHeat(0.05f) }
         tap("nav_forge", scroll = false)
         await("forge ready") { vm.forgeResult != null }
         rule.onNodeWithTag("forge_list").performScrollToNode(hasTestTag("surprise_odd"))
@@ -534,5 +534,52 @@ class AppTest {
         tap("surprise_send", scroll = false)
         await("landed in compose") { rule.onAllNodesWithTag("roll").fetchSemanticsNodes().isNotEmpty() }
         assertTrue("boxes filled", vm.boxes.values.any { it.isNotBlank() })
+    }
+
+    /** Surprise flavours: spicy/nsfw refuse without adult packs; nsfw pins adult-tier options only and runs hot; every kind can be undone. */
+    @Test
+    fun forgeSurpriseFlavoursKindsAndUndo() {
+        try {
+            rule.runOnUiThread { vm.onSurpriseFlavour("any"); vm.onForgeAdults(false) }
+            tap("nav_forge", scroll = false)
+            await("forge ready") { vm.forgeResult != null }
+            rule.onNodeWithTag("forge_list").performScrollToNode(hasTestTag("flavour_nsfw"))
+            tap("flavour_nsfw", scroll = false)
+            await("nsfw chosen") { vm.surpriseFlavour == "nsfw" }
+            tap("surprise_dare", scroll = false)
+            rule.waitForIdle()
+            assertTrue("refused without adult packs", vm.forgeLocks.isEmpty() && !vm.surpriseCanUndo)
+
+            rule.runOnUiThread { vm.onForgeAdults(true); vm.onForgeTier(4); vm.onForgeHeat(0.1f) }
+            rule.onNodeWithTag("forge_list").performScrollToNode(hasTestTag("surprise_chaos"))
+            tap("surprise_chaos", scroll = false)
+            await("chaos pinned") { vm.forgeLocks.size >= 3 }
+            for ((sid, texts) in vm.forgeLocks) {
+                val idx = vm.forgeLib.slots[sid]!!.tags.associateBy { it.text }
+                assertTrue("$sid adult-tier only: $texts", texts.all { (idx[it]?.tier ?: 0) >= 1 })
+            }
+            assertTrue("nsfw runs hot", vm.forgeHeat >= 0.8f)
+            tap("surprise_undo", scroll = false)
+            await("undone") { vm.forgeLocks.isEmpty() && !vm.surpriseCanUndo }
+            assertEquals(0.1f, vm.forgeHeat, 0.001f)
+
+            tap("flavour_any", scroll = false)
+            await("any chosen") { vm.surpriseFlavour == "any" }
+            tap("surprise_rare", scroll = false)
+            await("rare pinned") { vm.forgeLocks.size in 1..2 }
+            val rareSlots = vm.forgeLocks.keys
+            tap("surprise_lucky", scroll = false)
+            await("lucky locked more") { vm.forgeLocks.size > rareSlots.size }
+            assertTrue("earlier locks kept", vm.forgeLocks.keys.containsAll(rareSlots))
+            val seed = vm.forgeSeed
+            tap("surprise_remix", scroll = false)
+            rule.waitForIdle()
+            assertEquals("remix keeps the seed", seed, vm.forgeSeed)
+            val h = vm.forgeHeat
+            tap("surprise_heat", scroll = false)
+            await("heat up") { vm.forgeHeat > h || h >= 1f }
+        } finally {
+            rule.runOnUiThread { vm.onSurpriseFlavour("any") }
+        }
     }
 }

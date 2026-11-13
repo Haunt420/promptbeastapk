@@ -39,8 +39,13 @@ import androidx.compose.ui.unit.dp
 import promptbeast.Boxes
 import promptbeast.Forge
 import promptbeast.Slot
+import promptbeast.Surprise
 import promptbeast.SlotResult
 
+private val SURPRISES = listOf(
+    "wild" to "Wild roll", "odd" to "Odd one out", "dare" to "Dare me", "send" to "Surprise & send",
+    "remix" to "Remix", "rare" to "Rare find", "heat" to "Heat up", "chaos" to "Chaos", "lucky" to "Lucky lock",
+)
 private val MODES = listOf("replace" to "Replace boxes", "append" to "Append to boxes", "fill_empty" to "Fill empty only")
 
 @Composable
@@ -83,10 +88,17 @@ fun ForgeScreen(vm: PbViewModel, onSent: () -> Unit) {
                     Gap(8)
                     Label("Surprise me")
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedButton(onClick = { vm.forgeSurprise("wild") }, modifier = Modifier.testTag("surprise_wild")) { Text("Wild roll") }
-                        OutlinedButton(onClick = { vm.forgeSurprise("odd") }, modifier = Modifier.testTag("surprise_odd")) { Text("Odd one out") }
-                        OutlinedButton(onClick = { vm.forgeSurprise("dare") }, modifier = Modifier.testTag("surprise_dare")) { Text("Dare me") }
-                        OutlinedButton(onClick = { if (vm.forgeSurprise("send")) onSent() }, modifier = Modifier.testTag("surprise_send")) { Text("Surprise & send") }
+                        for ((id, name) in Surprise.FLAVOURS) {
+                            FilterChip(selected = vm.surpriseFlavour == id, onClick = { vm.onSurpriseFlavour(id) },
+                                label = { Text(name) }, modifier = Modifier.testTag("flavour_$id"))
+                        }
+                    }
+                    if (vm.surpriseFlavour != "any" && vm.forgeLimitTier < 1) Dim("Spicy and NSFW need the adult packs below.")
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        for ((id, name) in SURPRISES) {
+                            OutlinedButton(onClick = { if (vm.forgeSurprise(id)) onSent() }, modifier = Modifier.testTag("surprise_$id")) { Text(name) }
+                        }
+                        OutlinedButton(onClick = { vm.forgeSurpriseUndo() }, enabled = vm.surpriseCanUndo, modifier = Modifier.testTag("surprise_undo")) { Text("Undo") }
                     }
                     Gap(8)
                     Row(verticalAlignment = Alignment.CenterVertically) {
