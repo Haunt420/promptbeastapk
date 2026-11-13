@@ -488,7 +488,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
      * free slots, same seed), heat (+25%), send (wild, then straight into Compose). The flavour decides the pool. Locks and
      * switched-off slots are respected. Returns true when the roll was sent to Compose.
      */
-    fun forgeSurprise(kind: String, rng: kotlin.random.Random = kotlin.random.Random.Default, flavour: String = surpriseFlavour): Boolean {
+    fun forgeSurprise(kind: String, rng: kotlin.random.Random = kotlin.random.Random.Default, flavour: String = surpriseFlavour, sendMode: String = forgeMode): Boolean {
         if (flavour != "any" && forgeLimitTier < 1) { say("Spicy and NSFW surprises need adult packs: turn them on first"); return false }
         if (kind == "heat" && !forgeAdults) { say("Heat up needs adult packs: turn them on first"); return false }
         surpriseUndo = SurpriseUndo(forgeSeed, forgeSalts, forgeLocks, forgeOff, forgeHeat)
@@ -517,7 +517,7 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
             val shown = pins.entries.take(4).joinToString(", ") { (sid, t) -> "${forgeLib.slots[sid]?.label ?: sid}: ${t[0]}" }
             say("Pinned: $shown" + if (pins.size > 4) " (+${pins.size - 4} more)" else "")
         }
-        return kind == "send" && forgeSend()
+        return kind == "send" && forgeSend(sendMode)
     }
 
     fun forgeRerollSlot(id: String) {
@@ -593,26 +593,36 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         onForgeAdults(true)
     }
 
-    /** Forge picks -> Compose boxes (replace / append / fill_empty), plus the adult negative when an adult tier was used. */
-    fun forgeSend(): Boolean {
+    /**
+     * Forge picks -> Compose boxes (replace / append / fill_empty), plus the adult negative when an adult tier was used.
+     * With fill_empty nothing already typed is touched; when there is nothing empty to fill it says so and returns false.
+     */
+    fun forgeSend(mode: String = forgeMode): Boolean {
         val res = forgeResult ?: return false
         val bx = Forge.toBoxes(forgeLib, res)
         if (bx.isEmpty()) { say("Nothing to send: every slot is empty or switched off"); return false }
+        var changed = 0
         for (spec in Boxes.ALL) {
             val t = bx[spec.id] ?: continue
-            boxes[spec.id] = Forge.mergeText(boxes[spec.id] ?: "", t, forgeMode)
+            val cur = boxes[spec.id] ?: ""
+            val merged = Forge.mergeText(cur, t, mode)
+            if (merged != cur) { boxes[spec.id] = merged; changed++ }
         }
         val add = Forge.negativeAdd(res)
-        if (add.isNotEmpty()) {
+        if (add.isNotEmpty() && (mode != "fill_empty" || changed > 0)) {
             val have = negative.split(",").map { PyText.strip(it).lowercase() }.toSet()
             val extra = add.split(",").map { PyText.strip(it) }.filter { it.isNotEmpty() && it.lowercase() !in have }
             if (extra.isNotEmpty()) negative = Forge.mergeText(negative, extra.joinToString(", "), "append")
         }
+        if (mode == "fill_empty" && changed == 0) { say("No empty boxes to fill. Clear one, or use Forge's Replace mode."); return false }
         rolls = emptyList()
         dirty()
-        say("Sent to Compose")
+        say(if (mode == "fill_empty") "Filled $changed empty box${if (changed != 1) "es" else ""}" else "Sent to Compose")
         return true
     }
+
+    /** The Compose tab's Surprise button: a wild roll (flavour from Forge) written into the EMPTY boxes only. */
+    fun composeSurprise(): Boolean = forgeSurprise("send", sendMode = "fill_empty")
 
     // ---- mack ------------------------------------------------------------------------------------------------------
     /** idle -> loading -> live | failed. The page is only fetched the first time the Mack tab is opened. */

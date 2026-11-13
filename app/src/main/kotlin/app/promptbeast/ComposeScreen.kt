@@ -180,6 +180,7 @@ private fun RollBar(vm: PbViewModel, onRolled: () -> Unit) {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.weight(1f),
             )
+            OutlinedButton(onClick = { vm.composeSurprise() }, modifier = Modifier.testTag("compose_surprise")) { Text("Surprise") }
             OutlinedButton(onClick = { vm.cycleRollCount() }) { Text("x${vm.rollCount}") }
             Button(onClick = { if (vm.roll()) onRolled() }, modifier = Modifier.testTag("roll")) { Text("Roll") }
         }
