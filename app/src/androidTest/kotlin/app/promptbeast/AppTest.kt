@@ -587,15 +587,19 @@ class AppTest {
     /** Compose's Surprise button fills empty boxes only: typed text survives, and with nothing empty it changes nothing. */
     @Test
     fun composeSurpriseFillsOnlyEmptyBoxes() {
-        rule.runOnUiThread { vm.onSurpriseFlavour("any"); vm.newProject(); vm.onBox("main", "my own words"); vm.onForgeMode("replace") }
-        await("compose roll bar") { rule.onAllNodesWithTag("compose_surprise").fetchSemanticsNodes().isNotEmpty() }
-        tap("compose_surprise", scroll = false)
-        await("empty boxes filled") { vm.boxes.filter { it.key != "main" }.values.any { it.isNotBlank() } }
-        assertEquals("my own words", vm.boxes["main"])
-        rule.runOnUiThread { for (spec in Boxes.ALL) vm.onBox(spec.id, "x " + spec.id) }
-        val before = vm.boxes.toMap()
-        tap("compose_surprise", scroll = false)
-        rule.waitForIdle()
-        assertEquals(before, vm.boxes.toMap())
+        try {
+            rule.runOnUiThread { vm.onSurpriseFlavour("any"); vm.newProject(); vm.onBox("main", "my own words"); vm.onForgeMode("replace") }
+            await("compose roll bar") { rule.onAllNodesWithTag("compose_surprise").fetchSemanticsNodes().isNotEmpty() }
+            tap("compose_surprise", scroll = false)
+            await("empty boxes filled") { vm.boxes.filter { it.key != "main" }.values.any { it.isNotBlank() } }
+            assertEquals("my own words", vm.boxes["main"])
+            rule.runOnUiThread { for (spec in Boxes.ALL) vm.onBox(spec.id, "x " + spec.id) }
+            val before = vm.boxes.toMap()
+            tap("compose_surprise", scroll = false)
+            rule.waitForIdle()
+            assertEquals(before, vm.boxes.toMap())
+        } finally {
+            rule.runOnUiThread { vm.newProject(); vm.persistNow() }       // later tests start from an empty project
+        }
     }
 }
