@@ -81,6 +81,14 @@ fun ForgeScreen(vm: PbViewModel, onSent: () -> Unit) {
                         Button(onClick = { vm.forgeRerollAll() }) { Text("New seed") }
                     }
                     Gap(8)
+                    Label("Surprise me")
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedButton(onClick = { vm.forgeSurprise("wild") }, modifier = Modifier.testTag("surprise_wild")) { Text("Wild roll") }
+                        OutlinedButton(onClick = { vm.forgeSurprise("odd") }, modifier = Modifier.testTag("surprise_odd")) { Text("Odd one out") }
+                        OutlinedButton(onClick = { vm.forgeSurprise("dare") }, modifier = Modifier.testTag("surprise_dare")) { Text("Dare me") }
+                        OutlinedButton(onClick = { if (vm.forgeSurprise("send")) onSent() }, modifier = Modifier.testTag("surprise_send")) { Text("Surprise & send") }
+                    }
+                    Gap(8)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text("Adult packs (18+)")

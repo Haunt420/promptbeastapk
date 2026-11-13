@@ -507,4 +507,29 @@ class AppTest {
         rule.runOnUiThread { vm.signInForget() }
         assertTrue(!vm.signInSaved && !java.io.File(rule.activity.noBackupFilesDir, "signin.bin").exists())
     }
+
+    /** Surprise me: odd/dare pin free slots inside the tier limit, wild moves the heat but keeps locks, send lands in Compose. */
+    @Test
+    fun forgeSurpriseButtons() {
+        rule.runOnUiThread { vm.onForgeAdults(true); vm.onForgeTier(2); vm.onForgeHeat(0.05f) }
+        tap("nav_forge", scroll = false)
+        await("forge ready") { vm.forgeResult != null }
+        rule.onNodeWithTag("forge_list").performScrollToNode(hasTestTag("surprise_odd"))
+        tap("surprise_odd", scroll = false)
+        await("one pinned") { vm.forgeLocks.size == 1 }
+        tap("surprise_dare", scroll = false)
+        await("three more pinned") { vm.forgeLocks.size == 4 }
+        for ((sid, texts) in vm.forgeLocks) {
+            val idx = vm.forgeLib.slots[sid]!!.tags.associateBy { it.text }
+            assertTrue("$sid within tier", texts.size == 1 && texts[0] in idx && idx[texts[0]]!!.tier <= 2)
+        }
+        val locks = vm.forgeLocks
+        tap("surprise_wild", scroll = false)
+        await("heat moved") { vm.forgeHeat >= 0.35f }
+        assertEquals(locks, vm.forgeLocks)
+        rule.runOnUiThread { vm.onBox("main", ""); vm.onForgeMode("replace") }
+        tap("surprise_send", scroll = false)
+        await("landed in compose") { rule.onAllNodesWithTag("roll").fetchSemanticsNodes().isNotEmpty() }
+        assertTrue("boxes filled", vm.boxes.values.any { it.isNotBlank() })
+    }
 }

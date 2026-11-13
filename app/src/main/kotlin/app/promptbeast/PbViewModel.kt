@@ -61,6 +61,7 @@ import promptbeast.Pack
 import promptbeast.PackParser
 import promptbeast.Profiles
 import promptbeast.Project
+import promptbeast.Surprise
 import promptbeast.PyJson
 import promptbeast.ProviderConfig
 import promptbeast.ProviderError
@@ -448,6 +449,23 @@ class PbViewModel(private val app: Application) : AndroidViewModel(app) {
         forgeSeed = ThreadLocalRandom.current().nextLong(0, 1L shl 31)
         forgeSalts = emptyMap()
         runForge()
+    }
+
+    /**
+     * Surprise me: "wild" (heat by chance in adult mode), "odd" (one slot pinned to a random option from its whole list),
+     * "dare" (three slots), "send" (wild, then straight into Compose). Locks and switched-off slots stay as they are.
+     * Returns true when the roll was sent to Compose.
+     */
+    fun forgeSurprise(kind: String, rng: kotlin.random.Random = kotlin.random.Random.Default): Boolean {
+        if ((kind == "wild" || kind == "send") && forgeAdults) forgeHeat = Surprise.wildHeat(rng) / 100f
+        forgeRerollAll()
+        if (kind == "odd" || kind == "dare") {
+            val st = ForgeState(locks = HashMap(forgeLocks), disabled = HashSet(forgeOff), maxTier = forgeLimitTier)
+            val picks = Surprise.oddballs(forgeLib, st, rng, if (kind == "odd") Surprise.ODD_COUNT else Surprise.DARE_COUNT)
+            for ((sid, texts) in picks) forgeSetLock(sid, texts)
+            if (picks.isNotEmpty()) say("Pinned: " + picks.entries.joinToString(", ") { (sid, t) -> "${forgeLib.slots[sid]?.label ?: sid}: ${t[0]}" })
+        }
+        return kind == "send" && forgeSend()
     }
 
     fun forgeRerollSlot(id: String) {

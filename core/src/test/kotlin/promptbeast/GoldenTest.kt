@@ -27,4 +27,5 @@ class GoldenTest {
     @Test fun aistream() = run(GoldenSuite.aistream())
     @Test fun aiHttp() = run(AiHttpSuite.run())
     @Test fun userPacks() = run(UserPacksSuite.run())
+    @Test fun surprise() = run(SurpriseSuite.run())
 }
