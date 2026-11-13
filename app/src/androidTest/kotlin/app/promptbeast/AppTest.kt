@@ -232,6 +232,7 @@ class AppTest {
             assertTrue(!ok && !File(rule.activity.filesDir, "packs/junk.pbpack").exists())
 
             tap("nav_forge", scroll = false)
+            rule.onNodeWithTag("forge_list").performScrollToNode(hasTestTag("pack_row_hats-such"))     // the list is lazy: bring the card into composition
             await("packs card in Forge") { rule.onAllNodesWithTag("pack_row_hats-such").fetchSemanticsNodes().isNotEmpty() }
             shot("8_packs")
 
@@ -239,7 +240,8 @@ class AppTest {
             rule.runOnUiThread { vm.onForgeAdults(false) }
             assertTrue(vm.forgeLib.slots.containsKey("head"))
 
-            tap("pack_delete_hats-such")
+            rule.onNodeWithTag("forge_list").performScrollToNode(hasTestTag("pack_delete_hats-such"))
+            tap("pack_delete_hats-such", scroll = false)
             await("pack removed") { !vm.forgeLib.slots.containsKey("notes") && vm.userPacks.isEmpty() }
             assertTrue(!File(rule.activity.filesDir, "packs/hats-such.pbpack").exists())
         } finally {
@@ -339,7 +341,8 @@ class AppTest {
             assertTrue(vm.forgeLib.slots["new_slot"]!!.tags.none { it.text.contains("teen") })        // age guard
 
             // edit in place (same file), then a refusal that keeps the editor open
-            tap("pack_edit_hat-rack")
+            rule.onNodeWithTag("forge_list").performScrollToNode(hasTestTag("pack_edit_hat-rack"))
+            tap("pack_edit_hat-rack", scroll = false)
             await("editor reopened") { vm.packEditOpen && vm.packEditStem == "hat-rack" && vm.packEditText.contains("a first tag") }
             rule.runOnUiThread { vm.onPackEditText(vm.packEditText + "a deerstalker\n") }
             tap("pack_edit_save", scroll = false)
